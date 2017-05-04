@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <tgmath.h>
 
 #include "flex.h"
 
@@ -45,26 +46,33 @@ static unsigned int failures_n = 0;
 #define TEST_EQUAL_T(expr, val, type_fmt) \
     do { \
         __auto_type _res = expr; \
-        if (_res == val) { \
+        typeof(_res) _val = val; \
+        if (_res == _val) { \
             _PASS(); \
         } \
         else { \
-            _FAIL("failed test `%s == %s' (is " type_fmt ")", #expr, #val, \
-                    _res); \
+            char _fmt[100] = { 0 }; \
+            snprintf(_fmt, sizeof _fmt, "failed test `%%s == %s' (is %s)", \
+                    type_fmt, type_fmt); \
+            _FAIL(_fmt, #expr, _val, _res); \
         } \
     } \
     while (0)
 
-#define TEST_EQUAL_F(expr, val) TEST_EQUAL_T(expr, val, "%0.1f")
-#define TEST_EQUAL_I(expr, val) TEST_EQUAL_T(expr, val, "%d")
+#define TEST_EQUAL(expr, val) \
+    TEST_EQUAL_T(expr, val, \
+            (_Generic((expr), \
+                      unsigned int: "%u", \
+                      int: "%d", \
+                      float: "%0.1f")))
 
 #define TEST_FRAME_EQUAL(item, x, y, width, height) \
     do { \
         struct flex_item *_item = item; \
-        TEST_EQUAL_F(flex_item_get_frame_x(_item), x); \
-        TEST_EQUAL_F(flex_item_get_frame_y(_item), y); \
-        TEST_EQUAL_F(flex_item_get_frame_width(_item), width); \
-        TEST_EQUAL_F(flex_item_get_frame_height(_item), height); \
+        TEST_EQUAL(flex_item_get_frame_x(_item), x); \
+        TEST_EQUAL(flex_item_get_frame_y(_item), y); \
+        TEST_EQUAL(flex_item_get_frame_width(_item), width); \
+        TEST_EQUAL(flex_item_get_frame_height(_item), height); \
     } \
     while (0)
 
@@ -108,9 +116,9 @@ test_default_values(void)
     TEST(flex_item_get_direction(item) == FLEX_DIRECTION_ROW);
     TEST(flex_item_get_wrap(item) == FLEX_WRAP_NOWRAP);
 
-    TEST_EQUAL_I(flex_item_get_grow(item), 0);
-    TEST_EQUAL_I(flex_item_get_shrink(item), 1);
-    TEST_EQUAL_I(flex_item_get_order(item), 0);
+    TEST_EQUAL(flex_item_get_grow(item), 0);
+    TEST_EQUAL(flex_item_get_shrink(item), 1);
+    TEST_EQUAL(flex_item_get_order(item), 0);
 
     flex_item_free(item);
 }
@@ -202,8 +210,8 @@ test_grow4(void)
     struct flex_item *child2 = flex_item_with_size(100, 25);
     flex_item_add(root, child2);
 
-    TEST_EQUAL_I(flex_item_get_grow(child1), 0);
-    TEST_EQUAL_I(flex_item_get_grow(child2), 0);
+    TEST_EQUAL(flex_item_get_grow(child1), 0);
+    TEST_EQUAL(flex_item_get_grow(child2), 0);
 
     flex_layout(root);
 
@@ -329,8 +337,8 @@ test_shrink4(void)
     struct flex_item *child2 = flex_item_with_size(100, 25);
     flex_item_add(root, child2);
 
-    TEST_EQUAL_I(flex_item_get_shrink(child1), 1);
-    TEST_EQUAL_I(flex_item_get_shrink(child2), 1);
+    TEST_EQUAL(flex_item_get_shrink(child1), 1);
+    TEST_EQUAL(flex_item_get_shrink(child2), 1);
 
     flex_layout(root);
 
@@ -402,7 +410,7 @@ main(void)
         printf("\n");
         for (int i = 0; i < failures_n; i++) {
             printf("%s\n", failures[i]);
-        }    
+        }
         return 1;
     }
     printf(" OK\n");
