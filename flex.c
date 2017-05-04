@@ -174,6 +174,18 @@ FRAME_GETTER(height, 3)
 
 #undef FRAME_GETTER
 
+static int
+child_order_cmp(void *ctx, const void *e1, const void *e2)
+{
+    struct flex_item *item = (struct flex_item *)ctx;
+    int *index1 = (int *)e1;
+    int *index2 = (int *)e2;
+    
+    int order1 = item->children.ary[*index1]->order;
+    int order2 = item->children.ary[*index2]->order;
+    return order1 > order2 ? 1 : (order1 < order2 ? -1 : 0);
+}
+
 void
 flex_layout(struct flex_item *item)
 {
@@ -209,7 +221,7 @@ flex_layout(struct flex_item *item)
     int flex_grows = 0;
     int flex_shrinks = 0;
     float pos = reverse ? flex_dim : 0;
-
+    int *ordered_indices = NULL;
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = item->children.ary[i];
 
@@ -222,10 +234,27 @@ flex_layout(struct flex_item *item)
         flex_shrinks += child->shrink;
 
         flex_dim -= child->frame[frame_size_i];
+
+        if (child->order > 0) {
+            if (ordered_indices == NULL) {
+                ordered_indices =
+                    (int *)malloc(sizeof(int) * item->children.count);
+                assert(ordered_indices != NULL);
+            }
+        }
+    }
+
+    if (ordered_indices != NULL) {
+        for (int i = 0; i < item->children.count; i++) {
+            ordered_indices[i] = i;
+        }
+        qsort_r(ordered_indices, item->children.count, sizeof(int), item,
+                child_order_cmp);
     }
 
     for (int i = 0; i < item->children.count; i++) {
-        struct flex_item *child = item->children.ary[i];
+        int order_i = ordered_indices != NULL ? ordered_indices[i] : i;
+        struct flex_item *child = item->children.ary[order_i];
 
         float flex_size = 0;
         if (flex_dim > 0) {
@@ -253,5 +282,9 @@ flex_layout(struct flex_item *item)
             child->frame[frame_pos_i] = pos;
             pos += child->frame[frame_size_i];
         }
+    }
+
+    if (ordered_indices != NULL) {
+        free(ordered_indices);
     }
 }
