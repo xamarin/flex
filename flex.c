@@ -2,6 +2,7 @@
 #include <math.h>
 #include <string.h>
 #include <assert.h>
+#include <stdbool.h>
 
 #define DEBUG_PRINT_FRAMES      0
 
@@ -180,45 +181,77 @@ flex_layout(struct flex_item *item)
     assert(!isnan(item->width));
     assert(!isnan(item->height));
 
-    float flex_dim = item->height;
+    bool reverse = false;
+    float flex_dim = 0;
+    unsigned int frame_pos_i = 0;
+    unsigned int frame_size_i = 0;
+    switch (item->direction) {
+        case FLEX_DIRECTION_ROW_REVERSE:
+            reverse = true;
+        case FLEX_DIRECTION_ROW:
+            flex_dim = item->width;
+            frame_pos_i = 0;
+            frame_size_i = 2;
+            break;
+
+        case FLEX_DIRECTION_COLUMN_REVERSE:
+            reverse = true;
+        case FLEX_DIRECTION_COLUMN:
+            flex_dim = item->height;
+            frame_pos_i = 1;
+            frame_size_i = 3;
+            break;
+
+        default:
+            assert(false && "incorrect direction");
+    }
+
     int flex_grows = 0;
     int flex_shrinks = 0;
+    float pos = reverse ? flex_dim : 0;
 
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = item->children.ary[i];
 
+        child->frame[0] = 0;
+        child->frame[1] = 0;
         child->frame[2] = isnan(child->width) ? 0 : child->width;
         child->frame[3] = isnan(child->height) ? 0 : child->height;
 
         flex_grows += child->grow;
         flex_shrinks += child->shrink;
 
-        flex_dim -= child->frame[3];
+        flex_dim -= child->frame[frame_size_i];
     }
 
-    float pos = 0;
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = item->children.ary[i];
 
-        child->frame[0] = 0;
-        child->frame[1] = pos;
-
+        float flex_size = 0;
         if (flex_dim > 0) {
             if (child->grow != 0) {
-                child->frame[3] += (flex_dim / flex_grows) * child->grow;
+                flex_size = (flex_dim / flex_grows) * child->grow;
             }
         }
         else if (flex_dim < 0) {
             if (child->shrink != 0) {
-                child->frame[3] += (flex_dim / flex_shrinks) * child->shrink;
+                flex_size = (flex_dim / flex_shrinks) * child->shrink;
             }
         }
+        child->frame[frame_size_i] += flex_size;
 
 #if DEBUG_PRINT_FRAMES
         printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
                 child->frame[2], child->frame[3]);
 #endif
 
-        pos += child->frame[3];
+        if (reverse) {
+            pos -= child->frame[frame_size_i];
+            child->frame[frame_pos_i] = pos;
+        }
+        else {
+            child->frame[frame_pos_i] = pos;
+            pos += child->frame[frame_size_i];
+        }
     }
 }

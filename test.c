@@ -387,6 +387,102 @@ test_shrink6(void)
     flex_item_free(root);
 }
 
+static void
+test_direction1(void)
+{
+    struct flex_item *root = flex_item_with_size(200, 200);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+    TEST_FRAME_EQUAL(child2, 50, 0, 50, 50);
+    TEST_FRAME_EQUAL(child3, 100, 0, 50, 50);
+
+    flex_item_free(root);
+}
+
+static void
+test_direction2(void)
+{
+    struct flex_item *root = flex_item_with_size(200, 200);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+    TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
+    TEST_FRAME_EQUAL(child3, 0, 100, 50, 50);
+
+    flex_item_free(root);
+}
+
+static void
+test_direction3(void)
+{
+    struct flex_item *root = flex_item_with_size(200, 200);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW_REVERSE);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 150, 0, 50, 50);
+    TEST_FRAME_EQUAL(child2, 100, 0, 50, 50);
+    TEST_FRAME_EQUAL(child3, 50, 0, 50, 50);
+
+    flex_item_free(root);
+}
+
+static void
+test_direction4(void)
+{
+    struct flex_item *root = flex_item_with_size(200, 200);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 150, 50, 50);
+    TEST_FRAME_EQUAL(child2, 0, 100, 50, 50);
+    TEST_FRAME_EQUAL(child3, 0, 50, 50, 50);
+
+    flex_item_free(root);
+}
+
 int
 main(void)
 {
@@ -405,6 +501,11 @@ main(void)
     UNIT(shrink4);
     UNIT(shrink5);
     UNIT(shrink6);
+
+    UNIT(direction1);
+    UNIT(direction2);
+    UNIT(direction3);
+    UNIT(direction4);
 
     if (failures_n > 0) {
         printf("\n");
