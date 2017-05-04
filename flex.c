@@ -66,7 +66,7 @@ flex_item_new(void)
     item->align_self = FLEX_ALIGN_AUTO;
 
     item->position = FLEX_POSITION_RELATIVE;
-    item->direction = FLEX_DIRECTION_ROW;
+    item->direction = FLEX_DIRECTION_COLUMN;
     item->wrap = FLEX_WRAP_NOWRAP;
 
     item->grow = 0;

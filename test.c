@@ -113,7 +113,7 @@ test_default_values(void)
     TEST(flex_item_get_align_self(item) == FLEX_ALIGN_AUTO);
 
     TEST(flex_item_get_position(item) == FLEX_POSITION_RELATIVE);
-    TEST(flex_item_get_direction(item) == FLEX_DIRECTION_ROW);
+    TEST(flex_item_get_direction(item) == FLEX_DIRECTION_COLUMN);
     TEST(flex_item_get_wrap(item) == FLEX_WRAP_NOWRAP);
 
     TEST_EQUAL(flex_item_get_grow(item), 0);
