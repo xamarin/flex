@@ -196,23 +196,32 @@ flex_layout(struct flex_item *item)
 
     bool reverse = false;
     float flex_dim = 0;
+    float align_dim = 0;
     unsigned int frame_pos_i = 0;
+    unsigned int frame_pos2_i = 0;
     unsigned int frame_size_i = 0;
+    unsigned int frame_size2_i = 0;
     switch (item->direction) {
         case FLEX_DIRECTION_ROW_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_ROW:
             flex_dim = item->width;
+            align_dim = item->height;
             frame_pos_i = 0;
+            frame_pos2_i = 1;
             frame_size_i = 2;
+            frame_size2_i = 3;
             break;
 
         case FLEX_DIRECTION_COLUMN_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_COLUMN:
             flex_dim = item->height;
+            align_dim = item->width;
             frame_pos_i = 1;
+            frame_pos2_i = 0;
             frame_size_i = 3;
+            frame_size2_i = 2;
             break;
 
         default:
@@ -270,11 +279,6 @@ flex_layout(struct flex_item *item)
         }
         child->frame[frame_size_i] += flex_size;
 
-#if DEBUG_PRINT_FRAMES
-        printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
-                child->frame[2], child->frame[3]);
-#endif
-
         if (reverse) {
             pos -= child->frame[frame_size_i];
             child->frame[frame_pos_i] = pos;
@@ -283,6 +287,38 @@ flex_layout(struct flex_item *item)
             child->frame[frame_pos_i] = pos;
             pos += child->frame[frame_size_i];
         }
+
+        float align = 0;
+        switch (child->align_self) {
+            case FLEX_ALIGN_AUTO:
+            case FLEX_ALIGN_FLEX_START:
+                break;
+
+            case FLEX_ALIGN_FLEX_END:
+                align = align_dim - child->frame[frame_size2_i];
+                break;
+
+            case FLEX_ALIGN_CENTER:
+                align = ((align_dim / 2.0)
+                        - (child->frame[frame_size2_i] / 2.0));
+                break;
+
+            case FLEX_ALIGN_STRETCH:
+                if (child->frame[frame_size2_i] == 0) {
+                    align = 0;
+                    child->frame[frame_size2_i] = align_dim;
+                }
+                break;
+
+            default:
+                assert(false && "incorrect align_self");
+        }
+        child->frame[frame_pos2_i] = align;
+
+#if DEBUG_PRINT_FRAMES
+        printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
+                child->frame[2], child->frame[3]);
+#endif
     }
 
     if (ordered_indices != NULL) {
