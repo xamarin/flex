@@ -73,6 +73,7 @@ flex_item_new(void)
     item->grow = 0;
     item->shrink = 1;
     item->order = 0;
+    item->basis = 0;
 
     memset(item->frame, 0, sizeof item->frame);
 
@@ -242,6 +243,10 @@ flex_layout(struct flex_item *item)
 
         flex_grows += child->grow;
         flex_shrinks += child->shrink;
+
+        if (child->basis > 0) {
+            child->frame[frame_size_i] = child->basis;
+        }
 
         flex_dim -= child->frame[frame_size_i];
 
