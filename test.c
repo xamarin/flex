@@ -694,6 +694,37 @@ test_align_self5(void)
     flex_item_free(root);
 }
 
+static void
+test_align_self6(void)
+{
+    // Mixed config.
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child1 = flex_item_with_size(50, 25);
+    flex_item_set_align_self(child1, FLEX_ALIGN_FLEX_START);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 25);
+    flex_item_set_align_self(child2, FLEX_ALIGN_CENTER);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(0, 25);
+    flex_item_set_align_self(child3, FLEX_ALIGN_STRETCH);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(50, 25);
+    flex_item_set_align_self(child4, FLEX_ALIGN_FLEX_END);
+    flex_item_add(root, child4);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 25);
+    TEST_FRAME_EQUAL(child2, 25, 25, 50, 25);
+    TEST_FRAME_EQUAL(child3, 0, 50, 100, 25);
+    TEST_FRAME_EQUAL(child4, 50, 75, 50, 25);
+
+    flex_item_free(root);
+}
 int
 main(void)
 {
@@ -727,6 +758,7 @@ main(void)
     UNIT(align_self3);
     UNIT(align_self4);
     UNIT(align_self5);
+    UNIT(align_self6);
 
     if (failures_n > 0) {
         printf("\n");
