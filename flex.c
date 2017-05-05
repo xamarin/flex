@@ -76,6 +76,7 @@ flex_item_new(void)
 
     memset(item->frame, 0, sizeof item->frame);
 
+    item->parent = NULL;
     item->children.cap = 0;
     item->children.count = 0;
     item->children.ary = NULL;
