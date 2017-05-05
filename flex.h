@@ -88,5 +88,5 @@ FLEX_ATTRIBUTE(wrap, flex_wrap)
 
 FLEX_ATTRIBUTE(grow, unsigned int)
 FLEX_ATTRIBUTE(shrink, unsigned int)
-FLEX_ATTRIBUTE(order, unsigned int)
+FLEX_ATTRIBUTE(order, int)
 FLEX_ATTRIBUTE(basis, float)

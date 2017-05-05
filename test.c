@@ -536,6 +536,30 @@ test_order2(void)
     flex_item_free(root);
 }
 
+static void
+test_order3(void)
+{
+    struct flex_item *root = flex_item_with_size(200, 200);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_set_order(child2, -1);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 50, 50, 50);
+    TEST_FRAME_EQUAL(child2, 0, 0, 50, 50);
+    TEST_FRAME_EQUAL(child3, 0, 100, 50, 50);
+
+    flex_item_free(root);
+}
+
 int
 main(void)
 {
@@ -562,6 +586,7 @@ main(void)
 
     UNIT(order1);
     UNIT(order2);
+    UNIT(order3);
 
     if (failures_n > 0) {
         printf("\n");

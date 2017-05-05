@@ -235,7 +235,7 @@ flex_layout(struct flex_item *item)
 
         flex_dim -= child->frame[frame_size_i];
 
-        if (child->order > 0) {
+        if (child->order != 0) {
             if (ordered_indices == NULL) {
                 ordered_indices =
                     (int *)malloc(sizeof(int) * item->children.count);
