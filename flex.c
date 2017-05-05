@@ -63,7 +63,7 @@ flex_item_new(void)
     item->margin_bottom = NAN;
 
     item->align_content = FLEX_ALIGN_AUTO;
-    item->align_items = FLEX_ALIGN_AUTO;
+    item->align_items = FLEX_ALIGN_FLEX_START;
     item->align_self = FLEX_ALIGN_AUTO;
 
     item->position = FLEX_POSITION_RELATIVE;

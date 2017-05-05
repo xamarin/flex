@@ -109,7 +109,7 @@ test_default_values(void)
     TEST(isnan(flex_item_get_margin_bottom(item)));
 
     TEST(flex_item_get_align_content(item) == FLEX_ALIGN_AUTO);
-    TEST(flex_item_get_align_items(item) == FLEX_ALIGN_AUTO);
+    TEST(flex_item_get_align_items(item) == FLEX_ALIGN_FLEX_START);
     TEST(flex_item_get_align_self(item) == FLEX_ALIGN_AUTO);
 
     TEST(flex_item_get_position(item) == FLEX_POSITION_RELATIVE);
