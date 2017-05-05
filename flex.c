@@ -288,24 +288,27 @@ flex_layout(struct flex_item *item)
             pos += child->frame[frame_size_i];
         }
 
-        float align = 0;
-        switch (child->align_self) {
-            case FLEX_ALIGN_AUTO:
+        flex_align align = child->align_self;
+        if (align == FLEX_ALIGN_AUTO) {
+            align = item->align_items;
+        }
+        float align_pos = 0;
+        switch (align) {
             case FLEX_ALIGN_FLEX_START:
                 break;
 
             case FLEX_ALIGN_FLEX_END:
-                align = align_dim - child->frame[frame_size2_i];
+                align_pos = align_dim - child->frame[frame_size2_i];
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align = ((align_dim / 2.0)
+                align_pos = ((align_dim / 2.0)
                         - (child->frame[frame_size2_i] / 2.0));
                 break;
 
             case FLEX_ALIGN_STRETCH:
                 if (child->frame[frame_size2_i] == 0) {
-                    align = 0;
+                    align_pos = 0;
                     child->frame[frame_size2_i] = align_dim;
                 }
                 break;
@@ -313,7 +316,7 @@ flex_layout(struct flex_item *item)
             default:
                 assert(false && "incorrect align_self");
         }
-        child->frame[frame_pos2_i] = align;
+        child->frame[frame_pos2_i] = align_pos;
 
 #if DEBUG_PRINT_FRAMES
         printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
