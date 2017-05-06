@@ -164,6 +164,12 @@ flex_item_child(struct flex_item *item, unsigned int index)
     return item->children.ary[index];
 }
 
+struct flex_item *
+flex_item_parent(struct flex_item *item)
+{
+    return item->parent;
+}
+
 #define FRAME_GETTER(name, index) \
     float flex_item_get_frame_##name(struct flex_item *item) { \
         return item->frame[index]; \
@@ -180,11 +186,8 @@ static int
 child_order_cmp(void *ctx, const void *e1, const void *e2)
 {
     struct flex_item *item = (struct flex_item *)ctx;
-    int *index1 = (int *)e1;
-    int *index2 = (int *)e2;
-    
-    int order1 = item->children.ary[*index1]->order;
-    int order2 = item->children.ary[*index2]->order;
+    int order1 = item->children.ary[*(int *)e1]->order;
+    int order2 = item->children.ary[*(int *)e2]->order;
     return order1 > order2 ? 1 : (order1 < order2 ? -1 : 0);
 }
 
