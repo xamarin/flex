@@ -963,6 +963,85 @@ test_align_items5(void)
     flex_item_free(root);
 }
 
+static void
+test_wrap1(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_wrap(root, FLEX_WRAP_NOWRAP);
+
+    struct flex_item *child1 = flex_item_with_size(100, 150);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(100, 150);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(100, 150);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(100, 150);
+    flex_item_add(root, child4);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 100, 75);
+    TEST_FRAME_EQUAL(child2, 0, 75, 100, 75);
+    TEST_FRAME_EQUAL(child3, 0, 150, 100, 75);
+    TEST_FRAME_EQUAL(child4, 0, 225, 100, 75);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap2(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+
+    struct flex_item *child1 = flex_item_with_size(50, 150);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 150);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 150);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(50, 150);
+    flex_item_add(root, child4);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 150);
+    TEST_FRAME_EQUAL(child2, 0, 150, 50, 150);
+    TEST_FRAME_EQUAL(child3, 50, 0, 50, 150);
+    TEST_FRAME_EQUAL(child4, 50, 150, 50, 150);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap3(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+    TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
+    TEST_FRAME_EQUAL(child3, 50, 0, 50, 50);
+
+    flex_item_free(root);
+}
 int
 main(void)
 {
@@ -1009,6 +1088,10 @@ main(void)
     UNIT(align_items3);
     UNIT(align_items4);
     UNIT(align_items5);
+
+    UNIT(wrap1);
+    UNIT(wrap2);
+    UNIT(wrap3);
 
     if (failures_n > 0) {
         printf("\n");

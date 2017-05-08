@@ -199,7 +199,7 @@ flex_layout(struct flex_item *item)
     assert(!isnan(item->height));
 
     bool reverse = false;
-    float flex_dim = 0;
+    float size_dim = 0;
     float align_dim = 0;
     unsigned int frame_pos_i = 0;
     unsigned int frame_pos2_i = 0;
@@ -209,7 +209,7 @@ flex_layout(struct flex_item *item)
         case FLEX_DIRECTION_ROW_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_ROW:
-            flex_dim = item->width;
+            size_dim = item->width;
             align_dim = item->height;
             frame_pos_i = 0;
             frame_pos2_i = 1;
@@ -220,7 +220,7 @@ flex_layout(struct flex_item *item)
         case FLEX_DIRECTION_COLUMN_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_COLUMN:
-            flex_dim = item->height;
+            size_dim = item->height;
             align_dim = item->width;
             frame_pos_i = 1;
             frame_pos2_i = 0;
@@ -232,10 +232,14 @@ flex_layout(struct flex_item *item)
             assert(false && "incorrect direction");
     }
 
+    float flex_dim = size_dim;
     int flex_grows = 0;
     int flex_shrinks = 0;
-    float pos = reverse ? flex_dim : 0;
+    float pos_orig = reverse ? size_dim : 0;
+    float pos = pos_orig;
+    float pos2 = 0;
     int *ordered_indices = NULL;
+    bool wrap = item->wrap != FLEX_WRAP_NOWRAP;
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = item->children.ary[i];
 
@@ -270,22 +274,36 @@ flex_layout(struct flex_item *item)
                 child_order_cmp);
     }
 
+    float wrap_dim = size_dim;
     for (int i = 0; i < item->children.count; i++) {
         int order_i = ordered_indices != NULL ? ordered_indices[i] : i;
         struct flex_item *child = item->children.ary[order_i];
 
-        float flex_size = 0;
-        if (flex_dim > 0) {
-            if (child->grow != 0) {
-                flex_size = (flex_dim / flex_grows) * child->grow;
+        if (!wrap) {
+            float flex_size = 0;
+            if (flex_dim > 0) {
+                if (child->grow != 0) {
+                    flex_size = (flex_dim / flex_grows) * child->grow;
+                }
+            }
+            else if (flex_dim < 0) {
+                if (child->shrink != 0) {
+                    flex_size = (flex_dim / flex_shrinks) * child->shrink;
+                }
+            }
+            child->frame[frame_size_i] += flex_size;
+        }
+        else {
+            float child_size = child->frame[frame_size_i];
+            if (wrap_dim >= child_size) {
+                wrap_dim -= child_size;
+            }
+            else {
+                wrap_dim = size_dim;
+                pos = pos_orig;
+                pos2 += child->frame[frame_size2_i];
             }
         }
-        else if (flex_dim < 0) {
-            if (child->shrink != 0) {
-                flex_size = (flex_dim / flex_shrinks) * child->shrink;
-            }
-        }
-        child->frame[frame_size_i] += flex_size;
 
         if (reverse) {
             pos -= child->frame[frame_size_i];
@@ -300,7 +318,7 @@ flex_layout(struct flex_item *item)
         if (align == FLEX_ALIGN_AUTO) {
             align = item->align_items;
         }
-        float align_pos = 0;
+        float align_pos = pos2 + 0;
         switch (align) {
             case FLEX_ALIGN_FLEX_START:
                 break;
