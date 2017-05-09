@@ -9,7 +9,7 @@ void flex_item_free(struct flex_item *item);
 void flex_item_add(struct flex_item *item, struct flex_item *child);
 void flex_item_insert(struct flex_item *item, unsigned int index,
         struct flex_item *child);
-void flex_item_delete(struct flex_item *item, unsigned int index);
+struct flex_item *flex_item_delete(struct flex_item *item, unsigned int index);
 unsigned int flex_item_count(struct flex_item *item);
 struct flex_item *flex_item_child(struct flex_item *item, unsigned int index);
 struct flex_item *flex_item_parent(struct flex_item *item);

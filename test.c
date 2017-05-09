@@ -126,6 +126,44 @@ test_default_values(void)
 }
 
 static void
+test_children(void)
+{
+    struct flex_item *root = flex_item_new();
+
+    TEST_EQUAL(flex_item_count(root), 0);
+    TEST(flex_item_parent(root) == NULL);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_add(root, child1);
+
+    TEST_EQUAL(flex_item_count(root), 1);
+    TEST(flex_item_parent(child1) == root);
+    TEST(flex_item_child(root, 0) == child1);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_add(root, child2);
+
+    TEST_EQUAL(flex_item_count(root), 2);
+    TEST(flex_item_parent(child2) == root);
+    TEST(flex_item_child(root, 1) == child2);
+
+    TEST(flex_item_delete(root, 0) == child1);
+
+    TEST_EQUAL(flex_item_count(root), 1);
+    TEST(flex_item_parent(child1) == NULL);
+    TEST(flex_item_child(root, 0) == child2);
+
+    flex_item_insert(root, 0, child1);
+
+    TEST_EQUAL(flex_item_count(root), 2);
+    TEST(flex_item_parent(child1) == root);
+    TEST(flex_item_child(root, 0) == child1);
+    TEST(flex_item_child(root, 1) == child2);
+
+    flex_item_free(root);
+}
+
+static void
 test_basis1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -1196,6 +1234,8 @@ int
 main(void)
 {
     UNIT(default_values);
+
+    UNIT(children);
 
     UNIT(basis1);
     UNIT(basis2);
