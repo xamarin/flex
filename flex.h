@@ -26,7 +26,9 @@ typedef enum {
     FLEX_ALIGN_STRETCH,
     FLEX_ALIGN_CENTER,
     FLEX_ALIGN_FLEX_START,
-    FLEX_ALIGN_FLEX_END
+    FLEX_ALIGN_FLEX_END,
+    FLEX_ALIGN_SPACE_BETWEEN,
+    FLEX_ALIGN_SPACE_AROUND
 } flex_align;
 
 typedef enum {
@@ -79,6 +81,7 @@ FLEX_ATTRIBUTE(margin_right, float)
 FLEX_ATTRIBUTE(margin_top, float)
 FLEX_ATTRIBUTE(margin_bottom, float)
 
+FLEX_ATTRIBUTE(justify_content, flex_align)
 FLEX_ATTRIBUTE(align_content, flex_align)
 FLEX_ATTRIBUTE(align_items, flex_align)
 FLEX_ATTRIBUTE(align_self, flex_align)

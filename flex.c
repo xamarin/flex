@@ -62,6 +62,7 @@ flex_item_new(void)
     item->margin_top = NAN;
     item->margin_bottom = NAN;
 
+    item->justify_content = FLEX_ALIGN_FLEX_START;
     item->align_content = FLEX_ALIGN_AUTO;
     item->align_items = FLEX_ALIGN_FLEX_START;
     item->align_self = FLEX_ALIGN_AUTO;
@@ -198,6 +199,10 @@ flex_layout(struct flex_item *item)
     assert(!isnan(item->width));
     assert(!isnan(item->height));
 
+    if (item->children.count == 0) {
+        return;
+    }
+
     bool reverse = false;
     float size_dim = 0;
     float align_dim = 0;
@@ -266,6 +271,40 @@ flex_layout(struct flex_item *item)
         }
     }
 
+    float spacing = 0;
+    if (flex_grows == 0) {
+        float new_pos = 0;
+        switch (item->justify_content) {
+            case FLEX_ALIGN_FLEX_START:
+                break;
+
+            case FLEX_ALIGN_FLEX_END:
+                new_pos = flex_dim;
+                break;
+
+            case FLEX_ALIGN_CENTER:
+                new_pos = flex_dim / 2;
+                break;
+
+            case FLEX_ALIGN_SPACE_BETWEEN:
+                if (item->children.count > 0) {
+                    spacing = flex_dim / (item->children.count - 1);
+                }
+                break;
+
+            case FLEX_ALIGN_SPACE_AROUND:
+                if (item->children.count > 0) {
+                    spacing = flex_dim / item->children.count;
+                    new_pos = spacing / 2;
+                }
+                break;
+
+            default:
+                assert(false && "incorrect justify_content");
+        }
+        pos = pos_orig = reverse ? size_dim - new_pos : new_pos;
+    }
+
     if (ordered_indices != NULL) {
         for (int i = 0; i < item->children.count; i++) {
             ordered_indices[i] = i;
@@ -305,13 +344,14 @@ flex_layout(struct flex_item *item)
             }
         }
 
+        float new_pos = child->frame[frame_size_i] + spacing;
         if (reverse) {
-            pos -= child->frame[frame_size_i];
+            pos -= new_pos;
             child->frame[frame_pos_i] = pos;
         }
         else {
             child->frame[frame_pos_i] = pos;
-            pos += child->frame[frame_size_i];
+            pos += new_pos;
         }
 
         flex_align align = child->align_self;
