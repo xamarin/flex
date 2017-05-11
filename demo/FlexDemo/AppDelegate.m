@@ -109,17 +109,23 @@
 #define FLEX_FLOAT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
-	flex_item_set_##name([[self _selectedItem] item], \
-                [[field stringValue] floatValue]); \
-	[root updateLayout]; \
+	NSString *str = [field stringValue]; \
+	if ([str length] > 0) { \
+            flex_item_set_##name([[self _selectedItem] item], \
+            	[[field stringValue] floatValue]); \
+            [root updateLayout]; \
+    	} \
     }
 
 #define FLEX_INT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
-	flex_item_set_##name([[self _selectedItem] item], \
+	NSString *str = [field stringValue]; \
+	if ([str length] > 0) { \
+            flex_item_set_##name([[self _selectedItem] item], \
                 [[field stringValue] intValue]); \
-	[root updateLayout]; \
+            [root updateLayout]; \
+    	} \
     }
 
 FLEX_ENUM_ACTION(direction, direction);
