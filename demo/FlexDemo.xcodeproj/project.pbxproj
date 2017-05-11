@@ -1,0 +1,302 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4D133C8F1EC279A400055FE9 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D133C8E1EC279A400055FE9 /* AppDelegate.m */; };
+		4D133C921EC279A400055FE9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D133C911EC279A400055FE9 /* main.m */; };
+		4D133C971EC279A400055FE9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D133C951EC279A400055FE9 /* MainMenu.xib */; };
+		4D5E2D841EC27BE20030138C /* FlexView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D5E2D831EC27BE20030138C /* FlexView.m */; };
+		4D5E2D871EC2AB010030138C /* flex.c in Sources */ = {isa = PBXBuildFile; fileRef = 4D5E2D851EC2AB010030138C /* flex.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4D133C8A1EC279A400055FE9 /* FlexDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlexDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4D133C8D1EC279A400055FE9 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4D133C8E1EC279A400055FE9 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4D133C911EC279A400055FE9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4D133C961EC279A400055FE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4D133C981EC279A400055FE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4D5E2D821EC27BE20030138C /* FlexView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlexView.h; sourceTree = "<group>"; };
+		4D5E2D831EC27BE20030138C /* FlexView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlexView.m; sourceTree = "<group>"; };
+		4D5E2D851EC2AB010030138C /* flex.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = flex.c; path = ../../flex.c; sourceTree = "<group>"; };
+		4D5E2D861EC2AB010030138C /* flex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = flex.h; path = ../../flex.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4D133C871EC279A400055FE9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4D133C811EC279A400055FE9 = {
+			isa = PBXGroup;
+			children = (
+				4D133C8C1EC279A400055FE9 /* FlexDemo */,
+				4D133C8B1EC279A400055FE9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4D133C8B1EC279A400055FE9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4D133C8A1EC279A400055FE9 /* FlexDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4D133C8C1EC279A400055FE9 /* FlexDemo */ = {
+			isa = PBXGroup;
+			children = (
+				4D133C8D1EC279A400055FE9 /* AppDelegate.h */,
+				4D133C8E1EC279A400055FE9 /* AppDelegate.m */,
+				4D5E2D821EC27BE20030138C /* FlexView.h */,
+				4D5E2D831EC27BE20030138C /* FlexView.m */,
+				4D133C981EC279A400055FE9 /* Info.plist */,
+				4D133C911EC279A400055FE9 /* main.m */,
+				4D5E2D851EC2AB010030138C /* flex.c */,
+				4D5E2D861EC2AB010030138C /* flex.h */,
+				4D133C951EC279A400055FE9 /* MainMenu.xib */,
+			);
+			path = FlexDemo;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4D133C891EC279A400055FE9 /* FlexDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4D133C9B1EC279A400055FE9 /* Build configuration list for PBXNativeTarget "FlexDemo" */;
+			buildPhases = (
+				4D133C861EC279A400055FE9 /* Sources */,
+				4D133C871EC279A400055FE9 /* Frameworks */,
+				4D133C881EC279A400055FE9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FlexDemo;
+			productName = FlexDemo;
+			productReference = 4D133C8A1EC279A400055FE9 /* FlexDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4D133C821EC279A400055FE9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Microsoft;
+				TargetAttributes = {
+					4D133C891EC279A400055FE9 = {
+						CreatedOnToolsVersion = 8.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4D133C851EC279A400055FE9 /* Build configuration list for PBXProject "FlexDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4D133C811EC279A400055FE9;
+			productRefGroup = 4D133C8B1EC279A400055FE9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4D133C891EC279A400055FE9 /* FlexDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4D133C881EC279A400055FE9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D133C971EC279A400055FE9 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4D133C861EC279A400055FE9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4D5E2D841EC27BE20030138C /* FlexView.m in Sources */,
+				4D133C921EC279A400055FE9 /* main.m in Sources */,
+				4D5E2D871EC2AB010030138C /* flex.c in Sources */,
+				4D133C8F1EC279A400055FE9 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4D133C951EC279A400055FE9 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D133C961EC279A400055FE9 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4D133C991EC279A400055FE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4D133C9A1EC279A400055FE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4D133C9C1EC279A400055FE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				HEADER_SEARCH_PATHS = "";
+				INFOPLIST_FILE = FlexDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.FlexDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		4D133C9D1EC279A400055FE9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = "";
+				INFOPLIST_FILE = FlexDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.microsoft.FlexDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4D133C851EC279A400055FE9 /* Build configuration list for PBXProject "FlexDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D133C991EC279A400055FE9 /* Debug */,
+				4D133C9A1EC279A400055FE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4D133C9B1EC279A400055FE9 /* Build configuration list for PBXNativeTarget "FlexDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D133C9C1EC279A400055FE9 /* Debug */,
+				4D133C9D1EC279A400055FE9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4D133C821EC279A400055FE9 /* Project object */;
+}
