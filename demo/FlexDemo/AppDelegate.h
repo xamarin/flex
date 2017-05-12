@@ -26,6 +26,10 @@
     IBOutlet NSTextField *grow;
     IBOutlet NSTextField *shrink;
     IBOutlet NSTextField *order;
+    IBOutlet NSTextField *marginLeft;
+    IBOutlet NSTextField *marginRight;
+    IBOutlet NSTextField *marginTop;
+    IBOutlet NSTextField *marginBottom;
 }
 
 - (IBAction)addItem:(id)sender;
@@ -41,5 +45,9 @@
 - (IBAction)growSelected:(id)sender;
 - (IBAction)shrinkSelected:(id)sender;
 - (IBAction)orderSelected:(id)sender;
+- (IBAction)marginLeftSelected:(id)sender;
+- (IBAction)marginRightSelected:(id)sender;
+- (IBAction)marginTopSelected:(id)sender;
+- (IBAction)marginBottomSelected:(id)sender;
 
 @end

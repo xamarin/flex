@@ -54,6 +54,10 @@
     [width setEnabled:!is_root];
     [height setEnabled:!is_root];
     [basis setEnabled:!is_root];
+    [marginLeft setEnabled:!is_root];
+    [marginRight setEnabled:!is_root];
+    [marginTop setEnabled:!is_root];
+    [marginBottom setEnabled:!is_root];
     [remove setEnabled:!is_root];
 
     struct flex_item *item = [view item];
@@ -62,8 +66,12 @@
     [popup selectItemWithTag:flex_item_get_##name(item)]
 
 #define FLEX_FLOAT_GET(name, field) \
-    [field setStringValue:[NSString stringWithFormat:@"%0.1f", \
-        flex_item_get_##name(item)]]
+    do { \
+	float _val = flex_item_get_##name(item); \
+    	[field setStringValue:[NSString stringWithFormat:@"%0.1f", \
+            isnan(_val) ? 0 : _val]]; \
+    } \
+    while (0)
 
 #define FLEX_INT_GET(name, field) \
     [field setStringValue:[NSString stringWithFormat:@"%d", \
@@ -82,11 +90,20 @@
         FLEX_FLOAT_GET(width, width);
         FLEX_FLOAT_GET(height, height);
         FLEX_FLOAT_GET(basis, basis);
+        FLEX_FLOAT_GET(margin_left, marginLeft);
+        FLEX_FLOAT_GET(margin_right, marginRight);
+        FLEX_FLOAT_GET(margin_top, marginTop);
+        FLEX_FLOAT_GET(margin_bottom, marginBottom);
+
     }
     else {
         [width setStringValue:@""];
         [height setStringValue:@""];
         [basis setStringValue:@""];
+        [marginLeft setStringValue:@""];
+        [marginRight setStringValue:@""];
+        [marginTop setStringValue:@""];
+        [marginBottom setStringValue:@""];
     }
 
     FLEX_INT_GET(grow, grow);
@@ -136,6 +153,11 @@ FLEX_ENUM_ACTION(align_self, alignSelf);
 FLEX_FLOAT_ACTION(width, width);
 FLEX_FLOAT_ACTION(height, height);
 FLEX_FLOAT_ACTION(basis, basis);
+
+FLEX_FLOAT_ACTION(margin_left, marginLeft);
+FLEX_FLOAT_ACTION(margin_right, marginRight);
+FLEX_FLOAT_ACTION(margin_top, marginTop);
+FLEX_FLOAT_ACTION(margin_bottom, marginBottom);
 
 FLEX_INT_ACTION(grow, grow);
 FLEX_INT_ACTION(shrink, shrink);
