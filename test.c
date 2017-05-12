@@ -103,10 +103,10 @@ test_default_values(void)
     TEST(isnan(flex_item_get_padding_top(item)));
     TEST(isnan(flex_item_get_padding_bottom(item)));
 
-    TEST(isnan(flex_item_get_margin_left(item)));
-    TEST(isnan(flex_item_get_margin_right(item)));
-    TEST(isnan(flex_item_get_margin_top(item)));
-    TEST(isnan(flex_item_get_margin_bottom(item)));
+    TEST_EQUAL(flex_item_get_margin_left(item), 0);
+    TEST_EQUAL(flex_item_get_margin_right(item), 0);
+    TEST_EQUAL(flex_item_get_margin_top(item), 0);
+    TEST_EQUAL(flex_item_get_margin_bottom(item), 0);
 
     TEST(flex_item_get_justify_content(item) == FLEX_ALIGN_FLEX_START);
     TEST(flex_item_get_align_content(item) == FLEX_ALIGN_AUTO);

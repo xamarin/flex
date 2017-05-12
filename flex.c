@@ -57,10 +57,10 @@ flex_item_new(void)
     item->padding_top = NAN;
     item->padding_bottom = NAN;
 
-    item->margin_left = NAN;
-    item->margin_right = NAN;
-    item->margin_top = NAN;
-    item->margin_bottom = NAN;
+    item->margin_left = 0;
+    item->margin_right = 0;
+    item->margin_top = 0;
+    item->margin_bottom = 0;
 
     item->justify_content = FLEX_ALIGN_FLEX_START;
     item->align_content = FLEX_ALIGN_AUTO;
