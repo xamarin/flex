@@ -215,6 +215,7 @@ flex_layout(struct flex_item *item)
     }
 
     bool reverse = false;
+    bool vertical = true;
     float size_dim = 0;
     float align_dim = 0;
     unsigned int frame_pos_i = 0;
@@ -225,6 +226,7 @@ flex_layout(struct flex_item *item)
         case FLEX_DIRECTION_ROW_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_ROW:
+            vertical = false;
             size_dim = item->width;
             align_dim = item->height;
             frame_pos_i = 0;
@@ -271,7 +273,10 @@ flex_layout(struct flex_item *item)
             child->frame[frame_size_i] = child->basis;
         }
 
-        flex_dim -= child->frame[frame_size_i];
+        flex_dim -= child->frame[frame_size_i]
+            + (vertical
+                    ? child->margin_top + child->margin_bottom
+                    : child->margin_left + child->margin_right);
 
         if (child->order != 0) {
             if (ordered_indices == NULL) {
@@ -355,14 +360,18 @@ flex_layout(struct flex_item *item)
             }
         }
 
-        float new_pos = child->frame[frame_size_i] + spacing;
+        float child_size = child->frame[frame_size_i] + spacing;
         if (reverse) {
-            pos -= new_pos;
+            pos -= vertical ? child->margin_bottom : child->margin_right;
+            pos -= child_size;
             child->frame[frame_pos_i] = pos;
+            pos -= vertical ? child->margin_top : child->margin_left;
         }
         else {
+            pos += vertical ? child->margin_top : child->margin_left;
             child->frame[frame_pos_i] = pos;
-            pos += new_pos;
+            pos += child_size;
+            pos += vertical ? child->margin_bottom : child->margin_right;
         }
 
         flex_align align = child->align_self;
@@ -372,10 +381,12 @@ flex_layout(struct flex_item *item)
         float align_pos = pos2 + 0;
         switch (align) {
             case FLEX_ALIGN_FLEX_START:
+                align_pos += vertical ? child->margin_left : child->margin_top;
                 break;
 
             case FLEX_ALIGN_FLEX_END:
-                align_pos = align_dim - child->frame[frame_size2_i];
+                align_pos = align_dim - child->frame[frame_size2_i]
+                    - (vertical ? child->margin_right : child->margin_bottom);
                 break;
 
             case FLEX_ALIGN_CENTER:

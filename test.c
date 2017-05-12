@@ -1230,6 +1230,122 @@ test_justify_content7(void)
     flex_item_free(root);
 }
 
+static void
+test_margin1(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_START);
+    flex_item_set_justify_content(root, FLEX_ALIGN_FLEX_START);
+
+    struct flex_item *child1 = flex_item_with_size(25, 25);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 25);
+    flex_item_set_margin_top(child2, 10);
+    flex_item_set_margin_bottom(child2, 10);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_right(child2, 15);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 25);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 25, 25);
+    TEST_FRAME_EQUAL(child2, 15, 35, 25, 25);
+    TEST_FRAME_EQUAL(child3, 0, 70, 25, 25);
+
+    flex_item_free(root);
+}
+
+static void
+test_margin2(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_END);
+    flex_item_set_justify_content(root, FLEX_ALIGN_FLEX_START);
+
+    struct flex_item *child1 = flex_item_with_size(25, 25);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 25);
+    flex_item_set_margin_top(child2, 10);
+    flex_item_set_margin_bottom(child2, 10);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_right(child2, 15);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 25);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 75, 0, 25, 25);
+    TEST_FRAME_EQUAL(child2, 60, 35, 25, 25);
+    TEST_FRAME_EQUAL(child3, 75, 70, 25, 25);
+
+    flex_item_free(root);
+}
+
+static void
+test_margin3(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_START);
+    flex_item_set_justify_content(root, FLEX_ALIGN_FLEX_END);
+
+    struct flex_item *child1 = flex_item_with_size(25, 25);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 25);
+    flex_item_set_margin_top(child2, 10);
+    flex_item_set_margin_bottom(child2, 10);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_right(child2, 15);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 25);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 5, 25, 25);
+    TEST_FRAME_EQUAL(child2, 15, 40, 25, 25);
+    TEST_FRAME_EQUAL(child3, 0, 75, 25, 25);
+
+    flex_item_free(root);
+}
+
+static void
+test_margin4(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_END);
+    flex_item_set_justify_content(root, FLEX_ALIGN_FLEX_END);
+
+    struct flex_item *child1 = flex_item_with_size(25, 25);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 25);
+    flex_item_set_margin_top(child2, 10);
+    flex_item_set_margin_bottom(child2, 10);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_right(child2, 15);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 25);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 75, 5, 25, 25);
+    TEST_FRAME_EQUAL(child2, 60, 40, 25, 25);
+    TEST_FRAME_EQUAL(child3, 75, 75, 25, 25);
+
+    flex_item_free(root);
+}
+
 int
 main(void)
 {
@@ -1290,6 +1406,11 @@ main(void)
     UNIT(justify_content5);
     UNIT(justify_content6);
     UNIT(justify_content7);
+
+    UNIT(margin1);
+    UNIT(margin2);
+    UNIT(margin3);
+    UNIT(margin4);
 
     if (failures_n > 0) {
         printf("\n");
