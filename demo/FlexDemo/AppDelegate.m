@@ -14,6 +14,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [root setRoot:true];
+    [root setDelegate:self];
     [self _reloadItems];
     [self itemSelected:nil];
 }
@@ -27,6 +28,7 @@
 - (IBAction)addItem:(id)sender
 {
     FlexView *item = [[FlexView alloc] init];
+    [item setDelegate:self];
     flex_item_set_width([item item], 100);
     flex_item_set_height([item item], 100);
     [root addChild:item];
@@ -177,6 +179,18 @@ FLEX_INT_ACTION(order, order);
     }
     
     [root updateLayout];
+}
+
+- (void)flexViewClicked:(FlexView *)view
+{
+    NSInteger index = 0;
+    if (view != root) {
+        index = [[root subviews] indexOfObject:view];
+        assert(index != NSNotFound);
+        index++;
+    }
+    [items selectItemAtIndex:index];
+    [self itemSelected:nil];
 }
 
 @end

@@ -16,6 +16,7 @@ struct flex_item;
     struct flex_item *_item;
     bool _is_root;
     NSColor *_background_color;
+    id _delegate;
 }
 
 - (void)addChild:(FlexView *)item;
@@ -24,8 +25,17 @@ struct flex_item;
 - (void)setRoot:(bool)root;
 - (bool)isRoot;
 
+- (void)setDelegate:(id)delegate;
+- (id)delegate;
+
 - (struct flex_item *)item;
 
 - (void)updateLayout;
+
+@end
+
+@interface NSObject (FlexView)
+
+- (void)flexViewClicked:(FlexView *)view;
 
 @end

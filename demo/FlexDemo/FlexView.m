@@ -41,6 +41,7 @@
     _item = flex_item_new();
     _is_root = false;
     _background_color = [self _pickColor];
+    _delegate = nil;
 }
 
 - (void)dealloc
@@ -132,6 +133,23 @@
 {
     [super setFrameSize:frame];
     [self _resize];
+}
+
+- (id)delegate
+{
+    return _delegate;
+}
+
+- (void)setDelegate:(id)delegate
+{
+    _delegate = delegate; // weak
+}
+
+- (void)mouseDown:(NSEvent *)event
+{
+    if (_delegate != nil && [_delegate respondsToSelector:@selector(flexViewClicked:)]) {
+        [_delegate flexViewClicked:self];
+    }
 }
 
 @end
