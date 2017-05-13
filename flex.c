@@ -390,8 +390,10 @@ flex_layout(struct flex_item *item)
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align_pos = ((align_dim / 2.0)
-                        - (child->frame[frame_size2_i] / 2.0));
+                align_pos = (align_dim / 2.0)
+                    - (child->frame[frame_size2_i] / 2.0)
+                    + (vertical ? child->margin_left : child->margin_top)
+                    - (vertical ? child->margin_right : child->margin_bottom);
                 break;
 
             case FLEX_ALIGN_STRETCH:
