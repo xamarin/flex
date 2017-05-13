@@ -34,7 +34,7 @@ struct flex_item;
 
 @end
 
-@interface NSObject (FlexView)
+@interface NSObject (FlexViewDelegate)
 
 - (void)flexViewClicked:(FlexView *)view;
 
