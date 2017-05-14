@@ -203,6 +203,7 @@ FLEX_INT_ACTION(order, order);
 
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:nil keyEquivalent:@""];
     [item setRepresentedObject:view];
+    [item setIndentationLevel:view == root ? 0 : 1];
     [[items menu] addItem:item];
     [item release];
 }
