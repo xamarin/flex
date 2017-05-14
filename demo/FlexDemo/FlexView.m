@@ -73,14 +73,29 @@
 
 - (void)setRoot:(bool)root
 {
-    _is_root = root;
-    [self _resize];
-    [self setNeedsDisplay:YES];
+    if (_is_root != root) {
+        _is_root = root;
+    	[self _resize];
+    	[self setNeedsDisplay:YES];
+    }
 }
 
 - (bool)isRoot
 {
     return _is_root;
+}
+
+- (void)setSelected:(bool)selected
+{
+    if (_selected != selected) {
+    	_selected = selected;
+        [self setNeedsDisplay:YES];
+    }
+}
+
+- (bool)isSelected
+{
+    return _selected;
 }
 
 - (struct flex_item *)item
@@ -112,6 +127,10 @@
 {
     [_background_color set];
     NSRectFill([self bounds]);
+    if (_selected && !_is_root) {
+        [[NSColor blackColor] set];
+        NSFrameRect([self bounds]);
+    }
 }
 
 - (void)_resize

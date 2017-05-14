@@ -11,18 +11,17 @@
 
 @implementation AppDelegate
 
+- (void)awakeFromNib
+{
+    _selected_item = -1;
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     [root setRoot:true];
     [root setDelegate:self];
     [self _reloadItems];
-    [self itemSelected:nil];
-}
-
-- (FlexView *)_selectedItem
-{
-    NSInteger index = [items indexOfSelectedItem];
-    return index == 0 ? root : [[root subviews] objectAtIndex:index - 1];
+    [self _selectItem:0];
 }
 
 - (IBAction)addItem:(id)sender
@@ -44,13 +43,37 @@
     [root removeChild:item];
 
     [self _reloadItems];
-    [items selectItemAtIndex:0];
-    [self itemSelected:nil];
+    [self _selectItem:0];
 }
 
-- (IBAction)itemSelected:(id)sender
+- (FlexView *)_selectedItem
 {
-    FlexView *view = [self _selectedItem];
+    return [[items selectedItem] representedObject];
+}
+
+- (FlexView *)_itemAtIndex:(NSInteger)index
+{
+    return [[items itemAtIndex:index] representedObject];
+}
+
+- (void)_selectItem:(NSInteger)index
+{
+    if (_selected_item != index) {
+        if (_selected_item != -1) {
+            [[self _itemAtIndex:_selected_item] setSelected:false];
+        }
+        
+        _selected_item = index;
+        [items selectItemAtIndex:index];
+
+        FlexView *item = [self _itemAtIndex:index];
+        [self _updateWithItem:item];
+        [item setSelected:true];
+    }
+}
+
+- (void)_updateWithItem:(FlexView *)view
+{
     bool is_root = [view isRoot];
 
     [width setEnabled:!is_root];
@@ -169,13 +192,29 @@ FLEX_INT_ACTION(order, order);
 #undef FLEX_FLOAT_ACTION
 #undef FLEX_ENUM_ACTION
 
+- (IBAction)itemSelected:(id)sender
+{
+    [self _selectItem:[items indexOfSelectedItem]];
+}
+
+- (void)_addItem:(FlexView *)view
+{
+    NSString *title = view == root ? @"Root" : [NSString stringWithFormat:@"Item #%ld", [items numberOfItems]];
+
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:nil keyEquivalent:@""];
+    [item setRepresentedObject:view];
+    [[items menu] addItem:item];
+    [item release];
+}
+
 - (void)_reloadItems
 {
     [items removeAllItems];
-    [items addItemWithTitle:@"Root"];
+    _selected_item = -1;
 
-    for (NSInteger i = 0, count = [[root subviews] count]; i < count; i++) {
-        [items addItemWithTitle:[NSString stringWithFormat:@"Item #%ld", i]];
+    [self _addItem:root];
+    for (FlexView *view in [root subviews]) {
+        [self _addItem:view];
     }
     
     [root updateLayout];
@@ -189,8 +228,7 @@ FLEX_INT_ACTION(order, order);
         assert(index != NSNotFound);
         index++;
     }
-    [items selectItemAtIndex:index];
-    [self itemSelected:nil];
+    [self _selectItem:index];
 }
 
 @end

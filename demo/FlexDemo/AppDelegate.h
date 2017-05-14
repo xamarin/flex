@@ -30,6 +30,8 @@
     IBOutlet NSTextField *marginRight;
     IBOutlet NSTextField *marginTop;
     IBOutlet NSTextField *marginBottom;
+    
+    NSInteger _selected_item;
 }
 
 - (IBAction)addItem:(id)sender;
