@@ -32,6 +32,9 @@ struct flex_item;
 - (void)setDelegate:(id)delegate;
 - (id)delegate;
 
+- (NSColor *)color;
+- (void)setColor:(NSColor *)color;
+
 - (struct flex_item *)item;
 
 - (void)updateLayout;

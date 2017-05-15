@@ -164,6 +164,19 @@
     _delegate = delegate; // weak
 }
 
+- (NSColor *)color
+{
+    return _background_color;
+}
+
+- (void)setColor:(NSColor *)color
+{
+    if (_background_color != color) {
+        _background_color = color;
+        [self setNeedsDisplay:YES];
+    }
+}
+
 - (void)mouseDown:(NSEvent *)event
 {
     if (_delegate != nil && [_delegate respondsToSelector:@selector(flexViewClicked:)]) {

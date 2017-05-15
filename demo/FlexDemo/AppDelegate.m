@@ -85,6 +85,8 @@
     [marginBottom setEnabled:!is_root];
     [remove setEnabled:!is_root];
 
+    [color setColor:[view color]];
+
     struct flex_item *item = [view item];
 
 #define FLEX_ENUM_GET(name, popup) \
@@ -191,6 +193,11 @@ FLEX_INT_ACTION(order, order);
 #undef FLEX_INT_ACTION
 #undef FLEX_FLOAT_ACTION
 #undef FLEX_ENUM_ACTION
+
+- (IBAction)colorSelected:(id)sender
+{
+    [[self _selectedItem] setColor:[color color]];
+}
 
 - (IBAction)itemSelected:(id)sender
 {
