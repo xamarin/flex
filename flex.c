@@ -203,13 +203,9 @@ child_order_cmp(void *ctx, const void *e1, const void *e2)
     return order1 > order2 ? 1 : (order1 < order2 ? -1 : 0);
 }
 
-void
-flex_layout(struct flex_item *item)
+static void
+layout_item(struct flex_item *item, float width, float height)
 {
-    assert(item->parent == NULL);
-    assert(!isnan(item->width));
-    assert(!isnan(item->height));
-
     if (item->children.count == 0) {
         return;
     }
@@ -227,8 +223,8 @@ flex_layout(struct flex_item *item)
             reverse = true;
         case FLEX_DIRECTION_ROW:
             vertical = false;
-            size_dim = item->width;
-            align_dim = item->height;
+            size_dim = width;
+            align_dim = height;
             frame_pos_i = 0;
             frame_pos2_i = 1;
             frame_size_i = 2;
@@ -238,8 +234,8 @@ flex_layout(struct flex_item *item)
         case FLEX_DIRECTION_COLUMN_REVERSE:
             reverse = true;
         case FLEX_DIRECTION_COLUMN:
-            size_dim = item->height;
-            align_dim = item->width;
+            size_dim = height;
+            align_dim = width;
             frame_pos_i = 1;
             frame_pos2_i = 0;
             frame_size_i = 3;
@@ -412,9 +408,21 @@ flex_layout(struct flex_item *item)
         printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
                 child->frame[2], child->frame[3]);
 #endif
+
+        layout_item(child, child->frame[2], child->frame[3]);
     }
 
     if (ordered_indices != NULL) {
         free(ordered_indices);
     }
+}
+
+void
+flex_layout(struct flex_item *item)
+{
+    assert(item->parent == NULL);
+    assert(!isnan(item->width));
+    assert(!isnan(item->height));
+
+    layout_item(item, item->width, item->height);
 }
