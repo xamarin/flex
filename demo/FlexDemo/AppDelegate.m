@@ -26,11 +26,22 @@
 
 - (IBAction)addItem:(id)sender
 {
+    FlexView *parent = [self _selectedItem];
+
     FlexView *item = [[FlexView alloc] init];
     [item setDelegate:self];
-    flex_item_set_width([item item], 100);
-    flex_item_set_height([item item], 100);
-    [root addChild:item];
+
+    float item_width = 100, item_height = 100;
+    if (![parent isRoot]) {
+        item_width = flex_item_get_frame_width([parent item]) / 5.0;
+        item_height = flex_item_get_frame_height([parent item]) / 5.0;
+    }
+
+    flex_item_set_width([item item], item_width);
+    flex_item_set_height([item item], item_height);
+
+    [parent addChild:item];
+
     [item autorelease];
     
     [self _reloadItems];
@@ -204,15 +215,22 @@ FLEX_INT_ACTION(order, order);
     [self _selectItem:[items indexOfSelectedItem]];
 }
 
-- (void)_addItem:(FlexView *)view
+- (void)_addItem:(FlexView *)view indentation:(int)indentation
 {
-    NSString *title = view == root ? @"Root" : [NSString stringWithFormat:@"Item #%ld", [items numberOfItems]];
+    NSInteger index = [items numberOfItems];
+    [view setIndex:index];
+
+    NSString *title = [view isRoot] ? @"Root" : [NSString stringWithFormat:@"Item #%ld", index];
 
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:title action:nil keyEquivalent:@""];
     [item setRepresentedObject:view];
-    [item setIndentationLevel:view == root ? 0 : 1];
+    [item setIndentationLevel:indentation];
     [[items menu] addItem:item];
     [item release];
+
+    for (FlexView *child in [view subviews]) {
+        [self _addItem:child indentation:indentation + 1];
+    }
 }
 
 - (void)_reloadItems
@@ -220,23 +238,14 @@ FLEX_INT_ACTION(order, order);
     [items removeAllItems];
     _selected_item = -1;
 
-    [self _addItem:root];
-    for (FlexView *view in [root subviews]) {
-        [self _addItem:view];
-    }
+    [self _addItem:root indentation:0];
     
     [root updateLayout];
 }
 
 - (void)flexViewClicked:(FlexView *)view
 {
-    NSInteger index = 0;
-    if (view != root) {
-        index = [[root subviews] indexOfObject:view];
-        assert(index != NSNotFound);
-        index++;
-    }
-    [self _selectItem:index];
+    [self _selectItem:[view index]];
 }
 
 @end

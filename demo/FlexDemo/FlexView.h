@@ -18,6 +18,7 @@ struct flex_item;
     NSColor *_background_color;
     id _delegate;
     bool _selected;
+    NSInteger _index;
 }
 
 - (void)addChild:(FlexView *)item;
@@ -34,6 +35,9 @@ struct flex_item;
 
 - (NSColor *)color;
 - (void)setColor:(NSColor *)color;
+
+- (NSInteger)index;
+- (void)setIndex:(NSInteger)index;
 
 - (struct flex_item *)item;
 

@@ -104,24 +104,29 @@
     return _item;
 }
 
+- (void)_updateLayoutFrame
+{
+    if (!_is_root) {
+        NSRect frame = NSMakeRect(flex_item_get_frame_x(_item), flex_item_get_frame_y(_item), flex_item_get_frame_width(_item), flex_item_get_frame_height(_item));
+    
+        if (NSEqualRects([self frame], NSZeroRect)) {
+            // This is just to make the animation smoother...
+            [self setFrame:NSMakeRect(NSMidX(frame), NSMidY(frame), 0, 0)];
+        }
+    
+        [[self animator] setFrame:frame];
+    }
+
+    for (FlexView *child in [self subviews]) {
+        [child _updateLayoutFrame];
+    }
+}
+
 - (void)updateLayout
 {
     flex_layout(_item);
 
-    for (FlexView *child_view in [self subviews]) {
-        struct flex_item *child = child_view->_item;
-        NSRect frame = NSMakeRect(flex_item_get_frame_x(child),
-                flex_item_get_frame_y(child), flex_item_get_frame_width(child), 
-                flex_item_get_frame_height(child));
-        
-        if (NSEqualRects([child_view frame], NSZeroRect)) {
-            // This is just to make the animation smoother...
-            [child_view setFrame:NSMakeRect(NSMidX(frame), NSMidY(frame),
-                    0, 0)];
-        }
-
-        [[child_view animator] setFrame:frame];
-    }
+    [self _updateLayoutFrame];
 }
 
 - (void)drawRect:(NSRect)rect
@@ -177,6 +182,16 @@
         _background_color = [color retain];
         [self setNeedsDisplay:YES];
     }
+}
+
+- (NSInteger)index
+{
+    return _index;
+}
+
+- (void)setIndex:(NSInteger)index
+{
+    _index = index;
 }
 
 - (void)mouseDown:(NSEvent *)event
