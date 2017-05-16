@@ -67,7 +67,9 @@
 
 - (void)removeChild:(FlexView *)item
 {
-    flex_item_delete(_item, (unsigned int)[item index]);
+    NSInteger index = [[self subviews] indexOfObject:item];
+    assert(index != NSNotFound);
+    flex_item_delete(_item, (unsigned int)index);
     [item removeFromSuperview];
 }
 

@@ -51,7 +51,7 @@
 {
     FlexView *item = [self _selectedItem];
     assert(![item isRoot]);
-    [root removeChild:item];
+    [(FlexView *)[item superview] removeChild:item];
 
     [self _reloadItems];
     [self _selectItem:0];
