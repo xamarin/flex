@@ -42,6 +42,7 @@
     _is_root = false;
     _background_color = [[self _pickColor] retain];
     _delegate = nil;
+    _index = -1;
 }
 
 - (void)dealloc
@@ -66,9 +67,7 @@
 
 - (void)removeChild:(FlexView *)item
 {
-    NSInteger index = [[self subviews] indexOfObject:item];
-    assert(index != NSNotFound);
-    flex_item_delete(_item, (unsigned int)index);
+    flex_item_delete(_item, (unsigned int)[item index]);
     [item removeFromSuperview];
 }
 
