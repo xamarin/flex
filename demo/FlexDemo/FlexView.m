@@ -40,7 +40,7 @@
 {
     _item = flex_item_new();
     _is_root = false;
-    _background_color = [self _pickColor];
+    _background_color = [[self _pickColor] retain];
     _delegate = nil;
 }
 
@@ -49,6 +49,7 @@
     if (_is_root) {
         flex_item_free(_item);
     }
+    [_background_color release];
     [super dealloc];
 }
 
@@ -172,7 +173,8 @@
 - (void)setColor:(NSColor *)color
 {
     if (_background_color != color) {
-        _background_color = color;
+        [_background_color release];
+        _background_color = [color retain];
         [self setNeedsDisplay:YES];
     }
 }
