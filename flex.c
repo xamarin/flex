@@ -376,10 +376,6 @@ layout_item(struct flex_item *item, float width, float height)
         }
         float align_pos = pos2 + 0;
         switch (align) {
-            case FLEX_ALIGN_FLEX_START:
-                align_pos += vertical ? child->margin_left : child->margin_top;
-                break;
-
             case FLEX_ALIGN_FLEX_END:
                 align_pos = align_dim - child->frame[frame_size2_i]
                     - (vertical ? child->margin_right : child->margin_bottom);
@@ -394,12 +390,16 @@ layout_item(struct flex_item *item, float width, float height)
 
             case FLEX_ALIGN_STRETCH:
                 if (child->frame[frame_size2_i] == 0) {
-                    align_pos = vertical ? child->margin_left : child->margin_top;
+                    align_pos = 0;
                     child->frame[frame_size2_i] = align_dim
                         - (vertical
                                 ? child->margin_left + child->margin_right
                                 : child->margin_top + child->margin_bottom);
                 }
+                // fall through
+
+            case FLEX_ALIGN_FLEX_START:
+                align_pos += vertical ? child->margin_left : child->margin_top;
                 break;
 
             default:

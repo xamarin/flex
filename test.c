@@ -1400,6 +1400,33 @@ test_margin6(void)
     flex_item_free(root);
 }
 
+static void
+test_margin7(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child1 = flex_item_with_size(10, 10);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(10, 10);
+    flex_item_set_align_self(child2, FLEX_ALIGN_STRETCH);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_left(child2, 15);
+    flex_item_set_margin_right(child2, 10);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(10, 10);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 10, 10);
+    TEST_FRAME_EQUAL(child2, 15, 10, 10, 10);
+    TEST_FRAME_EQUAL(child3, 0, 20, 10, 10);
+
+    flex_item_free(root);
+}
+
 int
 main(void)
 {
@@ -1467,6 +1494,7 @@ main(void)
     UNIT(margin4);
     UNIT(margin5);
     UNIT(margin6);
+    UNIT(margin7);
 
     if (failures_n > 0) {
         printf("\n");
