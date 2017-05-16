@@ -394,8 +394,11 @@ layout_item(struct flex_item *item, float width, float height)
 
             case FLEX_ALIGN_STRETCH:
                 if (child->frame[frame_size2_i] == 0) {
-                    align_pos = 0;
-                    child->frame[frame_size2_i] = align_dim;
+                    align_pos = vertical ? child->margin_left : child->margin_top;
+                    child->frame[frame_size2_i] = align_dim
+                        - (vertical
+                                ? child->margin_left + child->margin_right
+                                : child->margin_top + child->margin_bottom);
                 }
                 break;
 
