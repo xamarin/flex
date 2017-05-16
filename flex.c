@@ -52,10 +52,10 @@ flex_item_new(void)
     item->top = NAN;
     item->bottom = NAN;
 
-    item->padding_left = NAN;
-    item->padding_right = NAN;
-    item->padding_top = NAN;
-    item->padding_bottom = NAN;
+    item->padding_left = 0;
+    item->padding_right = 0;
+    item->padding_top = 0;
+    item->padding_bottom = 0;
 
     item->margin_left = 0;
     item->margin_right = 0;
