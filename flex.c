@@ -210,6 +210,11 @@ layout_item(struct flex_item *item, float width, float height)
         return;
     }
 
+    width -= item->padding_left + item->padding_right;
+    height -= item->padding_top + item->padding_bottom;
+    assert(width >= 0);
+    assert(height >= 0);
+
     bool reverse = false;
     bool vertical = true;
     float size_dim = 0;
@@ -249,9 +254,6 @@ layout_item(struct flex_item *item, float width, float height)
     float flex_dim = size_dim;
     int flex_grows = 0;
     int flex_shrinks = 0;
-    float pos_orig = reverse ? size_dim : 0;
-    float pos = pos_orig;
-    float pos2 = 0;
     int *ordered_indices = NULL;
     bool wrap = item->wrap != FLEX_WRAP_NOWRAP;
     for (int i = 0; i < item->children.count; i++) {
@@ -283,15 +285,20 @@ layout_item(struct flex_item *item, float width, float height)
         }
     }
 
+    float pos_orig = (reverse ? size_dim : 0)
+        + (vertical ? item->padding_top : item->padding_left);
+    float pos = pos_orig;
+    float pos2 = vertical ? item->padding_left : item->padding_top;
     float spacing = 0;
     if (flex_grows == 0) {
-        float new_pos = 0;
+        float new_pos = pos;
         switch (item->justify_content) {
             case FLEX_ALIGN_FLEX_START:
                 break;
 
             case FLEX_ALIGN_FLEX_END:
-                new_pos = flex_dim;
+                new_pos = flex_dim
+                    + (vertical ? item->padding_top : item->padding_left);
                 break;
 
             case FLEX_ALIGN_CENTER:
@@ -314,7 +321,7 @@ layout_item(struct flex_item *item, float width, float height)
             default:
                 assert(false && "incorrect justify_content");
         }
-        pos = pos_orig = reverse ? size_dim - new_pos : new_pos;
+        pos = pos_orig = new_pos;
     }
 
     if (ordered_indices != NULL) {
@@ -378,7 +385,8 @@ layout_item(struct flex_item *item, float width, float height)
         switch (align) {
             case FLEX_ALIGN_FLEX_END:
                 align_pos = align_dim - child->frame[frame_size2_i]
-                    - (vertical ? child->margin_right : child->margin_bottom);
+                    - (vertical ? child->margin_right : child->margin_bottom)
+                    + (vertical ? item->padding_left : item->padding_top);
                 break;
 
             case FLEX_ALIGN_CENTER:
@@ -390,7 +398,6 @@ layout_item(struct flex_item *item, float width, float height)
 
             case FLEX_ALIGN_STRETCH:
                 if (child->frame[frame_size2_i] == 0) {
-                    align_pos = 0;
                     child->frame[frame_size2_i] = align_dim
                         - (vertical
                                 ? child->margin_left + child->margin_right
