@@ -132,7 +132,6 @@
         FLEX_FLOAT_GET(margin_right, marginRight);
         FLEX_FLOAT_GET(margin_top, marginTop);
         FLEX_FLOAT_GET(margin_bottom, marginBottom);
-
     }
     else {
         [width setStringValue:@""];
@@ -144,6 +143,11 @@
         [marginBottom setStringValue:@""];
     }
 
+    FLEX_FLOAT_GET(padding_left, paddingLeft);
+    FLEX_FLOAT_GET(padding_right, paddingRight);
+    FLEX_FLOAT_GET(padding_top, paddingTop);
+    FLEX_FLOAT_GET(padding_bottom, paddingBottom);
+    
     FLEX_INT_GET(grow, grow);
     FLEX_INT_GET(shrink, shrink);
     FLEX_INT_GET(order, order);
@@ -196,6 +200,11 @@ FLEX_FLOAT_ACTION(margin_left, marginLeft);
 FLEX_FLOAT_ACTION(margin_right, marginRight);
 FLEX_FLOAT_ACTION(margin_top, marginTop);
 FLEX_FLOAT_ACTION(margin_bottom, marginBottom);
+
+FLEX_FLOAT_ACTION(padding_left, paddingLeft);
+FLEX_FLOAT_ACTION(padding_right, paddingRight);
+FLEX_FLOAT_ACTION(padding_top, paddingTop);
+FLEX_FLOAT_ACTION(padding_bottom, paddingBottom);
 
 FLEX_INT_ACTION(grow, grow);
 FLEX_INT_ACTION(shrink, shrink);

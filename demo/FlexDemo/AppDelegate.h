@@ -30,6 +30,10 @@
     IBOutlet NSTextField *marginRight;
     IBOutlet NSTextField *marginTop;
     IBOutlet NSTextField *marginBottom;
+    IBOutlet NSTextField *paddingLeft;
+    IBOutlet NSTextField *paddingRight;
+    IBOutlet NSTextField *paddingTop;
+    IBOutlet NSTextField *paddingBottom;
     IBOutlet NSColorWell *color;
     
     NSInteger _selected_item;
@@ -52,6 +56,10 @@
 - (IBAction)marginRightSelected:(id)sender;
 - (IBAction)marginTopSelected:(id)sender;
 - (IBAction)marginBottomSelected:(id)sender;
+- (IBAction)paddingLeftSelected:(id)sender;
+- (IBAction)paddingRightSelected:(id)sender;
+- (IBAction)paddingTopSelected:(id)sender;
+- (IBAction)paddingBottomSelected:(id)sender;
 - (IBAction)colorSelected:(id)sender;
 
 @end
