@@ -6,11 +6,11 @@ Its goal is to provide a plain C API that exposes similar parameters that can be
 
 ## Getting started
 
-Currently the only way to use it is to copy the `flex.c` and `flex.h` files to your project. Bindings will be written in a later stage.
+Currently the only way to use it is to copy the `flex.c` and `flex.h` files to your project. Bindings will be written in a later stage for non-C languages.
 
 ## Demo app
 
-Under the `demo` directory you will find an Xcode project that will build a Mac demo app. The app exposes the entire set of flexbox parameters and let you create children (including nested ones), similar to how you would build a more realistic user interface.
+Under the `demo` directory you will find an Xcode project that will build a Mac demo app. The app exposes the entire set of flexbox parameters and lets you create children (including nested ones), similar to how you would build a more realistic user interface.
 
 ## Status
 
