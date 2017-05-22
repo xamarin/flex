@@ -120,10 +120,6 @@
     FLEX_ENUM_GET(justify_content, justifyContent);
     FLEX_ENUM_GET(align_self, alignSelf);
 
-    [direction selectItemWithTag:flex_item_get_direction(item)];
-    [alignItems selectItemWithTag:flex_item_get_align_items(item)];
-    [justifyContent selectItemWithTag:flex_item_get_justify_content(item)];
-
     if (!is_root) {
         FLEX_FLOAT_GET(width, width);
         FLEX_FLOAT_GET(height, height);
