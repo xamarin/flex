@@ -257,24 +257,19 @@ layout_item(struct flex_item *item, float width, float height)
         }
     }
 
-    float pos_orig = (reverse ? size_dim : 0)
-        + (vertical ? item->padding_top : item->padding_left);
-    float pos = pos_orig;
-    float pos2 = vertical ? item->padding_left : item->padding_top;
+    float pos = 0;
     float spacing = 0;
     if (flex_grows == 0) {
-        float new_pos = pos;
         switch (item->justify_content) {
             case FLEX_ALIGN_FLEX_START:
                 break;
 
             case FLEX_ALIGN_FLEX_END:
-                new_pos = flex_dim
-                    + (vertical ? item->padding_top : item->padding_left);
+                pos = flex_dim;
                 break;
 
             case FLEX_ALIGN_CENTER:
-                new_pos = flex_dim / 2;
+                pos = flex_dim / 2;
                 break;
 
             case FLEX_ALIGN_SPACE_BETWEEN:
@@ -286,15 +281,23 @@ layout_item(struct flex_item *item, float width, float height)
             case FLEX_ALIGN_SPACE_AROUND:
                 if (item->children.count > 0) {
                     spacing = flex_dim / item->children.count;
-                    new_pos = spacing / 2;
+                    pos = spacing / 2;
                 }
                 break;
 
             default:
                 assert(false && "incorrect justify_content");
         }
-        pos = pos_orig = new_pos;
     }
+
+    if (reverse) {
+        pos = size_dim - pos
+            - (vertical ? item->padding_bottom : item->padding_right);
+    }
+    else {
+        pos += vertical ? item->padding_top : item->padding_left;
+    }
+    float pos2 = vertical ? item->padding_left : item->padding_top;
 
     if (ordered_indices != NULL) {
         for (int i = 0; i < item->children.count; i++) {
@@ -304,6 +307,7 @@ layout_item(struct flex_item *item, float width, float height)
                 child_order_cmp);
     }
 
+    float pos_orig = pos;
     float wrap_dim = size_dim;
     for (int i = 0; i < item->children.count; i++) {
         int order_i = ordered_indices != NULL ? ordered_indices[i] : i;
@@ -333,17 +337,19 @@ layout_item(struct flex_item *item, float width, float height)
             wrap_dim -= child_size;
         }
 
-        float child_size = child->frame[frame_size_i] + spacing;
+        float child_size = child->frame[frame_size_i];
         if (reverse) {
             pos -= vertical ? child->margin_bottom : child->margin_right;
             pos -= child_size;
             child->frame[frame_pos_i] = pos;
+            pos -= spacing;
             pos -= vertical ? child->margin_top : child->margin_left;
         }
         else {
             pos += vertical ? child->margin_top : child->margin_left;
             child->frame[frame_pos_i] = pos;
             pos += child_size;
+            pos += spacing;
             pos += vertical ? child->margin_bottom : child->margin_right;
         }
 
