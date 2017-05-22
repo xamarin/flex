@@ -19,6 +19,7 @@
     IBOutlet NSPopUpButton *direction;
     IBOutlet NSPopUpButton *alignItems;
     IBOutlet NSPopUpButton *justifyContent;
+    IBOutlet NSPopUpButton *wrap;
     IBOutlet NSPopUpButton *alignSelf;
     IBOutlet NSTextField *width;
     IBOutlet NSTextField *height;
@@ -45,6 +46,7 @@
 - (IBAction)directionSelected:(id)sender;
 - (IBAction)alignItemsSelected:(id)sender;
 - (IBAction)justifyContentSelected:(id)sender;
+- (IBAction)wrapSelected:(id)sender;
 - (IBAction)alignSelfSelected:(id)sender;
 - (IBAction)widthSelected:(id)sender;
 - (IBAction)heightSelected:(id)sender;

@@ -118,6 +118,7 @@
     FLEX_ENUM_GET(direction, direction);
     FLEX_ENUM_GET(align_items, alignItems);
     FLEX_ENUM_GET(justify_content, justifyContent);
+    FLEX_ENUM_GET(wrap, wrap);
     FLEX_ENUM_GET(align_self, alignSelf);
 
     if (!is_root) {
@@ -186,6 +187,7 @@
 FLEX_ENUM_ACTION(direction, direction);
 FLEX_ENUM_ACTION(align_items, alignItems);
 FLEX_ENUM_ACTION(justify_content, justifyContent);
+FLEX_ENUM_ACTION(wrap, wrap);
 FLEX_ENUM_ACTION(align_self, alignSelf);
 
 FLEX_FLOAT_ACTION(width, width);
