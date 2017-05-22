@@ -14,7 +14,7 @@
 
 struct flex_item {
 #undef FLEX_ATTRIBUTE
-#define FLEX_ATTRIBUTE(name, type) type name;
+#define FLEX_ATTRIBUTE(name, type, def) type name;
 #include "flex.h"
 
     float frame[4];
@@ -28,7 +28,7 @@ struct flex_item {
 };
 
 #undef FLEX_ATTRIBUTE
-#define FLEX_ATTRIBUTE(name, type) \
+#define FLEX_ATTRIBUTE(name, type, def) \
     type flex_item_get_##name(struct flex_item *item) { \
         return item->name; \
     } \
@@ -44,37 +44,9 @@ flex_item_new(void)
         (struct flex_item *)malloc(sizeof(struct flex_item));
     assert(item != NULL);
 
-    item->width = NAN;
-    item->height = NAN;
-
-    item->left = NAN;
-    item->right = NAN;
-    item->top = NAN;
-    item->bottom = NAN;
-
-    item->padding_left = 0;
-    item->padding_right = 0;
-    item->padding_top = 0;
-    item->padding_bottom = 0;
-
-    item->margin_left = 0;
-    item->margin_right = 0;
-    item->margin_top = 0;
-    item->margin_bottom = 0;
-
-    item->justify_content = FLEX_ALIGN_FLEX_START;
-    item->align_content = FLEX_ALIGN_AUTO;
-    item->align_items = FLEX_ALIGN_FLEX_START;
-    item->align_self = FLEX_ALIGN_AUTO;
-
-    item->position = FLEX_POSITION_RELATIVE;
-    item->direction = FLEX_DIRECTION_COLUMN;
-    item->wrap = FLEX_WRAP_NOWRAP;
-
-    item->grow = 0;
-    item->shrink = 1;
-    item->order = 0;
-    item->basis = 0;
+#undef FLEX_ATTRIBUTE
+#define FLEX_ATTRIBUTE(name, type, def) item->name = def;
+#include "flex.h"
 
     memset(item->frame, 0, sizeof item->frame);
 
