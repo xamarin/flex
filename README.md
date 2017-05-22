@@ -16,17 +16,32 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 
 | Feature | Status |
 |---|---|
-| width, width | :ok: |
+| width, height | :ok: |
 | padding | :ok: |
 | margin | :ok: |
-| justify_content | :ok: |
-| align_content | :x: |
-| align_items | :ok: |
-| align_self | :ok: |
+| justify_content flex_start | :ok: |
+| justify_content flex_end | :ok: |
+| justify_content center | :ok: |
+| justify_content space_around | :ok: |
+| justify_content space_between | :ok: |
+| align_content * | :x: |
+| align_items flex_start | :ok: |
+| align_items flex_end | :ok: |
+| align_items center | :ok: |
+| align_items stretch | :ok: |
+| align_self flex_start | :ok: |
+| align_self flex_end | :ok: |
+| align_self center | :ok: |
+| align_self stretch | :ok: |
 | position relative | :ok: |
 | position absolute | :x: |
-| direction | :ok: |
-| wrap | :ok: |
+| direction column | :ok: |
+| direction column_reverse | :ok: |
+| direction row | :ok: |
+| direction row_reverse | :ok: |
+| wrap no_wrap | :ok: |
+| wrap wrap | :ok: |
+| wrap wrap_reverse | :x: |
 | grow | :ok: |
 | shrink | :ok: |
 | order | :ok: |
