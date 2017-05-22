@@ -325,14 +325,12 @@ layout_item(struct flex_item *item, float width, float height)
         }
         else {
             float child_size = child->frame[frame_size_i];
-            if (wrap_dim >= child_size) {
-                wrap_dim -= child_size;
-            }
-            else {
-                wrap_dim = size_dim;
+            if (wrap_dim < child_size) {
                 pos = pos_orig;
                 pos2 += child->frame[frame_size2_i];
+                wrap_dim = size_dim;
             }
+            wrap_dim -= child_size;
         }
 
         float child_size = child->frame[frame_size_i] + spacing;

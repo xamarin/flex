@@ -1083,6 +1083,42 @@ test_wrap3(void)
 }
 
 static void
+test_wrap4(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+
+    struct flex_item *child1 = flex_item_with_size(25, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 50);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(25, 50);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(25, 50);
+    flex_item_add(root, child5);
+
+    struct flex_item *child6 = flex_item_with_size(25, 50);
+    flex_item_add(root, child6);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 25, 50);
+    TEST_FRAME_EQUAL(child2, 0, 50, 25, 50);
+    TEST_FRAME_EQUAL(child3, 25, 0, 25, 50);
+    TEST_FRAME_EQUAL(child4, 25, 50, 25, 50);
+    TEST_FRAME_EQUAL(child5, 50, 0, 25, 50);
+    TEST_FRAME_EQUAL(child6, 50, 50, 25, 50);
+
+    flex_item_free(root);
+}
+
+static void
 test_justify_content1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -1595,6 +1631,7 @@ main(void)
     UNIT(wrap1);
     UNIT(wrap2);
     UNIT(wrap3);
+    UNIT(wrap4);
 
     UNIT(justify_content1);
     UNIT(justify_content2);
