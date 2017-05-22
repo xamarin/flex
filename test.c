@@ -93,10 +93,10 @@ test_default_values(void)
     TEST(isnan(flex_item_get_width(item)));
     TEST(isnan(flex_item_get_height(item)));
 
-    TEST(isnan(flex_item_get_left(item)));
-    TEST(isnan(flex_item_get_right(item)));
-    TEST(isnan(flex_item_get_top(item)));
-    TEST(isnan(flex_item_get_bottom(item)));
+    TEST_EQUAL(flex_item_get_left(item), 0);
+    TEST_EQUAL(flex_item_get_right(item), 0);
+    TEST_EQUAL(flex_item_get_top(item), 0);
+    TEST_EQUAL(flex_item_get_bottom(item), 0);
 
     TEST_EQUAL(flex_item_get_padding_left(item), 0);
     TEST_EQUAL(flex_item_get_padding_right(item), 0);
