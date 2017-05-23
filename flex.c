@@ -236,17 +236,19 @@ layout_item(struct flex_item *item, float width, float height)
         child->frame[2] = isnan(child->width) ? 0 : child->width;
         child->frame[3] = isnan(child->height) ? 0 : child->height;
 
-        flex_grows += child->grow;
-        flex_shrinks += child->shrink;
-
         if (child->basis > 0) {
             child->frame[frame_size_i] = child->basis;
         }
 
-        flex_dim -= child->frame[frame_size_i]
-            + (vertical
-                    ? child->margin_top + child->margin_bottom
-                    : child->margin_left + child->margin_right);
+        if (!wrap) {
+            flex_grows += child->grow;
+            flex_shrinks += child->shrink;
+
+            flex_dim -= child->frame[frame_size_i]
+                + (vertical
+                        ? child->margin_top + child->margin_bottom
+                        : child->margin_left + child->margin_right);
+        }
 
         if (child->order != 0) {
             if (ordered_indices == NULL) {
@@ -257,48 +259,6 @@ layout_item(struct flex_item *item, float width, float height)
         }
     }
 
-    float pos = 0;
-    float spacing = 0;
-    if (flex_grows == 0) {
-        switch (item->justify_content) {
-            case FLEX_ALIGN_FLEX_START:
-                break;
-
-            case FLEX_ALIGN_FLEX_END:
-                pos = flex_dim;
-                break;
-
-            case FLEX_ALIGN_CENTER:
-                pos = flex_dim / 2;
-                break;
-
-            case FLEX_ALIGN_SPACE_BETWEEN:
-                if (item->children.count > 0) {
-                    spacing = flex_dim / (item->children.count - 1);
-                }
-                break;
-
-            case FLEX_ALIGN_SPACE_AROUND:
-                if (item->children.count > 0) {
-                    spacing = flex_dim / item->children.count;
-                    pos = spacing / 2;
-                }
-                break;
-
-            default:
-                assert(false && "incorrect justify_content");
-        }
-    }
-
-    if (reverse) {
-        pos = size_dim - pos
-            - (vertical ? item->padding_bottom : item->padding_right);
-    }
-    else {
-        pos += vertical ? item->padding_top : item->padding_left;
-    }
-    float pos2 = vertical ? item->padding_left : item->padding_top;
-
     if (ordered_indices != NULL) {
         for (int i = 0; i < item->children.count; i++) {
             ordered_indices[i] = i;
@@ -307,13 +267,121 @@ layout_item(struct flex_item *item, float width, float height)
                 child_order_cmp);
     }
 
-    float pos_orig = pos;
-    float wrap_dim = size_dim;
-    for (int i = 0; i < item->children.count; i++) {
-        int order_i = ordered_indices != NULL ? ordered_indices[i] : i;
-        struct flex_item *child = item->children.ary[order_i];
+#define INIT_POS(pos, spacing, dim, children_count) \
+    do { \
+        float _dim = dim; \
+        int _children_count = children_count; \
+        pos = 0; \
+        spacing = 0; \
+        switch (item->justify_content) { \
+            case FLEX_ALIGN_FLEX_START: \
+                break; \
+            \
+            case FLEX_ALIGN_FLEX_END: \
+                pos = _dim; \
+                break; \
+            \
+            case FLEX_ALIGN_CENTER: \
+                pos = _dim / 2; \
+                break; \
+            \
+            case FLEX_ALIGN_SPACE_BETWEEN: \
+                if (_children_count > 0) { \
+                    spacing = _dim / (_children_count - 1); \
+                } \
+                break; \
+            \
+            case FLEX_ALIGN_SPACE_AROUND: \
+                if (_children_count > 0) { \
+                    spacing = _dim / _children_count; \
+                    pos = spacing / 2; \
+                } \
+                break; \
+            \
+            default: \
+                assert(false && "incorrect justify_content"); \
+        } \
+        if (reverse) { \
+            pos = size_dim - pos; \
+        } \
+    } \
+    while (0)
 
-        if (!wrap) {
+#define CHILD_AT(idx) \
+    item->children.ary[ordered_indices != NULL ? ordered_indices[idx] : idx]
+
+#define UPDATE_POS(child, pos, spacing, pos2) \
+    do { \
+        struct flex_item *_child = child; \
+        float _child_size = _child->frame[frame_size_i]; \
+        if (reverse) { \
+            pos -= vertical ? _child->margin_bottom : _child->margin_right; \
+            pos -= _child_size; \
+            _child->frame[frame_pos_i] = pos; \
+            pos -= spacing; \
+            pos -= vertical ? _child->margin_top : _child->margin_left; \
+        } \
+        else { \
+            pos += vertical ? _child->margin_top : _child->margin_left; \
+            _child->frame[frame_pos_i] = pos; \
+            pos += _child_size; \
+            pos += spacing; \
+            pos += vertical ? _child->margin_bottom : _child->margin_right; \
+        } \
+        _child->frame[frame_pos2_i] = pos2; \
+    } \
+    while (0)
+
+    float pos2 = vertical ? item->padding_left : item->padding_top;
+    if (wrap) {
+        float wrap_dim = size_dim;
+        int last_wrap_child = 0;
+
+        for (int i = 0; i < item->children.count; i++) {
+            struct flex_item *child = CHILD_AT(i);
+
+            float child_size = child->frame[frame_size_i];
+            if (wrap_dim < child_size) {
+again:;
+                float pos = 0;
+                float spacing = 0;
+                INIT_POS(pos, spacing, wrap_dim, i - last_wrap_child);
+
+                for (int j = last_wrap_child; j < i; j++) {
+                    UPDATE_POS(CHILD_AT(j), pos, spacing, pos2);
+                }
+
+                pos2 += child->frame[frame_size2_i];
+                wrap_dim = size_dim;
+                last_wrap_child = i;
+            }
+            wrap_dim -= child_size;
+
+            layout_item(child, child->frame[2], child->frame[3]);
+
+            if (i == item->children.count - 1) {
+                i++;
+                goto again;
+            }
+        }
+    }
+    else {
+        float pos = 0;
+        float spacing = 0;
+        if (flex_grows == 0) {
+            INIT_POS(pos, spacing, flex_dim, item->children.count);
+        }
+
+        if (reverse) {
+            pos -= vertical ? item->padding_bottom : item->padding_right;
+        }
+        else {
+            pos += vertical ? item->padding_top : item->padding_left;
+        }
+
+        for (int i = 0; i < item->children.count; i++) {
+            struct flex_item *child = CHILD_AT(i);
+
             float flex_size = 0;
             if (flex_dim > 0) {
                 if (child->grow != 0) {
@@ -326,77 +394,57 @@ layout_item(struct flex_item *item, float width, float height)
                 }
             }
             child->frame[frame_size_i] += flex_size;
-        }
-        else {
-            float child_size = child->frame[frame_size_i];
-            if (wrap_dim < child_size) {
-                pos = pos_orig;
-                pos2 += child->frame[frame_size2_i];
-                wrap_dim = size_dim;
+
+            flex_align align = child->align_self;
+            if (align == FLEX_ALIGN_AUTO) {
+                align = item->align_items;
             }
-            wrap_dim -= child_size;
-        }
-
-        float child_size = child->frame[frame_size_i];
-        if (reverse) {
-            pos -= vertical ? child->margin_bottom : child->margin_right;
-            pos -= child_size;
-            child->frame[frame_pos_i] = pos;
-            pos -= spacing;
-            pos -= vertical ? child->margin_top : child->margin_left;
-        }
-        else {
-            pos += vertical ? child->margin_top : child->margin_left;
-            child->frame[frame_pos_i] = pos;
-            pos += child_size;
-            pos += spacing;
-            pos += vertical ? child->margin_bottom : child->margin_right;
-        }
-
-        flex_align align = child->align_self;
-        if (align == FLEX_ALIGN_AUTO) {
-            align = item->align_items;
-        }
-        float align_pos = pos2 + 0;
-        switch (align) {
-            case FLEX_ALIGN_FLEX_END:
-                align_pos = align_dim - child->frame[frame_size2_i]
-                    - (vertical ? child->margin_right : child->margin_bottom)
-                    + (vertical ? item->padding_left : item->padding_top);
-                break;
-
-            case FLEX_ALIGN_CENTER:
-                align_pos = (align_dim / 2.0)
-                    - (child->frame[frame_size2_i] / 2.0)
-                    + (vertical ? child->margin_left : child->margin_top)
-                    - (vertical ? child->margin_right : child->margin_bottom);
-                break;
-
-            case FLEX_ALIGN_STRETCH:
-                if (child->frame[frame_size2_i] == 0) {
-                    child->frame[frame_size2_i] = align_dim
+            float align_pos = pos2 + 0;
+            switch (align) {
+                case FLEX_ALIGN_FLEX_END:
+                    align_pos = align_dim - child->frame[frame_size2_i]
                         - (vertical
-                                ? child->margin_left + child->margin_right
-                                : child->margin_top + child->margin_bottom);
-                }
-                // fall through
+                                ? child->margin_right : child->margin_bottom)
+                        + (vertical
+                                ? item->padding_left : item->padding_top);
+                    break;
 
-            case FLEX_ALIGN_FLEX_START:
-                align_pos += vertical ? child->margin_left : child->margin_top;
-                break;
+                case FLEX_ALIGN_CENTER:
+                    align_pos = (align_dim / 2.0)
+                        - (child->frame[frame_size2_i] / 2.0)
+                        + (vertical
+                                ? child->margin_left : child->margin_top)
+                        - (vertical
+                                ? child->margin_right : child->margin_bottom);
+                    break;
 
-            default:
-                assert(false && "incorrect align_self");
+                case FLEX_ALIGN_STRETCH:
+                    if (child->frame[frame_size2_i] == 0) {
+                        child->frame[frame_size2_i] = align_dim
+                            - (vertical
+                                    ? child->margin_left + child->margin_right
+                                    : child->margin_top + child->margin_bottom);
+                    }
+                    // fall through
+
+                case FLEX_ALIGN_FLEX_START:
+                    align_pos += vertical
+                        ? child->margin_left : child->margin_top;
+                    break;
+
+                default:
+                    assert(false && "incorrect align_self");
+            }
+
+            UPDATE_POS(child, pos, spacing, align_pos);
+
+            layout_item(child, child->frame[2], child->frame[3]);
         }
-        child->frame[frame_pos2_i] = align_pos;
-
-#if DEBUG_PRINT_FRAMES
-        printf("child %d: %f %f %f %f\n", i, child->frame[0], child->frame[1],
-                child->frame[2], child->frame[3]);
-#endif
-
-        layout_item(child, child->frame[2], child->frame[3]);
     }
+
+#undef INIT_POS
+#undef UPDATE_POS
+#undef CHILD_AT
 
     if (ordered_indices != NULL) {
         free(ordered_indices);
