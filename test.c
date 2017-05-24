@@ -139,6 +139,9 @@ test_default_values2(void)
     flex_item_set_height(child2, 100);
     flex_item_add(root, child2);
 
+    struct flex_item *child3 = flex_item_new();
+    flex_item_add(root, child3);
+
     flex_layout(root);
 
     TEST_EQUAL(flex_item_get_frame_width(child1), 100);
@@ -146,6 +149,9 @@ test_default_values2(void)
 
     TEST_EQUAL(flex_item_get_frame_width(child2), 0);
     TEST_EQUAL(flex_item_get_frame_height(child2), 100);
+
+    TEST_EQUAL(flex_item_get_frame_width(child3), 0);
+    TEST_EQUAL(flex_item_get_frame_height(child3), 0);
 
     flex_item_free(root);
 }
