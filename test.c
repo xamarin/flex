@@ -1266,6 +1266,74 @@ test_wrap8(void)
 }
 
 static void
+test_wrap9(void)
+{
+    // The align_items propery has no effect in wrap mode on the root item.
+    int modes[] = {
+        FLEX_ALIGN_STRETCH,
+        FLEX_ALIGN_CENTER,
+        FLEX_ALIGN_FLEX_START,
+        FLEX_ALIGN_FLEX_END
+    };
+    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
+        struct flex_item *root = flex_item_with_size(120, 120);
+        flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+        flex_item_set_align_items(root, modes[i]);
+
+        struct flex_item *child1 = flex_item_with_size(50, 50);
+        flex_item_add(root, child1);
+
+        struct flex_item *child2 = flex_item_with_size(50, 50);
+        flex_item_add(root, child2);
+
+        struct flex_item *child3 = flex_item_with_size(50, 50);
+        flex_item_add(root, child3);
+
+        flex_layout(root);
+
+        TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+        TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
+        TEST_FRAME_EQUAL(child3, 50, 0, 50, 50);
+
+        flex_item_free(root);
+    }
+}
+
+static void
+test_wrap10(void)
+{
+    // The align_self propery has no effect in wrap mode on children items.
+    int modes[] = {
+        FLEX_ALIGN_AUTO,
+        FLEX_ALIGN_STRETCH,
+        FLEX_ALIGN_CENTER,
+        FLEX_ALIGN_FLEX_START,
+        FLEX_ALIGN_FLEX_END
+    };
+    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
+        struct flex_item *root = flex_item_with_size(120, 120);
+        flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+
+        struct flex_item *child1 = flex_item_with_size(50, 50);
+        flex_item_add(root, child1);
+
+        struct flex_item *child2 = flex_item_with_size(50, 50);
+        flex_item_set_align_items(child2, modes[i]);
+        flex_item_add(root, child2);
+
+        struct flex_item *child3 = flex_item_with_size(50, 50);
+        flex_item_add(root, child3);
+
+        flex_layout(root);
+
+        TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+        TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
+        TEST_FRAME_EQUAL(child3, 50, 0, 50, 50);
+
+        flex_item_free(root);
+    }
+}
+
 test_justify_content1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -1888,6 +1956,8 @@ main(void)
     UNIT(wrap6);
     UNIT(wrap7);
     UNIT(wrap8);
+    UNIT(wrap9);
+    UNIT(wrap10);
 
     UNIT(justify_content1);
     UNIT(justify_content2);
