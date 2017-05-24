@@ -1600,6 +1600,7 @@ static void
 test_justify_content12(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
     flex_item_set_justify_content(root, FLEX_ALIGN_SPACE_AROUND);
 
     struct flex_item *child1 = flex_item_with_size(50, 100);
@@ -1610,8 +1611,8 @@ test_justify_content12(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 0, 25, 50, 100);
-    TEST_FRAME_EQUAL(child2, 0, 175, 50, 100);
+    TEST_FRAME_EQUAL(child1, 0, 175, 50, 100);
+    TEST_FRAME_EQUAL(child2, 0, 25, 50, 100);
 
     flex_item_free(root);
 }
