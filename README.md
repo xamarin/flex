@@ -24,7 +24,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | justify_content center | :ok: |
 | justify_content space_around | :ok: |
 | justify_content space_between | :ok: |
-| justify_content space_evenly | :x: |
+| justify_content space_evenly | :ok: |
 | align_content * | :x: |
 | align_items flex_start | :ok: |
 | align_items flex_end | :ok: |
