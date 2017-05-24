@@ -1516,6 +1516,50 @@ static void
 test_justify_content8(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_justify_content(root, FLEX_ALIGN_SPACE_EVENLY);
+
+    struct flex_item *child1 = flex_item_with_size(50, 105);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 105);
+    flex_item_add(root, child2);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 30, 50, 105);
+    TEST_FRAME_EQUAL(child2, 0, 165, 50, 105);
+
+    flex_item_free(root);
+}
+
+static void
+test_justify_content9(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_justify_content(root, FLEX_ALIGN_SPACE_EVENLY);
+
+    struct flex_item *child1 = flex_item_with_size(50, 40);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 40);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 40);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 45, 50, 40);
+    TEST_FRAME_EQUAL(child2, 0, 130, 50, 40);
+    TEST_FRAME_EQUAL(child3, 0, 215, 50, 40);
+
+    flex_item_free(root);
+}
+
+static void
+test_justify_content10(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 300);
     flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
     flex_item_set_justify_content(root, FLEX_ALIGN_CENTER);
 
@@ -1534,7 +1578,7 @@ test_justify_content8(void)
 }
 
 static void
-test_justify_content9(void)
+test_justify_content11(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
     flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
@@ -1555,7 +1599,7 @@ test_justify_content9(void)
 }
 
 static void
-test_justify_content10(void)
+test_justify_content12(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
     flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
@@ -1576,7 +1620,7 @@ test_justify_content10(void)
 }
 
 static void
-test_justify_content11(void)
+test_justify_content13(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
     flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
@@ -1597,7 +1641,7 @@ test_justify_content11(void)
 }
 
 static void
-test_justify_content12(void)
+test_justify_content14(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
     flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
@@ -1613,6 +1657,27 @@ test_justify_content12(void)
 
     TEST_FRAME_EQUAL(child1, 0, 175, 50, 100);
     TEST_FRAME_EQUAL(child2, 0, 25, 50, 100);
+
+    flex_item_free(root);
+}
+
+static void
+test_justify_content15(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 300);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN_REVERSE);
+    flex_item_set_justify_content(root, FLEX_ALIGN_SPACE_EVENLY);
+
+    struct flex_item *child1 = flex_item_with_size(50, 105);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 105);
+    flex_item_add(root, child2);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 165, 50, 105);
+    TEST_FRAME_EQUAL(child2, 0, 30, 50, 105);
 
     flex_item_free(root);
 }
@@ -2004,6 +2069,9 @@ main(void)
     UNIT(justify_content10);
     UNIT(justify_content11);
     UNIT(justify_content12);
+    UNIT(justify_content13);
+    UNIT(justify_content14);
+    UNIT(justify_content15);
 
     UNIT(margin1);
     UNIT(margin2);

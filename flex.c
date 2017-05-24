@@ -298,6 +298,13 @@ layout_item(struct flex_item *item, float width, float height)
                 } \
                 break; \
             \
+            case FLEX_ALIGN_SPACE_EVENLY: \
+                if (_children_count > 0) { \
+                    spacing = _dim / (_children_count + 1); \
+                    pos = spacing; \
+                } \
+                break; \
+            \
             default: \
                 assert(false && "incorrect justify_content"); \
         } \
