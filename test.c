@@ -1974,7 +1974,7 @@ test_padding3(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 60, 65, 25, 25);
+    TEST_FRAME_EQUAL(child1, 50, 65, 25, 25);
 
     flex_item_free(root);
 }
@@ -1997,7 +1997,7 @@ test_padding4(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 60, 15, 25, 25);
+    TEST_FRAME_EQUAL(child1, 50, 15, 25, 25);
 
     flex_item_free(root);
 }

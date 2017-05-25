@@ -271,13 +271,17 @@ layout_cleanup(struct flex_layout *layout)
     (item->children.ary[(layout->ordered_indices != NULL \
                          ? layout->ordered_indices[i] : i)]) \
 
-#define _LAYOUT_FRAME(child, name) \
-    child->frame[layout->frame_##name##_i]
+#define _LAYOUT_FRAME(child, name) child->frame[layout->frame_##name##_i]
 
 #define CHILD_POS(child) _LAYOUT_FRAME(child, pos)
 #define CHILD_POS2(child) _LAYOUT_FRAME(child, pos2)
 #define CHILD_SIZE(child) _LAYOUT_FRAME(child, size)
 #define CHILD_SIZE2(child) _LAYOUT_FRAME(child, size2)
+
+#define CHILD_MARGIN(child, if_vertical, if_horizontal) \
+    (layout->vertical \
+     ? child->margin_##if_vertical \
+     : child->margin_##if_horizontal)
 
 static void layout_item(struct flex_item *item, float width, float height);
 
@@ -366,59 +370,45 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         float align_pos = layout->pos2 + 0;
         switch (align) {
             case FLEX_ALIGN_FLEX_END:
-                align_pos = layout->align_dim
-                    - align_size
-                    - (layout->vertical
-                            ? child->margin_right : child->margin_bottom)
-                    + (layout->vertical
-                            ? item->padding_left : item->padding_top);
+                align_pos = layout->align_dim - align_size
+                    - CHILD_MARGIN(child, right, bottom);
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align_pos = (layout->align_dim / 2.0)
-                    - (align_size / 2.0)
-                    + (layout->vertical
-                            ? child->margin_left : child->margin_top)
-                    - (layout->vertical
-                            ? child->margin_right : child->margin_bottom);
+                align_pos = (layout->align_dim / 2.0) - (align_size / 2.0)
+                    + (CHILD_MARGIN(child, left, top)
+                            - CHILD_MARGIN(child, right, bottom));
                 break;
 
             case FLEX_ALIGN_STRETCH:
                 if (align_size == 0) {
                     CHILD_SIZE2(child) = layout->align_dim
-                        - (layout->vertical
-                                ? child->margin_left + child->margin_right
-                                : child->margin_top + child->margin_bottom);
+                        - (CHILD_MARGIN(child, left, top)
+                                + CHILD_MARGIN(child, right, bottom));
                 }
                 // fall through
 
             case FLEX_ALIGN_FLEX_START:
-                align_pos += layout->vertical
-                    ? child->margin_left : child->margin_top;
+                align_pos += CHILD_MARGIN(child, left, top);
                 break;
 
             default:
                 assert(false && "incorrect align_self");
         }
 
-        float child_size = CHILD_SIZE(child);
         if (layout->reverse) {
-            pos -= layout->vertical
-                ? child->margin_bottom : child->margin_right;
-            pos -= child_size;
+            pos -= CHILD_MARGIN(child, bottom, right);
+            pos -= CHILD_SIZE(child);
             CHILD_POS(child) = pos;
             pos -= spacing;
-            pos -= layout->vertical
-                ? child->margin_top : child->margin_left;
+            pos -= CHILD_MARGIN(child, top, left);
         }
         else {
-            pos += layout->vertical
-                ? child->margin_top : child->margin_left;
+            pos += CHILD_MARGIN(child, top, left);
             CHILD_POS(child) = pos;
-            pos += child_size;
+            pos += CHILD_SIZE(child);
             pos += spacing;
-            pos += layout->vertical
-                ? child->margin_bottom : child->margin_right;
+            pos += CHILD_MARGIN(child, bottom, right);
         }
         CHILD_POS2(child) = align_pos;
 
@@ -467,9 +457,8 @@ layout_item(struct flex_item *item, float width, float height)
         layout->flex_shrinks += child->shrink;
 
         layout->flex_dim -= child_size
-            + (layout->vertical
-                    ? child->margin_top + child->margin_bottom
-                    : child->margin_left + child->margin_right);
+            + (CHILD_MARGIN(child, top, left)
+                    + CHILD_MARGIN(child, bottom, right));
     }
 
     // Layout remaining children in wrap mode, or everything otherwise.
@@ -478,6 +467,7 @@ layout_item(struct flex_item *item, float width, float height)
     layout_cleanup(layout);
 }
 
+#undef CHILD_MARGIN
 #undef CHILD_POS
 #undef CHILD_POS2
 #undef CHILD_SIZE
