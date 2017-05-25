@@ -370,12 +370,12 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         float align_pos = layout->pos2 + 0;
         switch (align) {
             case FLEX_ALIGN_FLEX_END:
-                align_pos = layout->align_dim - align_size
+                align_pos += layout->align_dim - align_size
                     - CHILD_MARGIN(child, right, bottom);
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align_pos = (layout->align_dim / 2.0) - (align_size / 2.0)
+                align_pos += (layout->align_dim / 2.0) - (align_size / 2.0)
                     + (CHILD_MARGIN(child, left, top)
                             - CHILD_MARGIN(child, right, bottom));
                 break;
@@ -430,6 +430,9 @@ layout_item(struct flex_item *item, float width, float height)
 
     bool wrap = item->wrap != FLEX_WRAP_NOWRAP;
     int last_layout_child = 0;
+    if (wrap) {
+        layout->align_dim = 0;
+    }
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
 
@@ -448,8 +451,14 @@ layout_item(struct flex_item *item, float width, float height)
                 layout_items(item, last_layout_child, i, layout);
 
                 LAYOUT_RESET();
-                layout->pos2 += CHILD_SIZE2(child);
+                layout->pos2 += layout->align_dim;
                 last_layout_child = i;
+                layout->align_dim = 0;
+            }
+
+            float child_size2 = CHILD_SIZE2(child);
+            if (child_size2 > layout->align_dim) {
+                layout->align_dim = child_size2;
             }
         }
 

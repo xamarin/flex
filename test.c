@@ -1299,40 +1299,6 @@ test_wrap8(void)
 static void
 test_wrap9(void)
 {
-    // The align_items propery has no effect in wrap mode on the root item.
-    int modes[] = {
-        FLEX_ALIGN_STRETCH,
-        FLEX_ALIGN_CENTER,
-        FLEX_ALIGN_FLEX_START,
-        FLEX_ALIGN_FLEX_END
-    };
-    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
-        struct flex_item *root = flex_item_with_size(120, 120);
-        flex_item_set_wrap(root, FLEX_WRAP_WRAP);
-        flex_item_set_align_items(root, modes[i]);
-
-        struct flex_item *child1 = flex_item_with_size(50, 50);
-        flex_item_add(root, child1);
-
-        struct flex_item *child2 = flex_item_with_size(50, 50);
-        flex_item_add(root, child2);
-
-        struct flex_item *child3 = flex_item_with_size(50, 50);
-        flex_item_add(root, child3);
-
-        flex_layout(root);
-
-        TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
-        TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
-        TEST_FRAME_EQUAL(child3, 50, 0, 50, 50);
-
-        flex_item_free(root);
-    }
-}
-
-static void
-test_wrap10(void)
-{
     // The align_self propery has no effect in wrap mode on children items.
     int modes[] = {
         FLEX_ALIGN_AUTO,
@@ -1366,7 +1332,7 @@ test_wrap10(void)
 }
 
 static void
-test_wrap11(void)
+test_wrap10(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
     flex_item_set_wrap(root, FLEX_WRAP_WRAP);
@@ -1391,6 +1357,105 @@ test_wrap11(void)
     TEST_FRAME_EQUAL(child2, 0, 50, 50, 70);
     TEST_FRAME_EQUAL(child3, 50, 0, 50, 70);
     TEST_FRAME_EQUAL(child4, 50, 70, 50, 50);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap11(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_START);
+
+    struct flex_item *child1 = flex_item_with_size(50, 40);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(70, 30);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(60, 40);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(40, 50);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(50, 60);
+    flex_item_add(root, child5);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 50, 40);
+    TEST_FRAME_EQUAL(child2, 0, 40, 70, 30);
+    TEST_FRAME_EQUAL(child3, 0, 70, 60, 40);
+    TEST_FRAME_EQUAL(child4, 70, 0, 40, 50);
+    TEST_FRAME_EQUAL(child5, 70, 50, 50, 60);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap12(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+    flex_item_set_align_items(root, FLEX_ALIGN_CENTER);
+
+    struct flex_item *child1 = flex_item_with_size(50, 40);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(70, 30);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(60, 40);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(40, 50);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(50, 60);
+    flex_item_add(root, child5);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 10, 0, 50, 40);
+    TEST_FRAME_EQUAL(child2, 0, 40, 70, 30);
+    TEST_FRAME_EQUAL(child3, 5, 70, 60, 40);
+    TEST_FRAME_EQUAL(child4, 75, 0, 40, 50);
+    TEST_FRAME_EQUAL(child5, 70, 50, 50, 60);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap13(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP);
+    flex_item_set_align_items(root, FLEX_ALIGN_FLEX_END);
+
+    struct flex_item *child1 = flex_item_with_size(50, 40);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(70, 30);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(60, 40);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(40, 50);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(50, 60);
+    flex_item_add(root, child5);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 20, 0, 50, 40);
+    TEST_FRAME_EQUAL(child2, 0, 40, 70, 30);
+    TEST_FRAME_EQUAL(child3, 10, 70, 60, 40);
+    TEST_FRAME_EQUAL(child4, 80, 0, 40, 50);
+    TEST_FRAME_EQUAL(child5, 70, 50, 50, 60);
 
     flex_item_free(root);
 }
@@ -1974,7 +2039,7 @@ test_padding3(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 50, 65, 25, 25);
+    TEST_FRAME_EQUAL(child1, 60, 65, 25, 25);
 
     flex_item_free(root);
 }
@@ -1997,7 +2062,7 @@ test_padding4(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 50, 15, 25, 25);
+    TEST_FRAME_EQUAL(child1, 60, 15, 25, 25);
 
     flex_item_free(root);
 }
@@ -2088,6 +2153,8 @@ main(void)
     UNIT(wrap9);
     UNIT(wrap10);
     UNIT(wrap11);
+    UNIT(wrap12);
+    UNIT(wrap13);
 
     UNIT(justify_content1);
     UNIT(justify_content2);
