@@ -14,7 +14,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 
 ## Status
 
-| Feature | Status |
+| Attribute | Status |
 |---|---|
 | width, height | :ok: |
 | padding | :ok: |
@@ -22,10 +22,17 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | justify_content flex_start | :ok: |
 | justify_content flex_end | :ok: |
 | justify_content center | :ok: |
+| justify_content stretch | :x: |
 | justify_content space_around | :ok: |
 | justify_content space_between | :ok: |
 | justify_content space_evenly | :ok: |
-| align_content * | :x: |
+| align_content flex_start | :x: |
+| align_content flex_end | :x: |
+| align_content center | :x: |
+| align_content stretch | :x: |
+| align_content space_around | :x: |
+| align_content space_between | :x: |
+| align_content space_evenly | :x: |
 | align_items flex_start | :ok: |
 | align_items flex_end | :ok: |
 | align_items center | :ok: |
