@@ -170,19 +170,19 @@ struct flex_layout {
     // Set during init.
     bool reverse;
     bool vertical;
-    float size_dim;
-    float align_dim;
-    unsigned int frame_pos_i;
-    unsigned int frame_pos2_i;
-    unsigned int frame_size_i;
-    unsigned int frame_size2_i;
+    float size_dim;             // main axis parent size
+    float align_dim;            // cross axis parent size
+    unsigned int frame_pos_i;   // main axis position
+    unsigned int frame_pos2_i;  // cross axis position
+    unsigned int frame_size_i;  // main axis size
+    unsigned int frame_size2_i; // cross axis size
     int *ordered_indices;
 
     // Set for each line layout.
     float flex_dim;
     int flex_grows;
     int flex_shrinks;
-    float pos2;
+    float pos2;         // cross axis position (preserved in wrap mode)
 };
 
 static int
@@ -294,6 +294,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         return;
     }
 
+    // Determine the main axis initial position and optional spacing.
     float pos = 0;
     float spacing = 0;
     if (layout->flex_grows == 0) {
@@ -347,6 +348,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     for (int i = child_begin; i < child_end; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
 
+        // Grow or shrink the main axis item size if needed.
         float flex_size = 0;
         if (layout->flex_dim > 0) {
             if (child->grow != 0) {
@@ -362,6 +364,8 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         }
         CHILD_SIZE(child) += flex_size;
 
+        // Set the cross axis position (and stretch the cross axis size if
+        // needed).
         flex_align align = child->align_self;
         if (align == FLEX_ALIGN_AUTO) {
             align = item->align_items;
@@ -395,7 +399,9 @@ layout_items(struct flex_item *item, unsigned int child_begin,
             default:
                 assert(false && "incorrect align_self");
         }
+        CHILD_POS2(child) = align_pos;
 
+        // Set the main axis position.
         if (layout->reverse) {
             pos -= CHILD_MARGIN(child, bottom, right);
             pos -= CHILD_SIZE(child);
@@ -410,8 +416,8 @@ layout_items(struct flex_item *item, unsigned int child_begin,
             pos += spacing;
             pos += CHILD_MARGIN(child, bottom, right);
         }
-        CHILD_POS2(child) = align_pos;
 
+        // Now that the item has a frame, we can layout its children.
         layout_item(child, child->frame[2], child->frame[3]);
     }
 }
@@ -436,18 +442,22 @@ layout_item(struct flex_item *item, float width, float height)
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
 
+        // Initialize frame.
         child->frame[0] = 0;
         child->frame[1] = 0;
         child->frame[2] = isnan(child->width) ? 0 : child->width;
         child->frame[3] = isnan(child->height) ? 0 : child->height;
 
         if (child->basis > 0) {
+            // The `basis' property has priority.
             CHILD_SIZE(child) = child->basis;
         }
 
         float child_size = CHILD_SIZE(child);
         if (wrap) {
             if (layout->flex_dim < child_size) {
+                // Not enough space for this child on this line, layout the
+                // remaining items and move it to a new line.
                 layout_items(item, last_layout_child, i, layout);
 
                 LAYOUT_RESET();
@@ -456,6 +466,8 @@ layout_item(struct flex_item *item, float width, float height)
                 layout->align_dim = 0;
             }
 
+            // In wrap mode, the cross axis dimension of each line is the
+            // highest cross axis size of all items in said line.
             float child_size2 = CHILD_SIZE2(child);
             if (child_size2 > layout->align_dim) {
                 layout->align_dim = child_size2;
@@ -470,7 +482,7 @@ layout_item(struct flex_item *item, float width, float height)
                     + CHILD_MARGIN(child, bottom, right));
     }
 
-    // Layout remaining children in wrap mode, or everything otherwise.
+    // Layout remaining items in wrap mode, or everything otherwise.
     layout_items(item, last_layout_child, item->children.count, layout);
 
     layout_cleanup(layout);

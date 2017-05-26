@@ -3,9 +3,14 @@
 
 struct flex_item;
 
+// Create a new flex item.
 struct flex_item *flex_item_new(void);
+
+// Free memory associated with a flex item and its children.
+// This function can only be called on a root item.
 void flex_item_free(struct flex_item *item);
 
+// Manage items.
 void flex_item_add(struct flex_item *item, struct flex_item *child);
 void flex_item_insert(struct flex_item *item, unsigned int index,
         struct flex_item *child);
@@ -14,8 +19,13 @@ unsigned int flex_item_count(struct flex_item *item);
 struct flex_item *flex_item_child(struct flex_item *item, unsigned int index);
 struct flex_item *flex_item_parent(struct flex_item *item);
 
+// Layout the items associated with this item, as well as their children.
+// This function can only be called on a root item whose `width' and `height'
+// properties have been set.
 void flex_layout(struct flex_item *item);
 
+// Retrieve the layout frame associated with an item. These functions should
+// be called *after* the layout is done.
 float flex_item_get_frame_x(struct flex_item *item);
 float flex_item_get_frame_y(struct flex_item *item);
 float flex_item_get_frame_width(struct flex_item *item);
@@ -63,6 +73,14 @@ typedef enum {
 # endif
 
 #endif
+
+// Following are the list of properties associated with an item.
+//
+// Each property is exposed with getter and setter functions, for instance
+// the `width' property can be get and set using the respective
+// `flex_item_get_width()' and `flex_item_set_width()' functions.
+//
+// You can also see the type and default value for each property.
 
 FLEX_ATTRIBUTE(width, float, NAN)
 FLEX_ATTRIBUTE(height, float, NAN)
