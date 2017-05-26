@@ -976,6 +976,7 @@
                                     <menuItem title="Center" tag="2" id="Z7y-ka-jOR"/>
                                     <menuItem title="Space Around" tag="6" id="47B-Dw-VKH"/>
                                     <menuItem title="Space Between" tag="5" id="t6p-Br-wMb"/>
+                                    <menuItem title="Space Evenly" tag="7" id="1EX-R2-N4M"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
