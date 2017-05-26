@@ -92,6 +92,7 @@ grow_if_needed(struct flex_item *item)
 static void
 child_set(struct flex_item *item, struct flex_item *child, int index)
 {
+    assert(child->parent == NULL && "child already has a parent");
     item->children.ary[index] = child;
     item->children.count++;
     child->parent = item;
