@@ -2,7 +2,7 @@
 
 flex is a flexible box layout system following the <a href="https://www.w3.org/TR/css-flexbox-1/">CSS flexbox module</a> specifications. The goal is to offer a fully compliant implementation with a small and maintainable code base under a permissive license.
 
-flex exposes a plain C API with the same parameters that would you use in CSS and use them to customize the layout of a flexible view hierarchy. The API is designed to be easily interoperable with foreign runtimes (ex. C#) and meant to be used by widget toolkits as the foundation of a view layout API.
+flex exposes a plain C API with the same parameters that you would use in CSS to customize the layout of a flexible view hierarchy. The API is designed to be easily interoperable with foreign runtimes (ex. C#) and meant to be used by widget toolkits as the foundation of a view layout API.
 
 flex supports both single and multiple (wrap) lines layouts.
 
@@ -12,7 +12,7 @@ Currently the only way to use it is to copy the `flex.c` and `flex.h` files to y
 
 ## Demo App
 
-Under the `demo` directory you will find an Xcode project that will build a Mac demo app. The app exposes the entire set of flexbox parameters and lets you create children (including nested ones), similar to how you would build a more realistic user interface.
+Under the `demo` directory you will find an Xcode project that will build a Mac demo app. The app exposes the entire set of flexbox parameters that are implemented and lets you create views (including nested ones), similar to how you would build a more realistic user interface in practice.
 
 ## Implementation Status
 
