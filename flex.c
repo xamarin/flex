@@ -25,7 +25,22 @@ struct flex_item {
 	unsigned int count;
 	struct flex_item **ary;
     } children;
+    bool should_order_children;
 };
+
+#undef FLEX_ATTRIBUTE
+#define FLEX_ATTRIBUTE(name, type, def) FLEX_PROPERTY_##name,
+typedef enum {
+#include "flex.h"
+} flex_property;
+
+static void
+item_property_changed(struct flex_item *item, flex_property property)
+{
+    if (property == FLEX_PROPERTY_order && item->parent != NULL) {
+        item->parent->should_order_children = true;
+    }
+}
 
 #undef FLEX_ATTRIBUTE
 #define FLEX_ATTRIBUTE(name, type, def) \
@@ -34,6 +49,7 @@ struct flex_item {
     } \
     void flex_item_set_##name(struct flex_item *item, type value) { \
         item->name = value; \
+        item_property_changed(item, FLEX_PROPERTY_##name); \
     }
 #include "flex.h"
 
@@ -54,6 +70,7 @@ flex_item_new(void)
     item->children.cap = 0;
     item->children.count = 0;
     item->children.ary = NULL;
+    item->should_order_children = false;
 
     return item;
 }
@@ -96,6 +113,9 @@ child_set(struct flex_item *item, struct flex_item *child, int index)
     item->children.ary[index] = child;
     item->children.count++;
     child->parent = item;
+    if (child->order != 0) {
+        item->should_order_children = true;
+    }
 }
 
 void
@@ -234,15 +254,18 @@ layout_init(struct flex_item *item, float width, float height,
             assert(false && "incorrect direction");
     }
 
-    // TODO: order indices only when necessary
-    layout->ordered_indices =
-        (int *)malloc(sizeof(int) * item->children.count);
-    assert(layout->ordered_indices != NULL);
-    for (int i = 0; i < item->children.count; i++) {
-        layout->ordered_indices[i] = i;
+    layout->ordered_indices = NULL;
+    if (item->should_order_children) {
+        layout->ordered_indices =
+            (int *)malloc(sizeof(int) * item->children.count);
+        assert(layout->ordered_indices != NULL);
+
+        for (int i = 0; i < item->children.count; i++) {
+            layout->ordered_indices[i] = i;
+        }
+        qsort_r(layout->ordered_indices, item->children.count, sizeof(int),
+                item, child_order_cmp);
     }
-    qsort_r(layout->ordered_indices, item->children.count, sizeof(int), item,
-            child_order_cmp);
 
     layout->flex_dim = 0;
     layout->flex_grows = 0;
