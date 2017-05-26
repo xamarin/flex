@@ -1,18 +1,20 @@
 # flex
 
-flex is a flexible box layout system inspired from the <a href="https://www.w3.org/TR/css-flexbox-1/">CSS flexbox module</a>.
+flex is a flexible box layout system following the <a href="https://www.w3.org/TR/css-flexbox-1/">CSS flexbox module</a> specifications. The goal is to offer a fully compliant implementation with a small and maintainable code base under a permissive license.
 
-Its goal is to provide a plain C API that exposes similar parameters that can be used to customize the layout of a view hierarchy. The API is designed to be easily interoperable with foreign runtimes (ex. C#).
+flex exposes a plain C API with the same parameters that would you use in CSS and use them to customize the layout of a flexible view hierarchy. The API is designed to be easily interoperable with foreign runtimes (ex. C#) and meant to be used by widget toolkits as the foundation of a view layout API.
 
-## Getting started
+flex supports both single and multiple (wrap) lines layouts.
+
+## Getting Started
 
 Currently the only way to use it is to copy the `flex.c` and `flex.h` files to your project. Bindings will be written in a later stage for non-C languages.
 
-## Demo app
+## Demo App
 
 Under the `demo` directory you will find an Xcode project that will build a Mac demo app. The app exposes the entire set of flexbox parameters and lets you create children (including nested ones), similar to how you would build a more realistic user interface.
 
-## Status
+## Implementation Status
 
 | Attribute | Status |
 |---|---|
@@ -63,4 +65,4 @@ There is a test suite that you can run with the following command:
 $ make test
 ```
 
-However it's not that great yet.
+The test suite doesn't provide full coverage at this stage (as many parameters are in play) and needs more work.
