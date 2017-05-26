@@ -66,3 +66,7 @@ $ make test
 ```
 
 The test suite doesn't provide full coverage at this stage (as many parameters are in play) and needs more work.
+
+## License
+
+flex is distributed under the terms of the MIT license. See the `LICENSE.txt` file for more information.
