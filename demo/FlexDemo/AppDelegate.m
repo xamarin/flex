@@ -119,6 +119,7 @@
     FLEX_ENUM_GET(align_items, alignItems);
     FLEX_ENUM_GET(justify_content, justifyContent);
     FLEX_ENUM_GET(wrap, wrap);
+    FLEX_ENUM_GET(align_content, alignContent);
     FLEX_ENUM_GET(align_self, alignSelf);
 
     if (!is_root) {
@@ -152,35 +153,45 @@
 #undef FLEX_ENUM_GET
 #undef FLEX_FLOAT_GET
 #undef FLEX_INT_GET
+    
+    [self _propertyChanged];
+}
+
+- (void)_propertyChanged
+{
+    [alignContent setEnabled:[wrap selectedTag] != FLEX_WRAP_NOWRAP];
 }
 
 #define FLEX_ENUM_ACTION(name, popup) \
     - (IBAction)popup##Selected:(id)sender \
     { \
-	flex_item_set_##name([[self _selectedItem] item], \
+        flex_item_set_##name([[self _selectedItem] item], \
                 (int)[popup selectedTag]); \
-	[root updateLayout]; \
+        [root updateLayout]; \
+        [self _propertyChanged]; \
     }
 
 #define FLEX_FLOAT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
-	NSString *str = [field stringValue]; \
-	if ([str length] > 0) { \
+        NSString *str = [field stringValue]; \
+        if ([str length] > 0) { \
             flex_item_set_##name([[self _selectedItem] item], \
             	[[field stringValue] floatValue]); \
             [root updateLayout]; \
+            [self _propertyChanged]; \
     	} \
     }
 
 #define FLEX_INT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
-	NSString *str = [field stringValue]; \
-	if ([str length] > 0) { \
+        NSString *str = [field stringValue]; \
+        if ([str length] > 0) { \
             flex_item_set_##name([[self _selectedItem] item], \
                 [[field stringValue] intValue]); \
             [root updateLayout]; \
+            [self _propertyChanged]; \
     	} \
     }
 
@@ -188,6 +199,7 @@ FLEX_ENUM_ACTION(direction, direction);
 FLEX_ENUM_ACTION(align_items, alignItems);
 FLEX_ENUM_ACTION(justify_content, justifyContent);
 FLEX_ENUM_ACTION(wrap, wrap);
+FLEX_ENUM_ACTION(align_content, alignContent);
 FLEX_ENUM_ACTION(align_self, alignSelf);
 
 FLEX_FLOAT_ACTION(width, width);
