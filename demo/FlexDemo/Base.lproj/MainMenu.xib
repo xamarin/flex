@@ -1166,6 +1166,9 @@
                                 <items>
                                     <menuItem title="No Wrap" state="on" id="zgr-C2-mdZ"/>
                                     <menuItem title="Wrap" tag="1" id="ibw-a8-jKl"/>
+                                    <menuItem title="Wrap Reverse" tag="2" id="Fbr-8S-2pL">
+                                        <modifierMask key="keyEquivalentModifierMask"/>
+                                    </menuItem>
                                 </items>
                             </menu>
                         </popUpButtonCell>
