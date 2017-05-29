@@ -212,10 +212,20 @@ struct flex_layout {
     int *ordered_indices;
 
     // Set for each line layout.
-    float flex_dim;
+    float line_dim;             // the cross axis size
+    float flex_dim;             // the flexible part of the main axis size
     int flex_grows;
     int flex_shrinks;
-    float pos2;         // cross axis position (preserved in wrap mode)
+    float pos2;                 // cross axis position
+
+    // Calculated layout lines - only tracked when needed.
+    struct flex_layout_line {
+        unsigned int child_begin;
+        unsigned int child_end;
+        float size;
+    } *lines;
+    unsigned int lines_count;
+    float lines_sizes;
 };
 
 static int
@@ -295,6 +305,10 @@ layout_init(struct flex_item *item, float width, float height,
         layout->pos2 = layout->vertical
             ? item->padding_left : item->padding_top;
     }
+
+    layout->lines = NULL;
+    layout->lines_count = 0;
+    layout->lines_sizes = 0;
 }
 
 static void
@@ -304,16 +318,19 @@ layout_cleanup(struct flex_layout *layout)
         free(layout->ordered_indices);
         layout->ordered_indices = NULL;
     }
+    if (layout->lines != NULL) {
+        free(layout->lines);
+        layout->lines = NULL;
+    }
+    layout->lines_count = 0;
 }
 
 #define LAYOUT_RESET() \
     do { \
+        layout->line_dim = layout->wrap ? 0 : layout->align_dim; \
         layout->flex_dim = layout->size_dim; \
         layout->flex_grows = 0; \
         layout->flex_shrinks = 0; \
-        if (layout->wrap) { \
-            layout->align_dim = 0; \
-        } \
     } \
     while (0)
 
@@ -335,6 +352,53 @@ layout_cleanup(struct flex_layout *layout)
 
 static void layout_item(struct flex_item *item, float width, float height);
 
+static bool
+layout_align(flex_align align, float flex_dim, unsigned int children_count,
+        float *pos_p, float *spacing_p)
+{
+    float pos = 0;
+    float spacing = 0;
+    switch (align) {
+        case FLEX_ALIGN_FLEX_START:
+            break;
+
+        case FLEX_ALIGN_FLEX_END:
+            pos = flex_dim;
+            break;
+
+        case FLEX_ALIGN_CENTER:
+            pos = flex_dim / 2;
+            break;
+
+        case FLEX_ALIGN_SPACE_BETWEEN:
+            if (children_count > 0) {
+                spacing = flex_dim / (children_count - 1);
+            }
+            break;
+
+        case FLEX_ALIGN_SPACE_AROUND:
+            if (children_count > 0) {
+                spacing = flex_dim / children_count;
+                pos = spacing / 2;
+            }
+            break;
+
+        case FLEX_ALIGN_SPACE_EVENLY:
+            if (children_count > 0) {
+                spacing = flex_dim / (children_count + 1);
+                pos = spacing;
+            }
+            break;
+
+        default:
+            return false;
+    }
+
+    *pos_p = pos;
+    *spacing_p = spacing;
+    return true;
+}
+
 static void
 layout_items(struct flex_item *item, unsigned int child_begin,
         unsigned int child_end, struct flex_layout *layout)
@@ -348,41 +412,9 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     float pos = 0;
     float spacing = 0;
     if (layout->flex_grows == 0) {
-        switch (item->justify_content) {
-            case FLEX_ALIGN_FLEX_START:
-                break;
-
-            case FLEX_ALIGN_FLEX_END:
-                pos = layout->flex_dim;
-                break;
-
-            case FLEX_ALIGN_CENTER:
-                pos = layout->flex_dim / 2;
-                break;
-
-            case FLEX_ALIGN_SPACE_BETWEEN:
-                if (children_count > 0) {
-                    spacing = layout->flex_dim / (children_count - 1);
-                }
-                break;
-
-            case FLEX_ALIGN_SPACE_AROUND:
-                if (children_count > 0) {
-                    spacing = layout->flex_dim / children_count;
-                    pos = spacing / 2;
-                }
-                break;
-
-            case FLEX_ALIGN_SPACE_EVENLY:
-                if (children_count > 0) {
-                    spacing = layout->flex_dim / (children_count + 1);
-                    pos = spacing;
-                }
-                break;
-
-            default:
-                assert(false && "incorrect justify_content");
-        }
+        assert(layout_align(item->justify_content, layout->flex_dim,
+                    children_count, &pos, &spacing)
+                && "incorrect justify_content");
         if (layout->reverse) {
             pos = layout->size_dim - pos;
         }
@@ -395,7 +427,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         pos += layout->vertical ? item->padding_top : item->padding_left;
     }
     if (layout->wrap && layout->reverse2) {
-        layout->pos2 -= layout->align_dim;
+        layout->pos2 -= layout->line_dim;
     }
 
     for (int i = child_begin; i < child_end; i++) {
@@ -427,19 +459,19 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         float align_pos = layout->pos2 + 0;
         switch (align) {
             case FLEX_ALIGN_FLEX_END:
-                align_pos += layout->align_dim - align_size
+                align_pos += layout->line_dim - align_size
                     - CHILD_MARGIN(child, right, bottom);
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align_pos += (layout->align_dim / 2.0) - (align_size / 2.0)
+                align_pos += (layout->line_dim / 2.0) - (align_size / 2.0)
                     + (CHILD_MARGIN(child, left, top)
                             - CHILD_MARGIN(child, right, bottom));
                 break;
 
             case FLEX_ALIGN_STRETCH:
                 if (align_size == 0) {
-                    CHILD_SIZE2(child) = layout->align_dim
+                    CHILD_SIZE2(child) = layout->line_dim
                         - (CHILD_MARGIN(child, left, top)
                                 + CHILD_MARGIN(child, right, bottom));
                 }
@@ -475,7 +507,21 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     }
 
     if (layout->wrap && !layout->reverse2) {
-        layout->pos2 += layout->align_dim;
+        layout->pos2 += layout->line_dim;
+    }
+
+    if (layout->wrap && item->align_content != FLEX_ALIGN_FLEX_START) {
+        layout->lines = (struct flex_layout_line *)realloc(layout->lines,
+                sizeof(struct flex_layout_line) * (layout->lines_count + 1));
+        assert(layout->lines != NULL);
+
+        struct flex_layout_line *line = &layout->lines[layout->lines_count];
+        line->child_begin = child_begin;
+        line->child_end = child_end;
+        line->size = layout->line_dim;
+
+        layout->lines_count++;
+        layout->lines_sizes += line->size;
     }
 }
 
@@ -517,11 +563,9 @@ layout_item(struct flex_item *item, float width, float height)
                 last_layout_child = i;
             }
 
-            // In wrap mode, the cross axis dimension of each line is the
-            // highest cross axis size of all items in said line.
             float child_size2 = CHILD_SIZE2(child);
-            if (child_size2 > layout->align_dim) {
-                layout->align_dim = child_size2;
+            if (child_size2 > layout->line_dim) {
+                layout->line_dim = child_size2;
             }
         }
 
@@ -535,6 +579,47 @@ layout_item(struct flex_item *item, float width, float height)
 
     // Layout remaining items in wrap mode, or everything otherwise.
     layout_items(item, last_layout_child, item->children.count, layout);
+
+    // In wrap mode if the `align_content' property changed from its default
+    // value we need to tweak the position of each line accordingly.
+    if (layout->wrap && item->align_content != FLEX_ALIGN_FLEX_START
+            && layout->lines_count > 0) {
+        float pos = 0;
+        float spacing = 0;
+        assert(layout_align(item->align_content,
+                    layout->align_dim - layout->lines_sizes,
+                    layout->lines_count, &pos, &spacing)
+                && "incorrect align_content");
+
+        float old_pos = 0;
+        if (layout->reverse2) {
+            pos = layout->align_dim - pos;
+            old_pos = layout->align_dim;
+        }
+
+        for (int i = 0; i < layout->lines_count; i++) {
+            struct flex_layout_line *line = &layout->lines[i];
+
+            if (layout->reverse2) {
+                pos -= line->size;
+                pos -= spacing;
+                old_pos -= line->size;
+            }
+
+            // Re-position the children of this line, honoring any child
+            // alignment previously set within the line.
+            for (int j = line->child_begin; j < line->child_end; j++) {
+                struct flex_item *child = LAYOUT_CHILD_AT(item, j);
+                CHILD_POS2(child) = pos + (CHILD_POS2(child) - old_pos);
+            }
+
+            if (!layout->reverse2) {
+                pos += line->size;
+                pos += spacing;
+                old_pos += line->size;
+            }
+        }
+    }
 
     layout_cleanup(layout);
 }
