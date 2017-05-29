@@ -51,7 +51,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | direction row_reverse | :ok: |
 | wrap no_wrap | :ok: |
 | wrap wrap | :ok: |
-| wrap wrap_reverse | :x: |
+| wrap wrap_reverse | :ok: |
 | grow | :ok: |
 | shrink | :ok: |
 | order | :ok: |
