@@ -193,7 +193,9 @@ FRAME_GETTER(height, 3)
 
 struct flex_layout {
     // Set during init.
-    bool reverse;
+    bool wrap;
+    bool reverse;               // whether main axis is reversed
+    bool reverse2;              // whether cross axis is reversed (wrap only)
     bool vertical;
     float size_dim;             // main axis parent size
     float align_dim;            // cross axis parent size
@@ -275,7 +277,18 @@ layout_init(struct flex_item *item, float width, float height,
     layout->flex_grows = 0;
     layout->flex_shrinks = 0;
 
-    layout->pos2 = layout->vertical ? item->padding_left : item->padding_top;
+    layout->reverse2 = false;
+    layout->wrap = item->wrap != FLEX_WRAP_NOWRAP;
+    if (layout->wrap) {
+        if (item->wrap == FLEX_WRAP_WRAP_REVERSE) {
+            layout->reverse2 = true;
+            layout->pos2 = layout->align_dim;
+        }
+    }
+    else {
+        layout->pos2 = layout->vertical
+            ? item->padding_left : item->padding_top;
+    }
 }
 
 static void
@@ -292,6 +305,9 @@ layout_cleanup(struct flex_layout *layout)
         layout->flex_dim = layout->size_dim; \
         layout->flex_grows = 0; \
         layout->flex_shrinks = 0; \
+        if (layout->wrap) { \
+            layout->align_dim = 0; \
+        } \
     } \
     while (0)
 
@@ -372,6 +388,9 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     else {
         pos += layout->vertical ? item->padding_top : item->padding_left;
     }
+    if (layout->wrap && layout->reverse2) {
+        layout->pos2 -= layout->align_dim;
+    }
 
     for (int i = child_begin; i < child_end; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
@@ -448,6 +467,10 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         // Now that the item has a frame, we can layout its children.
         layout_item(child, child->frame[2], child->frame[3]);
     }
+
+    if (layout->wrap && !layout->reverse2) {
+        layout->pos2 += layout->align_dim;
+    }
 }
 
 static void
@@ -462,11 +485,7 @@ layout_item(struct flex_item *item, float width, float height)
 
     LAYOUT_RESET();
 
-    bool wrap = item->wrap != FLEX_WRAP_NOWRAP;
     int last_layout_child = 0;
-    if (wrap) {
-        layout->align_dim = 0;
-    }
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
 
@@ -482,16 +501,14 @@ layout_item(struct flex_item *item, float width, float height)
         }
 
         float child_size = CHILD_SIZE(child);
-        if (wrap) {
+        if (layout->wrap) {
             if (layout->flex_dim < child_size) {
                 // Not enough space for this child on this line, layout the
                 // remaining items and move it to a new line.
                 layout_items(item, last_layout_child, i, layout);
 
                 LAYOUT_RESET();
-                layout->pos2 += layout->align_dim;
                 last_layout_child = i;
-                layout->align_dim = 0;
             }
 
             // In wrap mode, the cross axis dimension of each line is the

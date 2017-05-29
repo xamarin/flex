@@ -1466,6 +1466,66 @@ test_wrap13(void)
 }
 
 static void
+test_wrap14(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP_REVERSE);
+
+    struct flex_item *child1 = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(50, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(50, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 70, 0, 50, 50);
+    TEST_FRAME_EQUAL(child2, 70, 50, 50, 50);
+    TEST_FRAME_EQUAL(child3, 20, 0, 50, 50);
+
+    flex_item_free(root);
+}
+
+static void
+test_wrap15(void)
+{
+    struct flex_item *root = flex_item_with_size(120, 120);
+    flex_item_set_wrap(root, FLEX_WRAP_WRAP_REVERSE);
+
+    struct flex_item *child1 = flex_item_with_size(25, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(25, 50);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(25, 50);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(25, 50);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(25, 50);
+    flex_item_add(root, child5);
+
+    struct flex_item *child6 = flex_item_with_size(25, 50);
+    flex_item_add(root, child6);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 95, 0, 25, 50);
+    TEST_FRAME_EQUAL(child2, 95, 50, 25, 50);
+    TEST_FRAME_EQUAL(child3, 70, 0, 25, 50);
+    TEST_FRAME_EQUAL(child4, 70, 50, 25, 50);
+    TEST_FRAME_EQUAL(child5, 45, 0, 25, 50);
+    TEST_FRAME_EQUAL(child6, 45, 50, 25, 50);
+
+    flex_item_free(root);
+}
+
+static void
 test_justify_content1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -2160,6 +2220,8 @@ main(void)
     UNIT(wrap11);
     UNIT(wrap12);
     UNIT(wrap13);
+    UNIT(wrap14);
+    UNIT(wrap15);
 
     UNIT(justify_content1);
     UNIT(justify_content2);
