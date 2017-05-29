@@ -39,10 +39,18 @@ typedef enum {
 } flex_property;
 
 static void
+update_should_order_children(struct flex_item *item)
+{
+    if (item->order != 0 && item->parent != NULL) {
+        item->parent->should_order_children = true;
+    }
+}
+
+static void
 item_property_changed(struct flex_item *item, flex_property property)
 {
-    if (property == FLEX_PROPERTY_order && item->parent != NULL) {
-        item->parent->should_order_children = true;
+    if (property == FLEX_PROPERTY_order) {
+        update_should_order_children(item);
     }
 }
 
@@ -117,9 +125,7 @@ child_set(struct flex_item *item, struct flex_item *child, int index)
     item->children.ary[index] = child;
     item->children.count++;
     child->parent = item;
-    if (child->order != 0) {
-        item->should_order_children = true;
-    }
+    update_should_order_children(child);
 }
 
 void
