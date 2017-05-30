@@ -24,14 +24,12 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | justify_content flex_start | :ok: |
 | justify_content flex_end | :ok: |
 | justify_content center | :ok: |
-| justify_content stretch | :x: |
 | justify_content space_around | :ok: |
 | justify_content space_between | :ok: |
 | justify_content space_evenly | :ok: |
 | align_content flex_start | :ok: |
 | align_content flex_end | :ok: |
 | align_content center | :ok: |
-| align_content stretch | :x: |
 | align_content space_around | :ok: |
 | align_content space_between | :ok: |
 | align_content space_evenly | :ok: |
