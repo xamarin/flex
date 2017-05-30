@@ -415,7 +415,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     // Determine the main axis initial position and optional spacing.
     float pos = 0;
     float spacing = 0;
-    if (layout->flex_grows == 0) {
+    if (layout->flex_grows == 0 && layout->flex_dim > 0) {
         assert(layout_align(item->justify_content, layout->flex_dim,
                     children_count, &pos, &spacing)
                 && "incorrect justify_content");

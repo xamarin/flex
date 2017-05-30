@@ -1870,6 +1870,115 @@ test_justify_content15(void)
 }
 
 static void
+test_justify_content16(void)
+{
+    // The `justify_content' property is ignored when the children fill up
+    // all the space.
+    int modes[] = {
+        FLEX_ALIGN_CENTER,
+        FLEX_ALIGN_FLEX_START,
+        FLEX_ALIGN_FLEX_END,
+        FLEX_ALIGN_SPACE_BETWEEN,
+        FLEX_ALIGN_SPACE_AROUND,
+        FLEX_ALIGN_SPACE_EVENLY
+    };
+    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
+        struct flex_item *root = flex_item_with_size(100, 100);
+        flex_item_set_justify_content(root, modes[i]);
+
+        struct flex_item *child1 = flex_item_with_size(50, 50);
+        flex_item_add(root, child1);
+
+        struct flex_item *child2 = flex_item_with_size(50, 50);
+        flex_item_add(root, child2);
+
+        flex_layout(root);
+
+        TEST_FRAME_EQUAL(child1, 0, 0, 50, 50);
+        TEST_FRAME_EQUAL(child2, 0, 50, 50, 50);
+
+        flex_item_free(root);
+    }
+}
+
+static void
+test_justify_content17(void)
+{
+    // The `justify_content' property is ignored when the children fill up
+    // more than the space.
+    int modes[] = {
+        FLEX_ALIGN_CENTER,
+        FLEX_ALIGN_FLEX_START,
+        FLEX_ALIGN_FLEX_END,
+        FLEX_ALIGN_SPACE_BETWEEN,
+        FLEX_ALIGN_SPACE_AROUND,
+        FLEX_ALIGN_SPACE_EVENLY
+    };
+    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
+        struct flex_item *root = flex_item_with_size(100, 100);
+        flex_item_set_justify_content(root, modes[i]);
+
+        struct flex_item *child1 = flex_item_with_size(50, 100);
+        flex_item_add(root, child1);
+
+        struct flex_item *child2 = flex_item_with_size(50, 100);
+        flex_item_add(root, child2);
+
+        struct flex_item *child3 = flex_item_with_size(50, 100);
+        flex_item_add(root, child3);
+
+        struct flex_item *child4 = flex_item_with_size(50, 100);
+        flex_item_add(root, child4);
+
+        flex_layout(root);
+
+        TEST_FRAME_EQUAL(child1, 0, 0, 50, 25);
+        TEST_FRAME_EQUAL(child2, 0, 25, 50, 25);
+        TEST_FRAME_EQUAL(child3, 0, 50, 50, 25);
+        TEST_FRAME_EQUAL(child4, 0, 75, 50, 25);
+
+        flex_item_free(root);
+    }
+}
+
+static void
+test_justify_content18(void)
+{
+    // The `justify_content' property is ignored when there are flexible
+    // children.
+    int modes[] = {
+        FLEX_ALIGN_CENTER,
+        FLEX_ALIGN_FLEX_START,
+        FLEX_ALIGN_FLEX_END,
+        FLEX_ALIGN_SPACE_BETWEEN,
+        FLEX_ALIGN_SPACE_AROUND,
+        FLEX_ALIGN_SPACE_EVENLY
+    };
+    for (int i = 0; i < sizeof(modes) / sizeof(int); i++) {
+        struct flex_item *root = flex_item_with_size(100, 100);
+        flex_item_set_justify_content(root, modes[i]);
+
+        struct flex_item *child1 = flex_item_with_size(50, 20);
+        flex_item_add(root, child1);
+
+        struct flex_item *child2 = flex_item_with_size(50, 20);
+        flex_item_set_grow(child2, 1);
+        flex_item_add(root, child2);
+
+        struct flex_item *child3 = flex_item_with_size(50, 20);
+        flex_item_add(root, child3);
+
+        flex_layout(root);
+
+        TEST_FRAME_EQUAL(child1, 0, 0, 50, 20);
+        TEST_FRAME_EQUAL(child2, 0, 20, 50, 60);
+        TEST_FRAME_EQUAL(child3, 0, 80, 50, 20);
+
+        flex_item_free(root);
+    }
+}
+
+static void
 test_align_content1(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -2415,6 +2524,9 @@ main(void)
     UNIT(justify_content13);
     UNIT(justify_content14);
     UNIT(justify_content15);
+    UNIT(justify_content16);
+    UNIT(justify_content17);
+    UNIT(justify_content18);
 
     UNIT(align_content1);
     UNIT(align_content2);
