@@ -228,15 +228,6 @@ struct flex_layout {
     float lines_sizes;
 };
 
-static int
-child_order_cmp(void *ctx, const void *e1, const void *e2)
-{
-    struct flex_item *item = (struct flex_item *)ctx;
-    int order1 = item->children.ary[*(int *)e1]->order;
-    int order2 = item->children.ary[*(int *)e2]->order;
-    return order1 > order2 ? 1 : (order1 < order2 ? -1 : 0);
-}
-
 static void
 layout_init(struct flex_item *item, float width, float height,
         struct flex_layout *layout)
@@ -277,16 +268,29 @@ layout_init(struct flex_item *item, float width, float height,
     }
 
     layout->ordered_indices = NULL;
-    if (item->should_order_children) {
-        layout->ordered_indices =
-            (int *)malloc(sizeof(int) * item->children.count);
-        assert(layout->ordered_indices != NULL);
+    if (item->should_order_children && item->children.count > 0) {
+        int *indices = (int *)malloc(sizeof(int) * item->children.count);
+        assert(indices != NULL);
 
+        // Creating a list of item indices sorted using the children's `order'
+        // attribute values. We are using a simple insertion sort as we need
+        // stability (insertion order must be preserved) and cross-platform
+        // support. We should eventually switch to merge sort (or something
+        // else) if the number of items becomes significant enough.
         for (int i = 0; i < item->children.count; i++) {
-            layout->ordered_indices[i] = i;
+            indices[i] = i;
+            for (int j = i; j > 0; j--) {
+                int prev = indices[j - 1];
+                int curr = indices[j];
+                if (item->children.ary[prev]->order
+                        <= item->children.ary[curr]->order) {
+                    break;
+                }
+                indices[j - 1] = curr;
+                indices[j] = prev;
+            }
         }
-        qsort_r(layout->ordered_indices, item->children.count, sizeof(int),
-                item, child_order_cmp);
+        layout->ordered_indices = indices;
     }
 
     layout->flex_dim = 0;

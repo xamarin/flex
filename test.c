@@ -785,6 +785,32 @@ test_order3(void)
 }
 
 static void
+test_order4(void)
+{
+    // This test ensures that the insertion order of the children is preserved
+    // when they get re-ordered during layout.
+    struct flex_item *root = flex_item_with_size(200, 200);
+
+    const int max = 100;
+    for (int i = 0; i < max; i++) {
+        flex_item_add(root, flex_item_with_size(1, 1));
+    }
+
+    flex_item_set_order(flex_item_child(root, 0), 1);
+    flex_item_set_order(flex_item_child(root, max - 1), -1);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(flex_item_child(root, max - 1), 0, 0, 1, 1);
+
+    for (int i = 1; i < max - 1; i++) {
+        TEST_FRAME_EQUAL(flex_item_child(root, i), 0, i, 1, 1);
+    }
+
+    TEST_FRAME_EQUAL(flex_item_child(root, 0), 0, max - 1, 1, 1);
+}
+
+static void
 test_align_self1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -2343,6 +2369,7 @@ main(void)
     UNIT(order1);
     UNIT(order2);
     UNIT(order3);
+    UNIT(order4);
 
     UNIT(align_self1);
     UNIT(align_self2);
