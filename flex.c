@@ -360,6 +360,8 @@ static bool
 layout_align(flex_align align, float flex_dim, unsigned int children_count,
         float *pos_p, float *spacing_p)
 {
+    assert(flex_dim > 0);
+
     float pos = 0;
     float spacing = 0;
     switch (align) {
@@ -590,10 +592,12 @@ layout_item(struct flex_item *item, float width, float height)
             && layout->lines_count > 0) {
         float pos = 0;
         float spacing = 0;
-        assert(layout_align(item->align_content,
-                    layout->align_dim - layout->lines_sizes,
-                    layout->lines_count, &pos, &spacing)
-                && "incorrect align_content");
+        float flex_dim = layout->align_dim - layout->lines_sizes;
+        if (flex_dim > 0) {
+            assert(layout_align(item->align_content, flex_dim,
+                        layout->lines_count, &pos, &spacing)
+                    && "incorrect align_content");
+        }
 
         float old_pos = 0;
         if (layout->reverse2) {
