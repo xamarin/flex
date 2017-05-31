@@ -22,6 +22,7 @@ struct flex_item *flex_item_delete(struct flex_item *item, unsigned int index);
 unsigned int flex_item_count(struct flex_item *item);
 struct flex_item *flex_item_child(struct flex_item *item, unsigned int index);
 struct flex_item *flex_item_parent(struct flex_item *item);
+struct flex_item *flex_item_root(struct flex_item *item);
 
 // Layout the items associated with this item, as well as their children.
 // This function can only be called on a root item whose `width' and `height'

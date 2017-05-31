@@ -185,6 +185,15 @@ flex_item_parent(struct flex_item *item)
     return item->parent;
 }
 
+struct flex_item *
+flex_item_root(struct flex_item *item)
+{
+    while (item->parent != NULL) {
+        item = item->parent;
+    }
+    return item;
+}
+
 #define FRAME_GETTER(name, index) \
     float flex_item_get_frame_##name(struct flex_item *item) { \
         return item->frame[index]; \

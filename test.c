@@ -197,6 +197,32 @@ test_children1(void)
 static void
 test_children2(void)
 {
+    struct flex_item *root = flex_item_new();
+
+    TEST(flex_item_root(root) == root);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_add(root, child1);
+
+    TEST(flex_item_root(child1) == root);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_add(child1, child2);
+
+    TEST(flex_item_root(child2) == root);
+
+    flex_item_delete(root, 0);
+
+    TEST(flex_item_root(child1) == child1);
+    TEST(flex_item_root(child2) == child1);
+
+    flex_item_free(child1);
+    flex_item_free(root);
+}
+
+static void
+test_children3(void)
+{
 #define CENTER_ITEM(width, height) \
     ({ \
         struct flex_item *_item = flex_item_with_size(width, height); \
@@ -2449,6 +2475,7 @@ main(void)
 
     UNIT(children1);
     UNIT(children2);
+    UNIT(children3);
 
     UNIT(basis1);
     UNIT(basis2);
