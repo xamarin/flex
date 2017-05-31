@@ -17,12 +17,10 @@
 #include "flex.h"
 
 struct flex_item {
-#undef FLEX_ATTRIBUTE
 #define FLEX_ATTRIBUTE(name, type, def) type name;
 #include "flex.h"
 
     float frame[4];
-
     struct flex_item *parent;
     struct {
 	unsigned int cap;
@@ -32,9 +30,8 @@ struct flex_item {
     bool should_order_children;
 };
 
-#undef FLEX_ATTRIBUTE
-#define FLEX_ATTRIBUTE(name, type, def) FLEX_PROPERTY_##name,
 typedef enum {
+#define FLEX_ATTRIBUTE(name, type, def) FLEX_PROPERTY_##name,
 #include "flex.h"
 } flex_property;
 
@@ -54,7 +51,6 @@ item_property_changed(struct flex_item *item, flex_property property)
     }
 }
 
-#undef FLEX_ATTRIBUTE
 #define FLEX_ATTRIBUTE(name, type, def) \
     type flex_item_get_##name(struct flex_item *item) { \
         return item->name; \
@@ -72,7 +68,6 @@ flex_item_new(void)
         (struct flex_item *)malloc(sizeof(struct flex_item));
     assert(item != NULL);
 
-#undef FLEX_ATTRIBUTE
 #define FLEX_ATTRIBUTE(name, type, def) item->name = def;
 #include "flex.h"
 

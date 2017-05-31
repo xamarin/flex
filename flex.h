@@ -118,3 +118,5 @@ FLEX_ATTRIBUTE(grow, unsigned int, 0)
 FLEX_ATTRIBUTE(shrink, unsigned int, 1)
 FLEX_ATTRIBUTE(order, int, 0)
 FLEX_ATTRIBUTE(basis, float, 0)
+
+#undef FLEX_ATTRIBUTE
