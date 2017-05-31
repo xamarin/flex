@@ -90,10 +90,10 @@ typedef enum {
 FLEX_ATTRIBUTE(width, float, NAN)
 FLEX_ATTRIBUTE(height, float, NAN)
 
-FLEX_ATTRIBUTE(left, float, 0)
-FLEX_ATTRIBUTE(right, float, 0)
-FLEX_ATTRIBUTE(top, float, 0)
-FLEX_ATTRIBUTE(bottom, float, 0)
+FLEX_ATTRIBUTE(left, float, NAN)
+FLEX_ATTRIBUTE(right, float, NAN)
+FLEX_ATTRIBUTE(top, float, NAN)
+FLEX_ATTRIBUTE(bottom, float, NAN)
 
 FLEX_ATTRIBUTE(padding_left, float, 0)
 FLEX_ATTRIBUTE(padding_right, float, 0)

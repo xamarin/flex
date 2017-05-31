@@ -416,9 +416,9 @@ layout_align(flex_align align, float flex_dim, unsigned int children_count,
 
 static void
 layout_items(struct flex_item *item, unsigned int child_begin,
-        unsigned int child_end, struct flex_layout *layout)
+        unsigned int child_end, int children_count, struct flex_layout *layout)
 {
-    int children_count = child_end - child_begin;
+    assert(children_count <= (child_end - child_begin));
     if (children_count <= 0) {
         return;
     }
@@ -447,6 +447,10 @@ layout_items(struct flex_item *item, unsigned int child_begin,
 
     for (int i = child_begin; i < child_end; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
+        if (child->position == FLEX_POSITION_ABSOLUTE) {
+            // Already positioned.
+            continue;
+        }
 
         // Grow or shrink the main axis item size if needed.
         float flex_size = 0;
@@ -553,8 +557,48 @@ layout_item(struct flex_item *item, float width, float height)
     LAYOUT_RESET();
 
     int last_layout_child = 0;
+    int relative_children_count = 0;
     for (int i = 0; i < item->children.count; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
+
+        // Items with an absolute position have their frames determined
+        // directly and are skipped during layout.
+        if (child->position == FLEX_POSITION_ABSOLUTE) {
+#define ABSOLUTE_SIZE(val, pos1, pos2, dim) \
+            (!isnan(val) \
+             ? val \
+             : (!isnan(pos1) && !isnan(pos2) \
+                 ? dim - pos2 - pos1 \
+                 : 0))
+
+#define ABSOLUTE_POS(pos1, pos2, size, dim) \
+            (!isnan(pos1) \
+             ? pos1 \
+             : (!isnan(pos2) \
+                 ? dim - size - pos2 \
+                 : 0))
+
+            float child_width = ABSOLUTE_SIZE(child->width, child->left,
+                    child->right, width);
+
+            float child_height = ABSOLUTE_SIZE(child->height, child->top,
+                    child->bottom, height);
+
+            float child_x = ABSOLUTE_POS(child->left, child->right,
+                    child_width, width);
+
+            float child_y = ABSOLUTE_POS(child->top, child->bottom,
+                    child_height, height);
+
+            child->frame[0] = child_x;
+            child->frame[1] = child_y;
+            child->frame[2] = child_width;
+            child->frame[3] = child_height;
+
+#undef ABSOLUTE_POS
+#undef ABSOLUTE_SIZE
+            continue;
+        }
 
         // Initialize frame.
         child->frame[0] = 0;
@@ -572,10 +616,12 @@ layout_item(struct flex_item *item, float width, float height)
             if (layout->flex_dim < child_size) {
                 // Not enough space for this child on this line, layout the
                 // remaining items and move it to a new line.
-                layout_items(item, last_layout_child, i, layout);
+                layout_items(item, last_layout_child, i,
+                        relative_children_count, layout);
 
                 LAYOUT_RESET();
                 last_layout_child = i;
+                relative_children_count = 0;
             }
 
             float child_size2 = CHILD_SIZE2(child);
@@ -590,10 +636,13 @@ layout_item(struct flex_item *item, float width, float height)
         layout->flex_dim -= child_size
             + (CHILD_MARGIN(child, top, left)
                     + CHILD_MARGIN(child, bottom, right));
+
+        relative_children_count++;
     }
 
     // Layout remaining items in wrap mode, or everything otherwise.
-    layout_items(item, last_layout_child, item->children.count, layout);
+    layout_items(item, last_layout_child, item->children.count,
+            relative_children_count, layout);
 
     // In wrap mode if the `align_content' property changed from its default
     // value we need to tweak the position of each line accordingly.
@@ -627,6 +676,10 @@ layout_item(struct flex_item *item, float width, float height)
             // alignment previously set within the line.
             for (int j = line->child_begin; j < line->child_end; j++) {
                 struct flex_item *child = LAYOUT_CHILD_AT(item, j);
+                if (child->position == FLEX_POSITION_ABSOLUTE) {
+                    // Should not be re-positioned.
+                    continue;
+                }
                 CHILD_POS2(child) = pos + (CHILD_POS2(child) - old_pos);
             }
 
