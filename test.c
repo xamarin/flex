@@ -2351,6 +2351,42 @@ test_position7(void)
 }
 
 static void
+test_position8(void)
+{
+    // Items with an absolute position can be nested.
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_set_position(child1, FLEX_POSITION_ABSOLUTE);
+    flex_item_set_left(child1, 10);
+    flex_item_set_top(child1, 10);
+    flex_item_set_right(child1, 10);
+    flex_item_set_bottom(child1, 10);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(60, 60);
+    flex_item_set_position(child2, FLEX_POSITION_ABSOLUTE);
+    flex_item_set_right(child2, 10);
+    flex_item_set_top(child2, 10);
+    flex_item_add(child1, child2);
+
+    struct flex_item *child3 = flex_item_with_size(40, 40);
+    flex_item_set_position(child3, FLEX_POSITION_ABSOLUTE);
+    flex_item_set_left(child3, 10);
+    flex_item_set_bottom(child3, 10);
+    flex_item_add(child2, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 10, 10, 80, 80);
+    TEST_FRAME_EQUAL(child2, 10, 10, 60, 60);
+    TEST_FRAME_EQUAL(child3, 10, 10, 40, 40);
+
+    flex_item_free(root);
+}
+
+static void
 test_margin1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -2765,6 +2801,7 @@ main(void)
     UNIT(position5);
     UNIT(position6);
     UNIT(position7);
+    UNIT(position8);
 
     UNIT(margin1);
     UNIT(margin2);

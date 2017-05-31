@@ -590,6 +590,9 @@ layout_item(struct flex_item *item, float width, float height)
             child->frame[2] = child_width;
             child->frame[3] = child_height;
 
+            // Now that the item has a frame, we can layout its children.
+            layout_item(child, child->frame[2], child->frame[3]);
+
 #undef ABSOLUTE_POS
 #undef ABSOLUTE_SIZE
             continue;
