@@ -42,7 +42,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | align_self center | :ok: |
 | align_self stretch | :ok: |
 | position relative | :ok: |
-| position absolute | :x: |
+| position absolute | :ok: |
 | direction column | :ok: |
 | direction column_reverse | :ok: |
 | direction row | :ok: |
