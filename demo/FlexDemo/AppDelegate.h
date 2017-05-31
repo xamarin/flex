@@ -36,6 +36,11 @@
     IBOutlet NSTextField *paddingRight;
     IBOutlet NSTextField *paddingTop;
     IBOutlet NSTextField *paddingBottom;
+    IBOutlet NSPopUpButton *position;
+    IBOutlet NSTextField *positionLeft;
+    IBOutlet NSTextField *positionRight;
+    IBOutlet NSTextField *positionTop;
+    IBOutlet NSTextField *positionBottom;
     IBOutlet NSColorWell *color;
     
     NSInteger _selected_item;
@@ -64,6 +69,11 @@
 - (IBAction)paddingRightSelected:(id)sender;
 - (IBAction)paddingTopSelected:(id)sender;
 - (IBAction)paddingBottomSelected:(id)sender;
+- (IBAction)positionSelected:(id)sender;
+- (IBAction)positionLeftSelected:(id)sender;
+- (IBAction)positionRightSelected:(id)sender;
+- (IBAction)positionTopSelected:(id)sender;
+- (IBAction)positionBottomSelected:(id)sender;
 - (IBAction)colorSelected:(id)sender;
 
 @end

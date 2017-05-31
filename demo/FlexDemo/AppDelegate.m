@@ -94,6 +94,7 @@
     [marginRight setEnabled:!is_root];
     [marginTop setEnabled:!is_root];
     [marginBottom setEnabled:!is_root];
+    [position setEnabled:!is_root];
     [remove setEnabled:!is_root];
 
     [color setColor:[view color]];
@@ -105,9 +106,9 @@
 
 #define FLEX_FLOAT_GET(name, field) \
     do { \
-	float _val = flex_item_get_##name(item); \
-    	[field setStringValue:[NSString stringWithFormat:@"%0.1f", \
-            isnan(_val) ? 0 : _val]]; \
+        float _val = flex_item_get_##name(item); \
+    	[field setStringValue:isnan(_val) ? @"NAN" : [NSString stringWithFormat:@"%0.1f", \
+            _val]]; \
     } \
     while (0)
 
@@ -130,6 +131,11 @@
         FLEX_FLOAT_GET(margin_right, marginRight);
         FLEX_FLOAT_GET(margin_top, marginTop);
         FLEX_FLOAT_GET(margin_bottom, marginBottom);
+        FLEX_ENUM_GET(position, position);
+        FLEX_FLOAT_GET(left, positionLeft);
+        FLEX_FLOAT_GET(right, positionRight);
+        FLEX_FLOAT_GET(top, positionTop);
+        FLEX_FLOAT_GET(bottom, positionBottom);
     }
     else {
         [width setStringValue:@""];
@@ -139,6 +145,10 @@
         [marginRight setStringValue:@""];
         [marginTop setStringValue:@""];
         [marginBottom setStringValue:@""];
+        [positionLeft setStringValue:@""];
+        [positionRight setStringValue:@""];
+        [positionTop setStringValue:@""];
+        [positionBottom setStringValue:@""];
     }
 
     FLEX_FLOAT_GET(padding_left, paddingLeft);
@@ -160,13 +170,25 @@
 - (void)_propertyChanged
 {
     [alignContent setEnabled:[wrap selectedTag] != FLEX_WRAP_NOWRAP];
+
+    bool position_enabled = [position selectedTag] == FLEX_POSITION_ABSOLUTE;
+    [positionLeft setEnabled:position_enabled];
+    [positionRight setEnabled:position_enabled];
+    [positionTop setEnabled:position_enabled];
+    [positionBottom setEnabled:position_enabled];
 }
+
+#define _GET_ITEM \
+    struct flex_item *item = [[self _selectedItem] item]; \
+    if (item == NULL) { \
+        return; \
+    }
 
 #define FLEX_ENUM_ACTION(name, popup) \
     - (IBAction)popup##Selected:(id)sender \
     { \
-        flex_item_set_##name([[self _selectedItem] item], \
-                (int)[popup selectedTag]); \
+        _GET_ITEM \
+        flex_item_set_##name(item, (int)[popup selectedTag]); \
         [root updateLayout]; \
         [self _propertyChanged]; \
     }
@@ -174,25 +196,22 @@
 #define FLEX_FLOAT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
+        _GET_ITEM \
         NSString *str = [field stringValue]; \
-        if ([str length] > 0) { \
-            flex_item_set_##name([[self _selectedItem] item], \
-            	[[field stringValue] floatValue]); \
-            [root updateLayout]; \
-            [self _propertyChanged]; \
-    	} \
+        float val = ([str isEqualToString:@""] || [str isEqualToString:@"NAN"]) \
+            ? NAN : [str floatValue]; \
+        flex_item_set_##name(item, val); \
+        [root updateLayout]; \
+        [self _propertyChanged]; \
     }
 
 #define FLEX_INT_ACTION(name, field) \
     - (IBAction)field##Selected:(id)sender \
     { \
-        NSString *str = [field stringValue]; \
-        if ([str length] > 0) { \
-            flex_item_set_##name([[self _selectedItem] item], \
-                [[field stringValue] intValue]); \
-            [root updateLayout]; \
-            [self _propertyChanged]; \
-    	} \
+        _GET_ITEM \
+        flex_item_set_##name(item, [[field stringValue] intValue]); \
+        [root updateLayout]; \
+        [self _propertyChanged]; \
     }
 
 FLEX_ENUM_ACTION(direction, direction);
@@ -201,6 +220,7 @@ FLEX_ENUM_ACTION(justify_content, justifyContent);
 FLEX_ENUM_ACTION(wrap, wrap);
 FLEX_ENUM_ACTION(align_content, alignContent);
 FLEX_ENUM_ACTION(align_self, alignSelf);
+FLEX_ENUM_ACTION(position, position);
 
 FLEX_FLOAT_ACTION(width, width);
 FLEX_FLOAT_ACTION(height, height);
@@ -216,10 +236,16 @@ FLEX_FLOAT_ACTION(padding_right, paddingRight);
 FLEX_FLOAT_ACTION(padding_top, paddingTop);
 FLEX_FLOAT_ACTION(padding_bottom, paddingBottom);
 
+FLEX_FLOAT_ACTION(left, positionLeft);
+FLEX_FLOAT_ACTION(right, positionRight);
+FLEX_FLOAT_ACTION(top, positionTop);
+FLEX_FLOAT_ACTION(bottom, positionBottom);
+
 FLEX_INT_ACTION(grow, grow);
 FLEX_INT_ACTION(shrink, shrink);
 FLEX_INT_ACTION(order, order);
 
+#undef _GET_ITEM
 #undef FLEX_INT_ACTION
 #undef FLEX_FLOAT_ACTION
 #undef FLEX_ENUM_ACTION
