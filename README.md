@@ -57,10 +57,11 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 
 ## Tests
 
-There is a test suite that you can run with the following command:
+There is a test suite in the `tests` directory that you can run:
 
 ```
-$ make test
+$ cd tests
+$ make
 ```
 
 The test suite doesn't provide full coverage at this stage (as many parameters are in play) and needs more work.
