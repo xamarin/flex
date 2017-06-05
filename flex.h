@@ -40,8 +40,8 @@ typedef enum {
     FLEX_ALIGN_AUTO = 0,
     FLEX_ALIGN_STRETCH,
     FLEX_ALIGN_CENTER,
-    FLEX_ALIGN_FLEX_START,
-    FLEX_ALIGN_FLEX_END,
+    FLEX_ALIGN_START,
+    FLEX_ALIGN_END,
     FLEX_ALIGN_SPACE_BETWEEN,
     FLEX_ALIGN_SPACE_AROUND,
     FLEX_ALIGN_SPACE_EVENLY
@@ -105,9 +105,9 @@ FLEX_ATTRIBUTE(margin_right, float, 0)
 FLEX_ATTRIBUTE(margin_top, float, 0)
 FLEX_ATTRIBUTE(margin_bottom, float, 0)
 
-FLEX_ATTRIBUTE(justify_content, flex_align, FLEX_ALIGN_FLEX_START)
-FLEX_ATTRIBUTE(align_content, flex_align, FLEX_ALIGN_FLEX_START)
-FLEX_ATTRIBUTE(align_items, flex_align, FLEX_ALIGN_FLEX_START)
+FLEX_ATTRIBUTE(justify_content, flex_align, FLEX_ALIGN_START)
+FLEX_ATTRIBUTE(align_content, flex_align, FLEX_ALIGN_START)
+FLEX_ATTRIBUTE(align_items, flex_align, FLEX_ALIGN_START)
 FLEX_ATTRIBUTE(align_self, flex_align, FLEX_ALIGN_AUTO)
 
 FLEX_ATTRIBUTE(position, flex_position, FLEX_POSITION_RELATIVE)

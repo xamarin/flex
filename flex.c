@@ -369,10 +369,10 @@ layout_align(flex_align align, float flex_dim, unsigned int children_count,
     float pos = 0;
     float spacing = 0;
     switch (align) {
-        case FLEX_ALIGN_FLEX_START:
+        case FLEX_ALIGN_START:
             break;
 
-        case FLEX_ALIGN_FLEX_END:
+        case FLEX_ALIGN_END:
             pos = flex_dim;
             break;
 
@@ -472,7 +472,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         float align_size = CHILD_SIZE2(child);
         float align_pos = layout->pos2 + 0;
         switch (align) {
-            case FLEX_ALIGN_FLEX_END:
+            case FLEX_ALIGN_END:
                 align_pos += layout->line_dim - align_size
                     - CHILD_MARGIN(child, right, bottom);
                 break;
@@ -491,7 +491,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
                 }
                 // fall through
 
-            case FLEX_ALIGN_FLEX_START:
+            case FLEX_ALIGN_START:
                 align_pos += CHILD_MARGIN(child, left, top);
                 break;
 
@@ -524,7 +524,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         layout->pos2 += layout->line_dim;
     }
 
-    if (layout->wrap && item->align_content != FLEX_ALIGN_FLEX_START) {
+    if (layout->wrap && item->align_content != FLEX_ALIGN_START) {
         layout->lines = (struct flex_layout_line *)realloc(layout->lines,
                 sizeof(struct flex_layout_line) * (layout->lines_count + 1));
         assert(layout->lines != NULL);
@@ -644,7 +644,7 @@ layout_item(struct flex_item *item, float width, float height)
 
     // In wrap mode if the `align_content' property changed from its default
     // value we need to tweak the position of each line accordingly.
-    if (layout->wrap && item->align_content != FLEX_ALIGN_FLEX_START
+    if (layout->wrap && item->align_content != FLEX_ALIGN_START
             && layout->lines_count > 0) {
         float pos = 0;
         float spacing = 0;
