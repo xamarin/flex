@@ -57,6 +57,7 @@ public class FlexNativeFunctions {
     [DllImport(dll_name)] public static extern float flex_item_get_height (IntPtr arg1);
     [DllImport(dll_name)] public static extern int flex_item_get_justify_content (IntPtr arg1);
     [DllImport(dll_name)] public static extern float flex_item_get_left (IntPtr arg1);
+    [DllImport(dll_name)] public static extern IntPtr flex_item_get_managed_ptr (IntPtr arg1);
     [DllImport(dll_name)] public static extern float flex_item_get_margin_bottom (IntPtr arg1);
     [DllImport(dll_name)] public static extern float flex_item_get_margin_left (IntPtr arg1);
     [DllImport(dll_name)] public static extern float flex_item_get_margin_right (IntPtr arg1);
@@ -86,6 +87,7 @@ public class FlexNativeFunctions {
     [DllImport(dll_name)] public static extern void flex_item_set_height (IntPtr arg1, float arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_justify_content (IntPtr arg1, int arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_left (IntPtr arg1, float arg2);
+    [DllImport(dll_name)] public static extern void flex_item_set_managed_ptr (IntPtr arg1, IntPtr arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_margin_bottom (IntPtr arg1, float arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_margin_left (IntPtr arg1, float arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_margin_right (IntPtr arg1, float arg2);
