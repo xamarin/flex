@@ -134,7 +134,7 @@ void
 flex_item_insert(struct flex_item *item, unsigned int index,
     struct flex_item *child)
 {
-    assert(index < item->children.count);
+    assert(index <= item->children.count);
 
     grow_if_needed(item);
     for (int i = index; i < item->children.count; i++) {
