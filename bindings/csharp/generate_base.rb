@@ -71,7 +71,7 @@ using System.Runtime.InteropServices;
 
 EOS
 
-  enums.each do |group, values|
+  enums.to_a.sort { |x, y| x[0] <=> y[0] }.each do |group, values|
     io.puts "public enum Flex#{group} : int {"
     values.sort { |x, y| x[1] <=> y[1] }.each do |name, value|
       io.puts "    #{name} = #{value},"
@@ -82,7 +82,7 @@ EOS
 
   io.puts "public class FlexNativeFunctions {"
   io.puts "    private const string dll_name = \"#{DLL_NAME}\";" 
-  functions.each do |name, retval, args|
+  functions.sort { |x, y| x[0] <=> y[0] }.each do |name, retval, args|
     i = 0
     args.map! { |x| x + " arg#{i += 1}" }
     func_line = "#{retval} #{name} (#{args.join(', ')})"
