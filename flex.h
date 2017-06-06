@@ -24,6 +24,11 @@ struct flex_item *flex_item_child(struct flex_item *item, unsigned int index);
 struct flex_item *flex_item_parent(struct flex_item *item);
 struct flex_item *flex_item_root(struct flex_item *item);
 
+// An item can store an arbitrary pointer, which can be used by bindings as
+// the address of a managed object.
+void flex_item_set_managed_ptr(struct flex_item *item, void *ptr);
+void *flex_item_get_managed_ptr(struct flex_item *item);
+
 // Layout the items associated with this item, as well as their children.
 // This function can only be called on a root item whose `width' and `height'
 // properties have been set.

@@ -28,6 +28,7 @@ struct flex_item {
 	struct flex_item **ary;
     } children;
     bool should_order_children;
+    void *managed_ptr;
 };
 
 typedef enum {
@@ -78,6 +79,7 @@ flex_item_new(void)
     item->children.count = 0;
     item->children.ary = NULL;
     item->should_order_children = false;
+    item->managed_ptr = NULL;
 
     return item;
 }
@@ -187,6 +189,18 @@ flex_item_root(struct flex_item *item)
         item = item->parent;
     }
     return item;
+}
+
+void
+flex_item_set_managed_ptr(struct flex_item *item, void *ptr)
+{
+    item->managed_ptr = ptr;
+}
+
+void *
+flex_item_get_managed_ptr(struct flex_item *item)
+{
+    return item->managed_ptr;
 }
 
 #define FRAME_GETTER(name, index) \
