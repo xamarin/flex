@@ -46,9 +46,9 @@ public class FlexItem : FlexBase
         return ReleaseHandleForItem(child_item, false);
     }
 
-    public int Count()
+    public int Count
     {
-        return flex_item_count(item);
+        get { return flex_item_count(item); }
     }
 
     public FlexItem ItemAt(int index)
@@ -56,18 +56,20 @@ public class FlexItem : FlexBase
         return ItemFromItem(flex_item_child(item, index));
     }
 
-    public FlexItem Parent()
+    public FlexItem Parent
     {
-        return ItemFromItem(flex_item_parent(item));
+        get { return ItemFromItem(flex_item_parent(item)); }
     }
 
-    public FlexItem Root()
+    public FlexItem Root
     {
-        FlexItem root = ItemFromItem(flex_item_root(item));
-        if (root != null) {
-            return root;
+        get {
+            FlexItem root = ItemFromItem(flex_item_root(item));
+            if (root != null) {
+                return root;
+            }
+            return this;
         }
-        return this;
     }
 
     public void Layout()
