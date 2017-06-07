@@ -295,6 +295,22 @@ test_children4(void)
 }
 
 static void
+test_managed_ptr1(void)
+{
+    struct flex_item *item = flex_item_new();
+
+    TEST(flex_item_get_managed_ptr(item) == NULL);
+
+    flex_item_set_managed_ptr(item, (void *)0x42);
+
+    TEST(flex_item_get_managed_ptr(item) == (void *)0x42);
+
+    flex_item_set_managed_ptr(item, NULL);
+
+    TEST(flex_item_get_managed_ptr(item) == NULL);
+}
+
+static void
 test_basis1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -2736,6 +2752,8 @@ main(void)
     UNIT(children2);
     UNIT(children3);
     UNIT(children4);
+
+    UNIT(managed_ptr1);
 
     UNIT(basis1);
     UNIT(basis2);
