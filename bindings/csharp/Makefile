@@ -1,5 +1,7 @@
 FLEX_DIR = ../..
 
+all: test
+
 base.cs:        $(FLEX_DIR)/flex.h
 	/usr/bin/ruby generate_base.rb
 
