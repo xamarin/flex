@@ -13,6 +13,12 @@ public class FlexItem : FlexBase
         item = flex_item_new();
     }
 
+    public FlexItem(float width, float height)
+    {
+        this.Width = width;
+        this.Height = height;
+    }
+
     ~FlexItem()
     {
         if (item != IntPtr.Zero) {
@@ -62,6 +68,11 @@ public class FlexItem : FlexBase
             return root;
         }
         return this;
+    }
+
+    public void Layout()
+    {
+        flex_layout(item);
     }
 
     private static void CreateHandleForItem(FlexItem item)
@@ -118,19 +129,5 @@ public class FlexItem : FlexBase
             ReleaseHandlesWithinItem(flex_item_child(item, i), true);
         }
         ReleaseHandleForItem(item, reset);
-    }
-}
-
-public class FlexRoot : FlexItem
-{
-    public FlexRoot(float width, float height) : base()
-    {
-        this.Width = width;
-        this.Height = height;
-    }
-
-    public void Layout()
-    {
-        flex_layout(item);
     }
 }
