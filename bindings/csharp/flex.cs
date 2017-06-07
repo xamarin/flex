@@ -44,7 +44,9 @@ public class FlexItem : FlexBase
     public FlexItem RemoveAt(int index)
     {
         IntPtr child_item = flex_item_delete(item, index);
-        return ReleaseHandleForItem(child_item, false);
+        FlexItem child = ReleaseHandleForItem(child_item, false);
+        child.CreateHandle(false);
+        return child;
     }
 
     public int Count
@@ -64,13 +66,7 @@ public class FlexItem : FlexBase
 
     public FlexItem Root
     {
-        get {
-            FlexItem root = FlexItemFromItem(flex_item_root(item));
-            if (root != null) {
-                return root;
-            }
-            return this;
-        }
+        get { return FlexItemFromItem(flex_item_root(item)); }
     }
 
     public void Layout()
