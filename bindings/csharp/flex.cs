@@ -13,7 +13,7 @@ public class FlexItem : FlexBase
         item = flex_item_new();
     }
 
-    public FlexItem(float width, float height)
+    public FlexItem(float width, float height) : this()
     {
         this.Width = width;
         this.Height = height;

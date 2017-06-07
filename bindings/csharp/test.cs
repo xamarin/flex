@@ -21,7 +21,6 @@ public class Test
     class Error
     {
         public string unit;
-        public string message;
         public string callstack;
     }
     List<Error> errors;
@@ -32,7 +31,59 @@ public class Test
         errors = new List<Error>();
     }
 
-    void test_gc1()
+    void _test_default_values_except_size(FlexItem item)
+    {
+        assert(Double.IsNaN(item.Left));
+        assert(Double.IsNaN(item.Right));
+        assert(Double.IsNaN(item.Top));
+        assert(Double.IsNaN(item.Bottom));
+
+        assert(item.PaddingLeft == 0);
+        assert(item.PaddingRight == 0);
+        assert(item.PaddingTop == 0);
+        assert(item.PaddingBottom == 0);
+
+        assert(item.MarginLeft == 0);
+        assert(item.MarginRight == 0);
+        assert(item.MarginTop == 0);
+        assert(item.MarginBottom == 0);
+
+        assert(item.JustifyContent == FlexAlign.Start);
+        assert(item.AlignContent == FlexAlign.Start);
+        assert(item.AlignItems == FlexAlign.Start);
+        assert(item.AlignSelf == FlexAlign.Auto);
+
+        assert(item.Position == FlexPosition.Relative);
+        assert(item.Direction == FlexDirection.Column);
+        assert(item.Wrap == FlexWrap.Nowrap);
+
+        assert(item.Grow == 0);
+        assert(item.Shrink == 1);
+        assert(item.Order == 0);
+        assert(item.Basis == 0);
+    }
+
+    void test_ctor1()
+    {
+        FlexItem item = new FlexItem();
+
+        assert(Double.IsNaN(item.Width));
+        assert(Double.IsNaN(item.Height));
+
+        _test_default_values_except_size(item);
+    }
+
+    void test_ctor2()
+    {
+        FlexItem item = new FlexItem(100, 200);
+
+        assert(item.Width == 100);
+        assert(item.Height == 200);
+
+        _test_default_values_except_size(item);
+    }
+
+    void test_dtor1()
     {
         WeakReference ref1 = null;
         WeakReference ref2 = null;
@@ -50,12 +101,12 @@ public class Test
 
         run_gc();
 
-        assert(!ref1.IsAlive, "ref1 is alive");
-        assert(!ref2.IsAlive, "ref2 is alive");
-        assert(!ref3.IsAlive, "ref3 is alive");
+        assert(!ref1.IsAlive);
+        assert(!ref2.IsAlive);
+        assert(!ref3.IsAlive);
     }
 
-    void test_gc2()
+    void test_dtor2()
     {
         WeakReference ref1 = null;
         WeakReference ref2 = null;
@@ -79,14 +130,14 @@ public class Test
 
         run_gc();
 
-        assert(ref1.IsAlive, "ref1 is not alive");
-        assert(ref2.IsAlive, "ref2 is not alive");
-        assert(ref3.IsAlive, "ref3 is not alive");
+        assert(ref1.IsAlive);
+        assert(ref2.IsAlive);
+        assert(ref3.IsAlive);
 
         handle1 = null;
     }
 
-    void test_gc3()
+    void test_dtor3()
     {
         WeakReference ref1 = null;
         WeakReference ref2 = null;
@@ -107,12 +158,12 @@ public class Test
 
         run_gc();
 
-        assert(!ref1.IsAlive, "ref1 is alive");
-        assert(!ref2.IsAlive, "ref2 is alive");
-        assert(!ref3.IsAlive, "ref3 is alive");
+        assert(!ref1.IsAlive);
+        assert(!ref2.IsAlive);
+        assert(!ref3.IsAlive);
     }
 
-    void test_gc4()
+    void test_dtor4()
     {
         WeakReference ref1 = null;
         WeakReference ref2 = null;
@@ -138,14 +189,14 @@ public class Test
 
         run_gc();
 
-        assert(ref1.IsAlive, "ref1 is not alive");
-        assert(!ref2.IsAlive, "ref2 is alive");
-        assert(!ref3.IsAlive, "ref3 is alive");
+        assert(ref1.IsAlive);
+        assert(!ref2.IsAlive);
+        assert(!ref3.IsAlive);
 
         handle1 = null;
     }
 
-    void test_gc5()
+    void test_dtor5()
     {
         WeakReference ref1 = null;
         WeakReference ref2 = null;
@@ -169,9 +220,9 @@ public class Test
 
         run_gc();
 
-        assert(ref1.IsAlive, "ref1 is not alive");
-        assert(ref2.IsAlive, "ref2 is not alive");
-        assert(ref3.IsAlive, "ref3 is not alive");
+        assert(ref1.IsAlive);
+        assert(ref2.IsAlive);
+        assert(ref3.IsAlive);
 
         handle1 = null;
     }
@@ -184,7 +235,7 @@ public class Test
         }
     }
 
-    void assert(bool condition, string error)
+    void assert(bool condition)
     {
         if (condition) {
             Console.Write('.');
@@ -194,7 +245,6 @@ public class Test
 
             var err = new Error();
             err.unit = current_unit;
-            err.message = error;
             err.callstack = Environment.StackTrace;
             errors.Add(err);
         }
@@ -222,8 +272,8 @@ public class Test
         }
         else {
             foreach (var error in errors) {
-                Console.WriteLine("\nfailed test `{0}': {1}\n#{2}", error.unit,
-                        error.message, error.callstack);
+                Console.WriteLine("\nfailed test `{0}':\n#{1}", error.unit,
+                        error.callstack);
             }
         }
     }
