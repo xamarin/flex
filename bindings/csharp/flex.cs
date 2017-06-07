@@ -11,7 +11,7 @@ public class FlexItem : FlexBase
     public FlexItem()
     {
         item = flex_item_new();
-        CreateHandleForItem(this, false);
+        CreateHandle(false);
     }
 
     public FlexItem(float width, float height) : this()
@@ -31,13 +31,13 @@ public class FlexItem : FlexBase
 
     public void Add(FlexItem child)
     {
-        CreateHandleForItem(child, true);
+        child.CreateHandle(true);
         flex_item_add(item, child.item);
     }
 
     public void InsertAt(int index, FlexItem child)
     {
-        CreateHandleForItem(child, true);
+        child.CreateHandle(true);
         flex_item_insert(item, index, child.item);
     }
 
@@ -54,18 +54,18 @@ public class FlexItem : FlexBase
 
     public FlexItem ItemAt(int index)
     {
-        return ItemFromItem(flex_item_child(item, index));
+        return FlexItemFromItem(flex_item_child(item, index));
     }
 
     public FlexItem Parent
     {
-        get { return ItemFromItem(flex_item_parent(item)); }
+        get { return FlexItemFromItem(flex_item_parent(item)); }
     }
 
     public FlexItem Root
     {
         get {
-            FlexItem root = ItemFromItem(flex_item_root(item));
+            FlexItem root = FlexItemFromItem(flex_item_root(item));
             if (root != null) {
                 return root;
             }
@@ -78,18 +78,7 @@ public class FlexItem : FlexBase
         flex_layout(item);
     }
 
-    private static void CreateHandleForItem(FlexItem item, bool strong)
-    {
-        IntPtr ptr = flex_item_get_managed_ptr(item.item);
-        if (ptr != IntPtr.Zero) {
-            GCHandle.FromIntPtr(ptr).Free();
-        }
-        GCHandle handle = GCHandle.Alloc(item, strong
-                ? GCHandleType.Pinned : GCHandleType.Weak);
-        flex_item_set_managed_ptr(item.item, GCHandle.ToIntPtr(handle));
-    }
-
-    private static Nullable<GCHandle> HandleFromItem(IntPtr item)
+    private static Nullable<GCHandle> HandleOfItem(IntPtr item)
     {
         if (item == IntPtr.Zero) {
             return null;
@@ -101,12 +90,12 @@ public class FlexItem : FlexBase
         return GCHandle.FromIntPtr(ptr);
     }
 
-    private static FlexItem ItemFromItem(IntPtr item)
+    private static FlexItem FlexItemFromItem(IntPtr item)
     {
         if (item == IntPtr.Zero) {
             return null;
         }
-        var ret = HandleFromItem(item);
+        var ret = HandleOfItem(item);
         if (ret.HasValue) {
             return (FlexItem)ret.Value.Target;
         }
@@ -115,7 +104,7 @@ public class FlexItem : FlexBase
 
     private static FlexItem ReleaseHandleForItem(IntPtr item, bool reset)
     {
-        var ret = HandleFromItem(item);
+        var ret = HandleOfItem(item);
         if (ret.HasValue) {
             GCHandle handle = ret.Value;
             FlexItem child = (FlexItem)handle.Target;
@@ -135,5 +124,13 @@ public class FlexItem : FlexBase
             ReleaseHandlesWithinItem(flex_item_child(item, i), true);
         }
         ReleaseHandleForItem(item, reset);
+    }
+
+    private void CreateHandle(bool strong)
+    {
+        ReleaseHandleForItem(item, false);
+        GCHandle handle = GCHandle.Alloc(this,
+                strong ? GCHandleType.Pinned : GCHandleType.Weak);
+        flex_item_set_managed_ptr(item, GCHandle.ToIntPtr(handle));
     }
 }
