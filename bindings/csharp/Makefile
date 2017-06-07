@@ -1,6 +1,6 @@
 FLEX_DIR = ../..
 
-all: test
+all: run
 
 base.cs:        $(FLEX_DIR)/flex.h
 	/usr/bin/ruby generate_base.rb
@@ -11,5 +11,9 @@ libflex.dylib:  $(FLEX_DIR)/flex.c $(FLEX_DIR)/flex.h
 test.exe:       base.cs flex.cs test.cs
 	mcs base.cs flex.cs test.cs -out:test.exe -d:DEBUG -debug
 
-test:   test.exe libflex.dylib
+run:   test.exe libflex.dylib
 	mono --debug test.exe
+
+clean:
+	/bin/rm -f base.cs libflex.dylib test.exe
+
