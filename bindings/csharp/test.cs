@@ -227,6 +227,46 @@ public class Test
         handle1 = null;
     }
 
+    void test_children1()
+    {
+        FlexItem item1 = new FlexItem();
+
+        assert(item1.Root == item1);
+        assert(item1.Parent == null);
+        assert(item1.Count == 0);
+
+        FlexItem item2 = new FlexItem();
+        item1.Add(item2);
+
+        assert(item1.Count == 1);
+        assert(item1.ItemAt(0) == item2);
+        assert(item2.Root == item1);
+        assert(item2.Parent == item1);
+
+        FlexItem item3 = new FlexItem();
+        item1.Add(item3);
+
+        assert(item1.Count == 2);
+        assert(item1.ItemAt(0) == item2);
+        assert(item1.ItemAt(1) == item3);
+        assert(item3.Root == item1);
+        assert(item3.Parent == item1);
+
+        item1.RemoveAt(0);
+
+        assert(item1.Count == 1);
+        assert(item1.ItemAt(0) == item3);
+        assert(item2.Root == item2);
+        assert(item2.Parent == null);
+
+        item3.Add(item2);
+
+        assert(item3.Count == 1);
+        assert(item3.ItemAt(0) == item2);
+        assert(item2.Root == item1);
+        assert(item2.Parent == item3);
+    }
+
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
@@ -275,6 +315,7 @@ public class Test
                 Console.WriteLine("\nfailed test `{0}':\n#{1}", error.unit,
                         error.callstack);
             }
+            Console.WriteLine("\n{0} tests failed.", errors.Count);
         }
     }
 
