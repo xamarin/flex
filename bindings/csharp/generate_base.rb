@@ -11,6 +11,12 @@
 FLEX_PATH = '../..'
 DLL_NAME = 'flex'
 OUTPUT_FILE = 'base.cs'
+FORCE_ENUM_PROPERTIES = {
+  'justify_content' => 'Align',
+  'align_content' => 'Align',
+  'align_items' => 'Align',
+  'align_self' => 'Align'
+}
 
 def die(*msg)
   $stderr.puts msg
@@ -26,12 +32,16 @@ require 'rexml/document'
 doc = REXML::Document.new(File.read(flex_bs))
 root = doc.get_elements('signatures')[0]
 
+def csharp_name(name)
+  name.capitalize.gsub(/_(.)/) { |md| md[1].upcase }
+end
+
 enums = {}
 root.get_elements('enum').each do |elem|
   enum_name = elem.attributes['name']
   die "invalid enum #{elem.to_s}" unless md = enum_name.match(/^FLEX_([^_]+)_(.+)$/)
-  group = md[1].capitalize
-  name = md[2].capitalize.gsub(/_(.)/) { |md| md[1].upcase }
+  group = csharp_name(md[1])
+  name = csharp_name(md[2])
   value = elem.attributes['value'].to_i
   (enums[group] ||= []) << [name, value]
 end
@@ -57,6 +67,7 @@ root.get_elements('function').each do |elem|
   args = elem.get_elements('arg').map { |arg_elem| convert_type(arg_elem) }
   functions << [name, retval, args]
 end
+functions.sort { |x, y| x[0] <=> y[0] }
 
 File.open(OUTPUT_FILE, 'w') do |io|
   io.puts <<EOS
@@ -68,11 +79,13 @@ File.open(OUTPUT_FILE, 'w') do |io|
 
 using System;
 using System.Runtime.InteropServices;
+using static FlexNativeFunctions;
 
 EOS
 
   enums.to_a.sort { |x, y| x[0] <=> y[0] }.each do |group, values|
-    io.puts "public enum Flex#{group} : int {"
+    io.puts "public enum Flex#{group} : int"
+    io.puts '{'
     values.sort { |x, y| x[1] <=> y[1] }.each do |name, value|
       io.puts "    #{name} = #{value},"
     end
@@ -80,13 +93,54 @@ EOS
     io.puts ''
   end
 
-  io.puts "public class FlexNativeFunctions {"
-  io.puts "    private const string dll_name = \"#{DLL_NAME}\";" 
+  io.puts 'public class FlexNativeFunctions'
+  io.puts '{'
+  io.puts "    private const string dll_name = \"#{DLL_NAME}\";"
+  properties = {}
   functions.sort { |x, y| x[0] <=> y[0] }.each do |name, retval, args|
     i = 0
-    args.map! { |x| x + " arg#{i += 1}" }
-    func_line = "#{retval} #{name} (#{args.join(', ')})"
+    args_list = args.map { |x| x + " arg#{i += 1}" }.join(', ')
+    func_line = "#{retval} #{name} (#{args_list})"
     io.puts "    [DllImport(dll_name)] public static extern #{func_line};"
+
+    if md = name.match(/^flex_item_(g|s)et_(.+)$/)
+      name = md[2]
+      what = md[1] == 'g' ? :get : :set
+      type = what == :get ? retval : args[1]
+      if type == 'int'
+        enum_type = (FORCE_ENUM_PROPERTIES[name] or name.capitalize)
+        type = 'Flex' + enum_type if enums.has_key?(enum_type)
+      end
+      if type != 'IntPtr' # ignore 'internal' properties
+        (properties[name] ||= [type]) << what
+      end
+    end
   end
+  io.puts '}'
+  io.puts ''
+
+  die "no properties?" if properties.empty?
+  io.puts 'abstract public class FlexBase'
+  io.puts '{'
+  io.puts '    protected IntPtr item = IntPtr.Zero;'
+  properties.each do |name, prop|
+    type = prop[0]
+    is_enum = type.match(/^[A-Z]/) # good enough
+
+    io.puts ''
+    io.puts "    public #{type} #{csharp_name(name)}"
+    io.puts '    {'
+    prop[1..-1].each do |method|
+      case method
+        when :get
+          cast = is_enum ? "(#{type})" : ''
+          io.puts "        get { return #{cast}flex_item_get_#{name}(item); }"
+        when :set
+          cast = is_enum ? "(int)" : ''
+          io.puts "        set { flex_item_set_#{name}(item, #{cast}value); }"
+      end
+    end
+    io.puts '    }'
+  end 
   io.puts '}'
 end

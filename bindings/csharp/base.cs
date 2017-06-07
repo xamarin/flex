@@ -6,8 +6,10 @@
 
 using System;
 using System.Runtime.InteropServices;
+using static FlexNativeFunctions;
 
-public enum FlexAlign : int {
+public enum FlexAlign : int
+{
     Auto = 0,
     Stretch = 1,
     Center = 2,
@@ -18,25 +20,29 @@ public enum FlexAlign : int {
     SpaceEvenly = 7,
 }
 
-public enum FlexDirection : int {
+public enum FlexDirection : int
+{
     Row = 0,
     RowReverse = 1,
     Column = 2,
     ColumnReverse = 3,
 }
 
-public enum FlexPosition : int {
+public enum FlexPosition : int
+{
     Relative = 0,
     Absolute = 1,
 }
 
-public enum FlexWrap : int {
+public enum FlexWrap : int
+{
     Nowrap = 0,
     Wrap = 1,
     WrapReverse = 2,
 }
 
-public class FlexNativeFunctions {
+public class FlexNativeFunctions
+{
     private const string dll_name = "flex";
     [DllImport(dll_name)] public static extern void flex_item_add (IntPtr arg1, IntPtr arg2);
     [DllImport(dll_name)] public static extern IntPtr flex_item_child (IntPtr arg1, int arg2);
@@ -104,4 +110,179 @@ public class FlexNativeFunctions {
     [DllImport(dll_name)] public static extern void flex_item_set_width (IntPtr arg1, float arg2);
     [DllImport(dll_name)] public static extern void flex_item_set_wrap (IntPtr arg1, int arg2);
     [DllImport(dll_name)] public static extern void flex_layout (IntPtr arg1);
+}
+
+abstract public class FlexBase
+{
+    protected IntPtr item = IntPtr.Zero;
+
+    public FlexAlign AlignContent
+    {
+        get { return (FlexAlign)flex_item_get_align_content(item); }
+        set { flex_item_set_align_content(item, (int)value); }
+    }
+
+    public FlexAlign AlignItems
+    {
+        get { return (FlexAlign)flex_item_get_align_items(item); }
+        set { flex_item_set_align_items(item, (int)value); }
+    }
+
+    public FlexAlign AlignSelf
+    {
+        get { return (FlexAlign)flex_item_get_align_self(item); }
+        set { flex_item_set_align_self(item, (int)value); }
+    }
+
+    public float Basis
+    {
+        get { return flex_item_get_basis(item); }
+        set { flex_item_set_basis(item, value); }
+    }
+
+    public float Bottom
+    {
+        get { return flex_item_get_bottom(item); }
+        set { flex_item_set_bottom(item, value); }
+    }
+
+    public FlexDirection Direction
+    {
+        get { return (FlexDirection)flex_item_get_direction(item); }
+        set { flex_item_set_direction(item, (int)value); }
+    }
+
+    public float FrameHeight
+    {
+        get { return flex_item_get_frame_height(item); }
+    }
+
+    public float FrameWidth
+    {
+        get { return flex_item_get_frame_width(item); }
+    }
+
+    public float FrameX
+    {
+        get { return flex_item_get_frame_x(item); }
+    }
+
+    public float FrameY
+    {
+        get { return flex_item_get_frame_y(item); }
+    }
+
+    public int Grow
+    {
+        get { return flex_item_get_grow(item); }
+        set { flex_item_set_grow(item, value); }
+    }
+
+    public float Height
+    {
+        get { return flex_item_get_height(item); }
+        set { flex_item_set_height(item, value); }
+    }
+
+    public FlexAlign JustifyContent
+    {
+        get { return (FlexAlign)flex_item_get_justify_content(item); }
+        set { flex_item_set_justify_content(item, (int)value); }
+    }
+
+    public float Left
+    {
+        get { return flex_item_get_left(item); }
+        set { flex_item_set_left(item, value); }
+    }
+
+    public float MarginBottom
+    {
+        get { return flex_item_get_margin_bottom(item); }
+        set { flex_item_set_margin_bottom(item, value); }
+    }
+
+    public float MarginLeft
+    {
+        get { return flex_item_get_margin_left(item); }
+        set { flex_item_set_margin_left(item, value); }
+    }
+
+    public float MarginRight
+    {
+        get { return flex_item_get_margin_right(item); }
+        set { flex_item_set_margin_right(item, value); }
+    }
+
+    public float MarginTop
+    {
+        get { return flex_item_get_margin_top(item); }
+        set { flex_item_set_margin_top(item, value); }
+    }
+
+    public int Order
+    {
+        get { return flex_item_get_order(item); }
+        set { flex_item_set_order(item, value); }
+    }
+
+    public float PaddingBottom
+    {
+        get { return flex_item_get_padding_bottom(item); }
+        set { flex_item_set_padding_bottom(item, value); }
+    }
+
+    public float PaddingLeft
+    {
+        get { return flex_item_get_padding_left(item); }
+        set { flex_item_set_padding_left(item, value); }
+    }
+
+    public float PaddingRight
+    {
+        get { return flex_item_get_padding_right(item); }
+        set { flex_item_set_padding_right(item, value); }
+    }
+
+    public float PaddingTop
+    {
+        get { return flex_item_get_padding_top(item); }
+        set { flex_item_set_padding_top(item, value); }
+    }
+
+    public FlexPosition Position
+    {
+        get { return (FlexPosition)flex_item_get_position(item); }
+        set { flex_item_set_position(item, (int)value); }
+    }
+
+    public float Right
+    {
+        get { return flex_item_get_right(item); }
+        set { flex_item_set_right(item, value); }
+    }
+
+    public int Shrink
+    {
+        get { return flex_item_get_shrink(item); }
+        set { flex_item_set_shrink(item, value); }
+    }
+
+    public float Top
+    {
+        get { return flex_item_get_top(item); }
+        set { flex_item_set_top(item, value); }
+    }
+
+    public float Width
+    {
+        get { return flex_item_get_width(item); }
+        set { flex_item_set_width(item, value); }
+    }
+
+    public FlexWrap Wrap
+    {
+        get { return (FlexWrap)flex_item_get_wrap(item); }
+        set { flex_item_set_wrap(item, (int)value); }
+    }
 }
