@@ -456,7 +456,7 @@ public class Test
         try {
             code();
         }
-        catch (Exception e) {
+        catch (Exception) {
             state = false;
         }
         assert(state);
