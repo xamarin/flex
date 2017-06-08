@@ -35,6 +35,7 @@ public class FlexItem : FlexBase, IEnumerable
         ValidateNewChild(child);
         child.CreateHandle(true);
         flex_item_add(item, child.item);
+        notify_changed = true;
     }
 
     public void InsertAt(int index, FlexItem child)
@@ -43,6 +44,7 @@ public class FlexItem : FlexBase, IEnumerable
         ValidateIndex(index, true);
         child.CreateHandle(true);
         flex_item_insert(item, index, child.item);
+        notify_changed = true;
     }
 
     public FlexItem RemoveAt(int index)
@@ -51,6 +53,7 @@ public class FlexItem : FlexBase, IEnumerable
         IntPtr child_item = flex_item_delete(item, index);
         FlexItem child = ReleaseHandleForItem(child_item, false);
         child.CreateHandle(false);
+        notify_changed = true;
         return child;
     }
 
@@ -114,6 +117,9 @@ public class FlexItem : FlexBase, IEnumerable
 
         public bool MoveNext()
         {
+            if (item.notify_changed) {
+                throw new InvalidOperationException("the item's children list was modified; enumeration cannot proceed");
+            }
             index++;
             return index < item.Count;
         } 
@@ -121,11 +127,13 @@ public class FlexItem : FlexBase, IEnumerable
 
     IEnumerator IEnumerable.GetEnumerator()
     {
-       return GetEnumerator();
+        return GetEnumerator();
     }
 
+    private bool notify_changed = false;
     public FlexItemEnumerator GetEnumerator()
     {
+        notify_changed = false;
         return new FlexItemEnumerator(this);
     }
 

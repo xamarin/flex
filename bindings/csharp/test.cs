@@ -413,7 +413,7 @@ public class Test
         assert_no_raised(() => { item2.Layout(); });
     }
 
-    void test_enumerable()
+    void test_enumerable1()
     {
         List<FlexItem> items = new List<FlexItem>();
 
@@ -454,6 +454,39 @@ public class Test
         assert(items.Count == 2);
         assert(items[0] == item2);
         assert(items[1] == item4);
+    }
+
+    void test_enumerable2()
+    {
+        FlexItem item = new FlexItem();
+        item.Add(new FlexItem());
+
+        assert_raised(() => { 
+                foreach (var child in item) {
+                    item.RemoveAt(0);
+                }}, typeof(InvalidOperationException));
+    }
+
+    void test_enumerable3()
+    {
+        FlexItem item = new FlexItem();
+        item.Add(new FlexItem());
+
+        assert_raised(() => { 
+                foreach (var child in item) {
+                    item.Add(new FlexItem());
+                }}, typeof(InvalidOperationException));
+    }
+
+    void test_enumerable4()
+    {
+        FlexItem item = new FlexItem();
+        item.Add(new FlexItem());
+
+        assert_raised(() => { 
+                foreach (var child in item) {
+                    item.InsertAt(0, new FlexItem());
+                }}, typeof(InvalidOperationException));
     }
 
     void run_gc()
