@@ -307,6 +307,112 @@ public class Test
 
         assert(item1.Count == 0);
     }
+
+    void test_children_aref_validation()
+    {
+        FlexItem item = new FlexItem();
+
+        foreach (int val in new int[] { -100, -1, 0, 1, 100 }) {
+            assert_raised(() => { item.ItemAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+
+            assert_raised(() => { item.RemoveAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+
+        FlexItem item2 = new FlexItem();
+
+        foreach (int val in new int[] { -100, -1, 1, 100 }) {
+            assert_raised(() => { item.InsertAt(val, item2); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+
+        item.Add(item2);
+
+        foreach (int val in new int[] { -100, -1, 1, 2, 100 }) {
+            assert_raised(() => { item.ItemAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+
+            assert_raised(() => { item.RemoveAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+
+        FlexItem item3 = new FlexItem();
+
+        foreach (int val in new int[] { -100, -1, 2, 100 }) {
+            assert_raised(() => { item.InsertAt(val, item3); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+
+        item.RemoveAt(0);
+
+        foreach (int val in new int[] { -100, -1, 0, 1, 100 }) {
+            assert_raised(() => { item.ItemAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+
+            assert_raised(() => { item.RemoveAt(val); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+
+        foreach (int val in new int[] { -100, -1, 1, 100 }) {
+            assert_raised(() => { item.InsertAt(val, item2); },
+                    typeof(ArgumentOutOfRangeException));
+        }
+    }
+
+    void test_children_add_validation()
+    {
+        FlexItem item = new FlexItem();
+
+        assert_raised(() => { item.Add(item); }, typeof(ArgumentException));
+        assert_raised(() => { item.InsertAt(0, item); },
+                typeof(ArgumentException));
+
+        FlexItem item2 = new FlexItem();
+        item.Add(item2);
+
+        FlexItem item3 = new FlexItem();
+
+        assert_raised(() => { item3.Add(item2); }, typeof(ArgumentException));
+        assert_raised(() => { item3.InsertAt(0, item2); },
+                typeof(ArgumentException));
+
+        item.RemoveAt(0);
+
+        assert_no_raised(() => { item3.Add(item2); });
+
+        item3.RemoveAt(0);
+
+        assert_no_raised(() => { item3.InsertAt(0, item2); });
+    }
+
+    void test_layout_validation()
+    {
+        FlexItem item = new FlexItem();
+
+        assert_raised(() => { item.Layout(); },
+                typeof(InvalidOperationException));
+
+        item.Width = 100;
+
+        assert_raised(() => { item.Layout(); },
+                typeof(InvalidOperationException));
+
+        item.Height = 100;
+
+        assert_no_raised(() => { item.Layout(); });
+
+        FlexItem item2 = new FlexItem(100, 100);
+        item.Add(item2);
+
+        assert_raised(() => { item2.Layout(); },
+                typeof(InvalidOperationException));
+
+        item.RemoveAt(0);
+
+        assert_no_raised(() => { item2.Layout(); });
+    }
+
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
@@ -328,6 +434,32 @@ public class Test
             err.callstack = Environment.StackTrace;
             errors.Add(err);
         }
+    }
+
+    void assert_raised(Action code, Type klass)
+    {
+        bool state = false;
+        try {
+            code();
+        }
+        catch (Exception e) {
+            if (e.GetType() == klass) {
+                state = true;
+            }
+        }
+        assert(state);
+    }
+
+    void assert_no_raised(Action code)
+    {
+        bool state = true;
+        try {
+            code();
+        }
+        catch (Exception e) {
+            state = false;
+        }
+        assert(state);
     }
 
     void run()

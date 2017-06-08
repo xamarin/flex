@@ -31,18 +31,22 @@ public class FlexItem : FlexBase
 
     public void Add(FlexItem child)
     {
+        ValidateNewChild(child);
         child.CreateHandle(true);
         flex_item_add(item, child.item);
     }
 
     public void InsertAt(int index, FlexItem child)
     {
+        ValidateNewChild(child);
+        ValidateIndex(index, true);
         child.CreateHandle(true);
         flex_item_insert(item, index, child.item);
     }
 
     public FlexItem RemoveAt(int index)
     {
+        ValidateIndex(index, false);
         IntPtr child_item = flex_item_delete(item, index);
         FlexItem child = ReleaseHandleForItem(child_item, false);
         child.CreateHandle(false);
@@ -56,6 +60,7 @@ public class FlexItem : FlexBase
 
     public FlexItem ItemAt(int index)
     {
+        ValidateIndex(index, false);
         return FlexItemFromItem(flex_item_child(item, index));
     }
 
@@ -71,6 +76,12 @@ public class FlexItem : FlexBase
 
     public void Layout()
     {
+        if (Parent != null) {
+            throw new InvalidOperationException("Layout() must be called on a root item (that hasn't been added to another item)");
+        }
+        if (Double.IsNaN(Width) || Double.IsNaN(Height)) {
+            throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
+        }
         flex_layout(item);
     }
 
@@ -128,5 +139,26 @@ public class FlexItem : FlexBase
         GCHandle handle = GCHandle.Alloc(this,
                 strong ? GCHandleType.Pinned : GCHandleType.Weak);
         flex_item_set_managed_ptr(item, GCHandle.ToIntPtr(handle));
+    }
+
+    private void ValidateNewChild(FlexItem child)
+    {
+        if (this == child) {
+            throw new ArgumentException("cannot add item into self");
+        }
+        if (child.Parent != null) {
+            throw new ArgumentException("child already has a parent");
+        } 
+    }
+
+    private void ValidateIndex(int index, bool inc)
+    {
+        int max = Count;
+        if (inc) {
+            max++;
+        }
+        if (index < 0 || index >= max) {
+            throw new ArgumentOutOfRangeException();
+        }
     }
 }
