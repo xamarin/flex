@@ -3,10 +3,11 @@
 // for the license information.
 
 using System;
+using System.Collections;
 using System.Runtime.InteropServices;
 using static FlexNativeFunctions;
 
-public class FlexItem : FlexBase
+public class FlexItem : FlexBase, IEnumerable
 {
     public FlexItem()
     {
@@ -83,6 +84,49 @@ public class FlexItem : FlexBase
             throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
         }
         flex_layout(item);
+    }
+
+    public class FlexItemEnumerator : IEnumerator
+    {
+        private FlexItem item;
+        private int index;
+
+        public FlexItemEnumerator(FlexItem _item)
+        {
+            item = _item;
+            index = -1;
+        }
+
+        object IEnumerator.Current
+        {
+            get { return Current; }
+        }
+
+        public FlexItem Current
+        {
+            get { return item.ItemAt(index); }
+        }
+
+        public void Reset()
+        {
+            index = -1;
+        }
+
+        public bool MoveNext()
+        {
+            index++;
+            return index < item.Count;
+        } 
+    }
+
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+       return GetEnumerator();
+    }
+
+    public FlexItemEnumerator GetEnumerator()
+    {
+        return new FlexItemEnumerator(this);
     }
 
     private static Nullable<GCHandle> HandleOfItem(IntPtr item)

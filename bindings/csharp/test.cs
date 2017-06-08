@@ -413,6 +413,49 @@ public class Test
         assert_no_raised(() => { item2.Layout(); });
     }
 
+    void test_enumerable()
+    {
+        List<FlexItem> items = new List<FlexItem>();
+
+        FlexItem item = new FlexItem();
+
+        items.Clear();
+        foreach (var child in item) {
+            items.Add(child);
+        }
+
+        assert(items.Count == 0);
+
+        FlexItem item2 = new FlexItem();
+        FlexItem item3 = new FlexItem();
+        FlexItem item4 = new FlexItem();
+
+        item.Add(item2);
+        item.Add(item3);
+        item.Add(item4);
+
+        items.Clear();
+        foreach (var child in item) {
+            items.Add(child);
+        }
+
+        assert(items.Count == 3);
+        assert(items[0] == item2);
+        assert(items[1] == item3);
+        assert(items[2] == item4);
+
+        item.RemoveAt(1);
+
+        items.Clear();
+        foreach (var child in item) {
+            items.Add(child);
+        }
+
+        assert(items.Count == 2);
+        assert(items[0] == item2);
+        assert(items[1] == item4);
+    }
+
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
