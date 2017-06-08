@@ -252,7 +252,7 @@ public class Test
         assert(item3.Root == item1);
         assert(item3.Parent == item1);
 
-        item1.RemoveAt(0);
+        assert(item1.RemoveAt(0) == item2);
 
         assert(item1.Count == 1);
         assert(item1.ItemAt(0) == item3);
@@ -267,6 +267,46 @@ public class Test
         assert(item2.Parent == item3);
     }
 
+    void test_children2()
+    {
+        FlexItem item1 = new FlexItem();
+
+        FlexItem item2 = new FlexItem();
+        item1.InsertAt(0, item2);
+
+        assert(item1.Count == 1);
+        assert(item1.ItemAt(0) == item2);
+
+        FlexItem item3 = new FlexItem();
+        item1.InsertAt(0, item3);
+
+        assert(item1.Count == 2);
+        assert(item1.ItemAt(0) == item3);
+        assert(item1.ItemAt(1) == item2);
+
+        FlexItem item4 = new FlexItem();
+        item1.InsertAt(1, item4);
+
+        assert(item1.Count == 3);
+        assert(item1.ItemAt(0) == item3);
+        assert(item1.ItemAt(1) == item4);
+        assert(item1.ItemAt(2) == item2);
+
+        assert(item1.RemoveAt(1) == item4);
+
+        assert(item1.Count == 2);
+        assert(item1.ItemAt(0) == item3);
+        assert(item1.ItemAt(1) == item2);
+
+        assert(item1.RemoveAt(1) == item2);
+
+        assert(item1.Count == 1);
+        assert(item1.ItemAt(0) == item3);
+
+        assert(item1.RemoveAt(0) == item3);
+
+        assert(item1.Count == 0);
+    }
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
