@@ -68,6 +68,11 @@ public class FlexItem : FlexBase, IEnumerable
         return FlexItemFromItem(flex_item_child(item, index));
     }
 
+    public FlexItem this[int index]
+    {
+        get { return ItemAt(index); }
+    }
+
     public FlexItem Parent
     {
         get { return FlexItemFromItem(flex_item_parent(item)); }

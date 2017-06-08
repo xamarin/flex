@@ -489,6 +489,31 @@ public class Test
                 }}, typeof(InvalidOperationException));
     }
 
+    void test_aref_syntax()
+    {
+        FlexItem item = new FlexItem();
+        FlexItem item2 = new FlexItem();
+        FlexItem item3 = new FlexItem();
+        FlexItem item4 = new FlexItem();
+
+        item.Add(item2);
+        item.Add(item3);
+        item.Add(item4);
+
+        assert(item[0] == item2);
+        assert(item[1] == item3);
+        assert(item[2] == item4);
+
+        assert(item.ItemAt(0) == item[0]);
+        assert(item.ItemAt(1) == item[1]);
+        assert(item.ItemAt(2) == item[2]);
+
+        assert_raised(() => { var x = item[-1]; },
+                typeof(ArgumentOutOfRangeException));
+        assert_raised(() => { var x = item[3]; },
+                typeof(ArgumentOutOfRangeException));
+    }
+
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
