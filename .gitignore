@@ -1,3 +1,4 @@
 .*.sw?
 .gdb_history
 .DS_Store
+build
