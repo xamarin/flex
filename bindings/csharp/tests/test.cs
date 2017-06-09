@@ -12,11 +12,12 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
+using Xamarin.Flex;
 
 public class Test
 {
     private string current_unit;
-    private FlexItem handle1;
+    private Item handle1;
 
     class Error
     {
@@ -31,7 +32,7 @@ public class Test
         errors = new List<Error>();
     }
 
-    void _test_default_values_except_size(FlexItem item)
+    void _test_default_values_except_size(Item item)
     {
         assert(Double.IsNaN(item.Left));
         assert(Double.IsNaN(item.Right));
@@ -48,14 +49,14 @@ public class Test
         assert(item.MarginTop == 0);
         assert(item.MarginBottom == 0);
 
-        assert(item.JustifyContent == FlexAlign.Start);
-        assert(item.AlignContent == FlexAlign.Start);
-        assert(item.AlignItems == FlexAlign.Start);
-        assert(item.AlignSelf == FlexAlign.Auto);
+        assert(item.JustifyContent == Align.Start);
+        assert(item.AlignContent == Align.Start);
+        assert(item.AlignItems == Align.Start);
+        assert(item.AlignSelf == Align.Auto);
 
-        assert(item.Position == FlexPosition.Relative);
-        assert(item.Direction == FlexDirection.Column);
-        assert(item.Wrap == FlexWrap.Nowrap);
+        assert(item.Position == Position.Relative);
+        assert(item.Direction == Direction.Column);
+        assert(item.Wrap == Wrap.Nowrap);
 
         assert(item.Grow == 0);
         assert(item.Shrink == 1);
@@ -65,7 +66,7 @@ public class Test
 
     void test_ctor1()
     {
-        FlexItem item = new FlexItem();
+        Item item = new Item();
 
         assert(Double.IsNaN(item.Width));
         assert(Double.IsNaN(item.Height));
@@ -75,7 +76,7 @@ public class Test
 
     void test_ctor2()
     {
-        FlexItem item = new FlexItem(100, 200);
+        Item item = new Item(100, 200);
 
         assert(item.Width == 100);
         assert(item.Height == 200);
@@ -90,9 +91,9 @@ public class Test
         WeakReference ref3 = null;
 
         new Action(() => {
-            FlexItem item1 = new FlexItem();
-            FlexItem item2 = new FlexItem();
-            FlexItem item3 = new FlexItem();
+            Item item1 = new Item();
+            Item item2 = new Item();
+            Item item3 = new Item();
 
             ref1 = new WeakReference(item1);
             ref2 = new WeakReference(item2);
@@ -115,9 +116,9 @@ public class Test
         handle1 = null;
 
         new Action(() => {
-            FlexItem item1 = new FlexItem();
-            FlexItem item2 = new FlexItem();
-            FlexItem item3 = new FlexItem();
+            Item item1 = new Item();
+            Item item2 = new Item();
+            Item item3 = new Item();
     
             item1.Add(item2);
             item2.Add(item3);
@@ -144,9 +145,9 @@ public class Test
         WeakReference ref3 = null;
 
         new Action(() => {
-            FlexItem item1 = new FlexItem();
-            FlexItem item2 = new FlexItem();
-            FlexItem item3 = new FlexItem();
+            Item item1 = new Item();
+            Item item2 = new Item();
+            Item item3 = new Item();
     
             item1.Add(item2);
             item2.Add(item3);
@@ -172,9 +173,9 @@ public class Test
         handle1 = null;
 
         new Action(() => {
-            FlexItem item1 = new FlexItem();
-            FlexItem item2 = new FlexItem();
-            FlexItem item3 = new FlexItem();
+            Item item1 = new Item();
+            Item item2 = new Item();
+            Item item3 = new Item();
     
             item1.Add(item2);
             item2.Add(item3);
@@ -205,9 +206,9 @@ public class Test
         handle1 = null;
 
         new Action(() => {
-            FlexItem item1 = new FlexItem();
-            FlexItem item2 = new FlexItem();
-            FlexItem item3 = new FlexItem();
+            Item item1 = new Item();
+            Item item2 = new Item();
+            Item item3 = new Item();
 
             handle1 = item1;
             item1.InsertAt(0, item2);
@@ -229,13 +230,13 @@ public class Test
 
     void test_children1()
     {
-        FlexItem item1 = new FlexItem();
+        Item item1 = new Item();
 
         assert(item1.Root == item1);
         assert(item1.Parent == null);
         assert(item1.Count == 0);
 
-        FlexItem item2 = new FlexItem();
+        Item item2 = new Item();
         item1.Add(item2);
 
         assert(item1.Count == 1);
@@ -243,7 +244,7 @@ public class Test
         assert(item2.Root == item1);
         assert(item2.Parent == item1);
 
-        FlexItem item3 = new FlexItem();
+        Item item3 = new Item();
         item1.Add(item3);
 
         assert(item1.Count == 2);
@@ -269,22 +270,22 @@ public class Test
 
     void test_children2()
     {
-        FlexItem item1 = new FlexItem();
+        Item item1 = new Item();
 
-        FlexItem item2 = new FlexItem();
+        Item item2 = new Item();
         item1.InsertAt(0, item2);
 
         assert(item1.Count == 1);
         assert(item1.ItemAt(0) == item2);
 
-        FlexItem item3 = new FlexItem();
+        Item item3 = new Item();
         item1.InsertAt(0, item3);
 
         assert(item1.Count == 2);
         assert(item1.ItemAt(0) == item3);
         assert(item1.ItemAt(1) == item2);
 
-        FlexItem item4 = new FlexItem();
+        Item item4 = new Item();
         item1.InsertAt(1, item4);
 
         assert(item1.Count == 3);
@@ -310,7 +311,7 @@ public class Test
 
     void test_children_aref_validation()
     {
-        FlexItem item = new FlexItem();
+        Item item = new Item();
 
         foreach (int val in new int[] { -100, -1, 0, 1, 100 }) {
             assert_raised(() => { item.ItemAt(val); },
@@ -320,7 +321,7 @@ public class Test
                     typeof(ArgumentOutOfRangeException));
         }
 
-        FlexItem item2 = new FlexItem();
+        Item item2 = new Item();
 
         foreach (int val in new int[] { -100, -1, 1, 100 }) {
             assert_raised(() => { item.InsertAt(val, item2); },
@@ -337,7 +338,7 @@ public class Test
                     typeof(ArgumentOutOfRangeException));
         }
 
-        FlexItem item3 = new FlexItem();
+        Item item3 = new Item();
 
         foreach (int val in new int[] { -100, -1, 2, 100 }) {
             assert_raised(() => { item.InsertAt(val, item3); },
@@ -362,16 +363,16 @@ public class Test
 
     void test_children_add_validation()
     {
-        FlexItem item = new FlexItem();
+        Item item = new Item();
 
         assert_raised(() => { item.Add(item); }, typeof(ArgumentException));
         assert_raised(() => { item.InsertAt(0, item); },
                 typeof(ArgumentException));
 
-        FlexItem item2 = new FlexItem();
+        Item item2 = new Item();
         item.Add(item2);
 
-        FlexItem item3 = new FlexItem();
+        Item item3 = new Item();
 
         assert_raised(() => { item3.Add(item2); }, typeof(ArgumentException));
         assert_raised(() => { item3.InsertAt(0, item2); },
@@ -388,7 +389,7 @@ public class Test
 
     void test_layout_validation()
     {
-        FlexItem item = new FlexItem();
+        Item item = new Item();
 
         assert_raised(() => { item.Layout(); },
                 typeof(InvalidOperationException));
@@ -402,7 +403,7 @@ public class Test
 
         assert_no_raised(() => { item.Layout(); });
 
-        FlexItem item2 = new FlexItem(100, 100);
+        Item item2 = new Item(100, 100);
         item.Add(item2);
 
         assert_raised(() => { item2.Layout(); },
@@ -415,9 +416,9 @@ public class Test
 
     void test_enumerable1()
     {
-        List<FlexItem> items = new List<FlexItem>();
+        List<Item> items = new List<Item>();
 
-        FlexItem item = new FlexItem();
+        Item item = new Item();
 
         items.Clear();
         foreach (var child in item) {
@@ -426,9 +427,9 @@ public class Test
 
         assert(items.Count == 0);
 
-        FlexItem item2 = new FlexItem();
-        FlexItem item3 = new FlexItem();
-        FlexItem item4 = new FlexItem();
+        Item item2 = new Item();
+        Item item3 = new Item();
+        Item item4 = new Item();
 
         item.Add(item2);
         item.Add(item3);
@@ -458,8 +459,8 @@ public class Test
 
     void test_enumerable2()
     {
-        FlexItem item = new FlexItem();
-        item.Add(new FlexItem());
+        Item item = new Item();
+        item.Add(new Item());
 
         assert_raised(() => { 
                 foreach (var child in item) {
@@ -469,32 +470,32 @@ public class Test
 
     void test_enumerable3()
     {
-        FlexItem item = new FlexItem();
-        item.Add(new FlexItem());
+        Item item = new Item();
+        item.Add(new Item());
 
         assert_raised(() => { 
                 foreach (var child in item) {
-                    item.Add(new FlexItem());
+                    item.Add(new Item());
                 }}, typeof(InvalidOperationException));
     }
 
     void test_enumerable4()
     {
-        FlexItem item = new FlexItem();
-        item.Add(new FlexItem());
+        Item item = new Item();
+        item.Add(new Item());
 
         assert_raised(() => { 
                 foreach (var child in item) {
-                    item.InsertAt(0, new FlexItem());
+                    item.InsertAt(0, new Item());
                 }}, typeof(InvalidOperationException));
     }
 
     void test_aref_syntax()
     {
-        FlexItem item = new FlexItem();
-        FlexItem item2 = new FlexItem();
-        FlexItem item3 = new FlexItem();
-        FlexItem item4 = new FlexItem();
+        Item item = new Item();
+        Item item2 = new Item();
+        Item item3 = new Item();
+        Item item4 = new Item();
 
         item.Add(item2);
         item.Add(item3);

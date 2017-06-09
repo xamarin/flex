@@ -5,217 +5,223 @@
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
-using static FlexNativeFunctions;
+using static Xamarin.Flex.NativeFunctions;
 
-public class FlexItem : FlexBase, IEnumerable
+namespace Xamarin.Flex
 {
-    public FlexItem()
+    public class Item : Base, IEnumerable
     {
-        item = flex_item_new();
-        CreateHandle(false);
-    }
-
-    public FlexItem(float width, float height) : this()
-    {
-        this.Width = width;
-        this.Height = height;
-    }
-
-    ~FlexItem()
-    {
-        if (item != IntPtr.Zero) {
-            ReleaseHandlesWithinItem(item, false);
-            flex_item_free(item);
-            item = IntPtr.Zero;
-        }
-    }
-
-    public void Add(FlexItem child)
-    {
-        ValidateNewChild(child);
-        child.CreateHandle(true);
-        flex_item_add(item, child.item);
-        notify_changed = true;
-    }
-
-    public void InsertAt(int index, FlexItem child)
-    {
-        ValidateNewChild(child);
-        ValidateIndex(index, true);
-        child.CreateHandle(true);
-        flex_item_insert(item, index, child.item);
-        notify_changed = true;
-    }
-
-    public FlexItem RemoveAt(int index)
-    {
-        ValidateIndex(index, false);
-        IntPtr child_item = flex_item_delete(item, index);
-        FlexItem child = ReleaseHandleForItem(child_item, false);
-        child.CreateHandle(false);
-        notify_changed = true;
-        return child;
-    }
-
-    public int Count
-    {
-        get { return flex_item_count(item); }
-    }
-
-    public FlexItem ItemAt(int index)
-    {
-        ValidateIndex(index, false);
-        return FlexItemFromItem(flex_item_child(item, index));
-    }
-
-    public FlexItem this[int index]
-    {
-        get { return ItemAt(index); }
-    }
-
-    public FlexItem Parent
-    {
-        get { return FlexItemFromItem(flex_item_parent(item)); }
-    }
-
-    public FlexItem Root
-    {
-        get { return FlexItemFromItem(flex_item_root(item)); }
-    }
-
-    public void Layout()
-    {
-        if (Parent != null) {
-            throw new InvalidOperationException("Layout() must be called on a root item (that hasn't been added to another item)");
-        }
-        if (Double.IsNaN(Width) || Double.IsNaN(Height)) {
-            throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
-        }
-        flex_layout(item);
-    }
-
-    public class FlexItemEnumerator : IEnumerator
-    {
-        private FlexItem item;
-        private int index;
-
-        public FlexItemEnumerator(FlexItem _item)
+        public Item()
         {
-            item = _item;
-            index = -1;
+            item = flex_item_new();
+            CreateHandle(false);
         }
-
-        object IEnumerator.Current
+    
+        public Item(float width, float height) : this()
         {
-            get { return Current; }
+            this.Width = width;
+            this.Height = height;
         }
-
-        public FlexItem Current
+    
+        ~Item()
         {
-            get { return item.ItemAt(index); }
-        }
-
-        public void Reset()
-        {
-            index = -1;
-        }
-
-        public bool MoveNext()
-        {
-            if (item.notify_changed) {
-                throw new InvalidOperationException("the item's children list was modified; enumeration cannot proceed");
+            if (item != IntPtr.Zero) {
+                ReleaseHandlesWithinItem(item, false);
+                flex_item_free(item);
+                item = IntPtr.Zero;
             }
-            index++;
-            return index < item.Count;
-        } 
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-        return GetEnumerator();
-    }
-
-    private bool notify_changed = false;
-    public FlexItemEnumerator GetEnumerator()
-    {
-        notify_changed = false;
-        return new FlexItemEnumerator(this);
-    }
-
-    private static Nullable<GCHandle> HandleOfItem(IntPtr item)
-    {
-        if (item == IntPtr.Zero) {
-            return null;
         }
-        IntPtr ptr = flex_item_get_managed_ptr(item);
-        if (ptr == IntPtr.Zero) {
-            return null;
+    
+        public void Add(Item child)
+        {
+            ValidateNewChild(child);
+            child.CreateHandle(true);
+            flex_item_add(item, child.item);
+            notify_changed = true;
         }
-        return GCHandle.FromIntPtr(ptr);
-    }
-
-    private static FlexItem FlexItemFromItem(IntPtr item)
-    {
-        if (item == IntPtr.Zero) {
-            return null;
+    
+        public void InsertAt(int index, Item child)
+        {
+            ValidateNewChild(child);
+            ValidateIndex(index, true);
+            child.CreateHandle(true);
+            flex_item_insert(item, index, child.item);
+            notify_changed = true;
         }
-        var ret = HandleOfItem(item);
-        if (ret.HasValue) {
-            return (FlexItem)ret.Value.Target;
-        }
-        return null;
-    }
-
-    private static FlexItem ReleaseHandleForItem(IntPtr item, bool reset)
-    {
-        var ret = HandleOfItem(item);
-        if (ret.HasValue) {
-            GCHandle handle = ret.Value;
-            FlexItem child = (FlexItem)handle.Target;
-            if (reset) {
-                child.item = IntPtr.Zero;
-            }
-            handle.Free();
-            flex_item_set_managed_ptr(item, IntPtr.Zero);
+    
+        public Item RemoveAt(int index)
+        {
+            ValidateIndex(index, false);
+            IntPtr child_item = flex_item_delete(item, index);
+            Item child = ReleaseHandleForItem(child_item, false);
+            child.CreateHandle(false);
+            notify_changed = true;
             return child;
         }
-        return null;
-    }
-
-    private static void ReleaseHandlesWithinItem(IntPtr item, bool reset)
-    {
-        for (int i = 0, count = flex_item_count(item); i < count; i++) {
-            ReleaseHandlesWithinItem(flex_item_child(item, i), true);
+    
+        public int Count
+        {
+            get { return flex_item_count(item); }
         }
-        ReleaseHandleForItem(item, reset);
-    }
-
-    private void CreateHandle(bool strong)
-    {
-        ReleaseHandleForItem(item, false);
-        GCHandle handle = GCHandle.Alloc(this,
-                strong ? GCHandleType.Pinned : GCHandleType.Weak);
-        flex_item_set_managed_ptr(item, GCHandle.ToIntPtr(handle));
-    }
-
-    private void ValidateNewChild(FlexItem child)
-    {
-        if (this == child) {
-            throw new ArgumentException("cannot add item into self");
+    
+        public Item ItemAt(int index)
+        {
+            ValidateIndex(index, false);
+            return FlexItemFromItem(flex_item_child(item, index));
         }
-        if (child.Parent != null) {
-            throw new ArgumentException("child already has a parent");
-        } 
-    }
-
-    private void ValidateIndex(int index, bool inc)
-    {
-        int max = Count;
-        if (inc) {
-            max++;
+ 
+        // The IndexerName() attribute is required because otherwise we clash
+        // with another symbol named `Item' in the builtin library.
+        [System.Runtime.CompilerServices.IndexerName("ItemIndexer")]
+        public Item this[int index]
+        {
+            get { return ItemAt(index); }
         }
-        if (index < 0 || index >= max) {
-            throw new ArgumentOutOfRangeException();
+  
+        public Item Parent
+        {
+            get { return FlexItemFromItem(flex_item_parent(item)); }
+        }
+    
+        public Item Root
+        {
+            get { return FlexItemFromItem(flex_item_root(item)); }
+        }
+    
+        public void Layout()
+        {
+            if (Parent != null) {
+                throw new InvalidOperationException("Layout() must be called on a root item (that hasn't been added to another item)");
+            }
+            if (Double.IsNaN(Width) || Double.IsNaN(Height)) {
+                throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
+            }
+            flex_layout(item);
+        }
+    
+        public class ItemEnumerator : IEnumerator
+        {
+            private Item item;
+            private int index;
+    
+            public ItemEnumerator(Item _item)
+            {
+                item = _item;
+                index = -1;
+            }
+    
+            object IEnumerator.Current
+            {
+                get { return Current; }
+            }
+    
+            public Item Current
+            {
+                get { return item.ItemAt(index); }
+            }
+    
+            public void Reset()
+            {
+                index = -1;
+            }
+    
+            public bool MoveNext()
+            {
+                if (item.notify_changed) {
+                    throw new InvalidOperationException("the item's children list was modified; enumeration cannot proceed");
+                }
+                index++;
+                return index < item.Count;
+            } 
+        }
+    
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    
+        private bool notify_changed = false;
+        public ItemEnumerator GetEnumerator()
+        {
+            notify_changed = false;
+            return new ItemEnumerator(this);
+        }
+    
+        private static Nullable<GCHandle> HandleOfItem(IntPtr item)
+        {
+            if (item == IntPtr.Zero) {
+                return null;
+            }
+            IntPtr ptr = flex_item_get_managed_ptr(item);
+            if (ptr == IntPtr.Zero) {
+                return null;
+            }
+            return GCHandle.FromIntPtr(ptr);
+        }
+    
+        private static Item FlexItemFromItem(IntPtr item)
+        {
+            if (item == IntPtr.Zero) {
+                return null;
+            }
+            var ret = HandleOfItem(item);
+            if (ret.HasValue) {
+                return (Item)ret.Value.Target;
+            }
+            return null;
+        }
+    
+        private static Item ReleaseHandleForItem(IntPtr item, bool reset)
+        {
+            var ret = HandleOfItem(item);
+            if (ret.HasValue) {
+                GCHandle handle = ret.Value;
+                Item child = (Item)handle.Target;
+                if (reset) {
+                    child.item = IntPtr.Zero;
+                }
+                handle.Free();
+                flex_item_set_managed_ptr(item, IntPtr.Zero);
+                return child;
+            }
+            return null;
+        }
+    
+        private static void ReleaseHandlesWithinItem(IntPtr item, bool reset)
+        {
+            for (int i = 0, count = flex_item_count(item); i < count; i++) {
+                ReleaseHandlesWithinItem(flex_item_child(item, i), true);
+            }
+            ReleaseHandleForItem(item, reset);
+        }
+    
+        private void CreateHandle(bool strong)
+        {
+            ReleaseHandleForItem(item, false);
+            GCHandle handle = GCHandle.Alloc(this,
+                    strong ? GCHandleType.Pinned : GCHandleType.Weak);
+            flex_item_set_managed_ptr(item, GCHandle.ToIntPtr(handle));
+        }
+    
+        private void ValidateNewChild(Item child)
+        {
+            if (this == child) {
+                throw new ArgumentException("cannot add item into self");
+            }
+            if (child.Parent != null) {
+                throw new ArgumentException("child already has a parent");
+            } 
+        }
+    
+        private void ValidateIndex(int index, bool inc)
+        {
+            int max = Count;
+            if (inc) {
+                max++;
+            }
+            if (index < 0 || index >= max) {
+                throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }
