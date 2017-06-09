@@ -24,8 +24,7 @@ MACOS_BUILD_DIR = $(BUILD_DIR)/macos
 MACOS_FLEX_O = $(MACOS_BUILD_DIR)/flex.o
 MACOS_DYLIB = $(MACOS_BUILD_DIR)/libflex.dylib
 MACOS_SLIB = $(MACOS_BUILD_DIR)/libflex.a
-MACOS_ARCHFLAG = -arch i386 -arch x86_64
-MACOS_CFLAGS = -mmacosx-version-min=$(MACOS_MIN_TARGET)
+MACOS_CFLAGS = -mmacosx-version-min=$(MACOS_MIN_TARGET) -arch i386 -arch x86_64
 
 IOS_BUILD_DIR = $(BUILD_DIR)/ios
 IOS_DYLIB = $(IOS_BUILD_DIR)/libflex.dylib
@@ -35,29 +34,28 @@ IOS_SIM_PNAME = iPhoneSimulator
 IOS_SIM_FLEX_O = $(IOS_BUILD_DIR)/$(IOS_SIM_PNAME)/flex.o
 IOS_SIM_DYLIB = $(IOS_BUILD_DIR)/$(IOS_SIM_PNAME)/libflex.dylib
 IOS_SIM_SLIB = $(IOS_BUILD_DIR)/$(IOS_SIM_PNAME)/libflex.a
-IOS_SIM_ARCHFLAG = -arch i386 -arch x86_64
-IOS_SIM_CFLAGS = -isysroot $(XCODE_DIR)/Contents/Developer/Platforms/$(IOS_SIM_PNAME).platform/Developer/SDKs/$(IOS_SIM_PNAME).sdk -mios-simulator-version-min=$(IOS_MIN_TARGET)
+IOS_SIM_CFLAGS = -isysroot $(XCODE_DIR)/Contents/Developer/Platforms/$(IOS_SIM_PNAME).platform/Developer/SDKs/$(IOS_SIM_PNAME).sdk -mios-simulator-version-min=$(IOS_MIN_TARGET) -arch i386 -arch x86_64
 
 IOS_DEV_PNAME = iPhoneOS
 IOS_DEV_FLEX_O = $(IOS_BUILD_DIR)/$(IOS_DEV_PNAME)/flex.o
 IOS_DEV_DYLIB = $(IOS_BUILD_DIR)/$(IOS_DEV_PNAME)/libflex.dylib
 IOS_DEV_SLIB = $(IOS_BUILD_DIR)/$(IOS_DEV_PNAME)/libflex.a
-IOS_DEV_ARCHFLAG = -arch armv7 -arch armv7s -arch arm64 
-IOS_DEV_CFLAGS = -isysroot $(XCODE_DIR)/Contents/Developer/Platforms/$(IOS_DEV_PNAME).platform/Developer/SDKs/$(IOS_DEV_PNAME).sdk -mios-version-min=$(IOS_MIN_TARGET)
+IOS_DEV_CFLAGS = -isysroot $(XCODE_DIR)/Contents/Developer/Platforms/$(IOS_DEV_PNAME).platform/Developer/SDKs/$(IOS_DEV_PNAME).sdk -mios-version-min=$(IOS_MIN_TARGET) -arch armv7 -arch armv7s -arch arm64 
 
 ANDROID_BUILD_DIR = $(BUILD_DIR)/android
+ANDROID_CFLAGS = -no-canonical-prefixes -msoft-float -MMD -MP -fpic -ffunction-sections -fstack-protector -fno-strict-aliasing -DANDROID -Wformat -Werror=format-security
 
 ANDROID_X86_DIR = $(ANDROID_BUILD_DIR)/x86
 ANDROID_X86_FLEX_O = $(ANDROID_X86_DIR)/flex.o
 ANDROID_X86_DYLIB = $(ANDROID_X86_DIR)/libflex.so
 ANDROID_X86_SLIB = $(ANDROID_X86_DIR)/libflex.a
-ANDROID_X86_CFLAGS = --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86 -mno-sse -mno-mmx -no-canonical-prefixes -msoft-float -target i686-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/x86-4.9/prebuilt/darwin-x86_64 -MMD -MP -fpic -ffunction-sections -fstack-protector -fno-strict-aliasing -DANDROID -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86/usr/include -Wformat -Werror=format-security
+ANDROID_X86_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86 -mno-sse -mno-mmx -target i686-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/x86-4.9/prebuilt/darwin-x86_64 -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86/usr/include
 
 ANDROID_ARM_DIR = $(ANDROID_BUILD_DIR)/armeabi
 ANDROID_ARM_FLEX_O = $(ANDROID_ARM_DIR)/flex.o
 ANDROID_ARM_DYLIB = $(ANDROID_ARM_DIR)/libflex.so
 ANDROID_ARM_SLIB = $(ANDROID_ARM_DIR)/libflex.a
-ANDROID_ARM_CFLAGS = --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -no-canonical-prefixes -target armv5te-none-linux-androideabi -march=armv5te -mthumb -msoft-float -marm -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -mtune=xscale -MMD -MP -fpic -ffunction-sections -fstack-protector -fno-strict-aliasing -DANDROID -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include -Wformat -Werror=format-security 
+ANDROID_ARM_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -target armv5te-none-linux-androideabi -march=armv5te -mthumb -marm -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -mtune=xscale -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include 
 
 all: macos ios android
 macos:  $(MACOS_DYLIB) $(MACOS_SLIB)
@@ -66,10 +64,10 @@ android: $(ANDROID_X86_DYLIB) $(ANDROID_X86_SLIB) $(ANDROID_ARM_DYLIB) $(ANDROID
 
 $(MACOS_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(MACOS_FLEX_O)`
-	$(XCODE_CC) $(CFLAGS) $(MACOS_CFLAGS) $(MACOS_ARCHFLAG) -c $(FLEX_SRC) -o $(MACOS_FLEX_O)
+	$(XCODE_CC) $(CFLAGS) $(MACOS_CFLAGS) -c $(FLEX_SRC) -o $(MACOS_FLEX_O)
 
 $(MACOS_DYLIB): $(MACOS_FLEX_O)
-	$(XCODE_CC) $(LDFLAGS) $(MACOS_CFLAGS) $(MACOS_ARCHFLAG) $(MACOS_FLEX_O) -dynamiclib -undefined dynamic_lookup -o $(MACOS_DYLIB)
+	$(XCODE_CC) $(LDFLAGS) $(MACOS_CFLAGS) $(MACOS_FLEX_O) -dynamiclib -undefined dynamic_lookup -o $(MACOS_DYLIB)
 
 $(MACOS_SLIB): $(MACOS_FLEX_O)
 	/bin/rm -f $(MACOS_SLIB)
@@ -78,10 +76,10 @@ $(MACOS_SLIB): $(MACOS_FLEX_O)
 
 $(IOS_SIM_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(IOS_SIM_FLEX_O)`
-	$(XCODE_CC) $(CFLAGS) $(IOS_SIM_CFLAGS) $(IOS_SIM_ARCHFLAG) -c $(FLEX_SRC) -o $(IOS_SIM_FLEX_O)
+	$(XCODE_CC) $(CFLAGS) $(IOS_SIM_CFLAGS) -c $(FLEX_SRC) -o $(IOS_SIM_FLEX_O)
 
 $(IOS_SIM_DYLIB): $(IOS_SIM_FLEX_O)
-	$(XCODE_CC) $(LDFLAGS) $(IOS_SIM_CFLAGS) $(IOS_SIM_ARCHFLAG) $(IOS_SIM_FLEX_O) -dynamiclib -o $(IOS_SIM_DYLIB)
+	$(XCODE_CC) $(LDFLAGS) $(IOS_SIM_CFLAGS) $(IOS_SIM_FLEX_O) -dynamiclib -o $(IOS_SIM_DYLIB)
 
 $(IOS_SIM_SLIB): $(IOS_SIM_FLEX_O)
 	/bin/rm -f $(IOS_SIM_SLIB)
@@ -90,10 +88,10 @@ $(IOS_SIM_SLIB): $(IOS_SIM_FLEX_O)
 
 $(IOS_DEV_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(IOS_DEV_FLEX_O)`
-	$(XCODE_CC) $(CFLAGS) $(IOS_DEV_CFLAGS) $(IOS_DEV_ARCHFLAG) -c $(FLEX_SRC) -o $(IOS_DEV_FLEX_O)
+	$(XCODE_CC) $(CFLAGS) $(IOS_DEV_CFLAGS) -c $(FLEX_SRC) -o $(IOS_DEV_FLEX_O)
 
 $(IOS_DEV_DYLIB): $(IOS_DEV_FLEX_O)
-	$(XCODE_CC) $(LDFLAGS) $(IOS_DEV_CFLAGS) $(IOS_DEV_ARCHFLAG) $(IOS_DEV_FLEX_O) -dynamiclib -o $(IOS_DEV_DYLIB)
+	$(XCODE_CC) $(LDFLAGS) $(IOS_DEV_CFLAGS) $(IOS_DEV_FLEX_O) -dynamiclib -o $(IOS_DEV_DYLIB)
 
 $(IOS_DEV_SLIB): $(IOS_DEV_FLEX_O)
 	/bin/rm -f $(IOS_DEV_SLIB)
