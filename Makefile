@@ -49,13 +49,13 @@ ANDROID_BUILD_DIR = $(BUILD_DIR)/android
 
 ANDROID_X86_DIR = $(ANDROID_BUILD_DIR)/x86
 ANDROID_X86_FLEX_O = $(ANDROID_X86_DIR)/flex.o
-ANDROID_X86_DYLIB = $(ANDROID_X86_DIR)/libflex.dylib
+ANDROID_X86_DYLIB = $(ANDROID_X86_DIR)/libflex.so
 ANDROID_X86_SLIB = $(ANDROID_X86_DIR)/libflex.a
 ANDROID_X86_CFLAGS = --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86 -mno-sse -mno-mmx -no-canonical-prefixes -msoft-float -target i686-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/x86-4.9/prebuilt/darwin-x86_64 -MMD -MP -fpic -ffunction-sections -fstack-protector -fno-strict-aliasing -DANDROID -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86/usr/include -Wformat -Werror=format-security
 
 ANDROID_ARM_DIR = $(ANDROID_BUILD_DIR)/armeabi
 ANDROID_ARM_FLEX_O = $(ANDROID_ARM_DIR)/flex.o
-ANDROID_ARM_DYLIB = $(ANDROID_ARM_DIR)/libflex.dylib
+ANDROID_ARM_DYLIB = $(ANDROID_ARM_DIR)/libflex.so
 ANDROID_ARM_SLIB = $(ANDROID_ARM_DIR)/libflex.a
 ANDROID_ARM_CFLAGS = --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -no-canonical-prefixes -target armv5te-none-linux-androideabi -march=armv5te -mthumb -msoft-float -marm -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -mtune=xscale -MMD -MP -fpic -ffunction-sections -fstack-protector -fno-strict-aliasing -DANDROID -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include -Wformat -Werror=format-security 
 
