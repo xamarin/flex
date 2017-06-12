@@ -8,12 +8,6 @@
 #include <assert.h>
 #include <stdbool.h>
 
-#define DEBUG_PRINT_FRAMES      0
-
-#if DEBUG_PRINT_FRAMES
-# include <stdio.h>
-#endif
-
 #include "flex.h"
 
 struct flex_item {
