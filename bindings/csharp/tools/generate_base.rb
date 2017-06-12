@@ -94,8 +94,16 @@ EOS
     out 'public class NativeFunctions'
     out '{'
     @indent += 1
-    out "private const string dll_name = \"#{DLL_NAME}\";"
-    out ''
+    out 'private const string dll_name ='
+    out '#if LIBFLEX_STATIC'
+    @indent += 1
+    out "\"__Internal\";"
+    @indent -= 1
+    out '#else'
+    @indent += 1
+    out "\"flex\";"
+    @indent -= 1
+    out '#endif'
     properties = {}
     @functions.sort { |x, y| x[0] <=> y[0] }.each do |name, retval, args|
       i = 0

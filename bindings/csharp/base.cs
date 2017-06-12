@@ -45,8 +45,12 @@ namespace Xamarin.Flex
     
     public class NativeFunctions
     {
-        private const string dll_name = "flex";
-        
+        private const string dll_name =
+        #if LIBFLEX_STATIC
+            "__Internal";
+        #else
+            "flex";
+        #endif
         [DllImport(dll_name)] public static extern void flex_item_add (IntPtr arg1, IntPtr arg2);
         [DllImport(dll_name)] public static extern IntPtr flex_item_child (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern int flex_item_count (IntPtr arg1);
