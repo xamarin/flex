@@ -147,7 +147,7 @@ namespace Xamarin.Flex
             return new ItemEnumerator(this);
         }
     
-        private static Nullable<GCHandle> HandleOfItem(IntPtr item)
+        private static GCHandle? HandleOfItem(IntPtr item)
         {
             if (item == IntPtr.Zero) {
                 return null;
