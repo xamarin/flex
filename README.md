@@ -19,6 +19,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | Attribute | Status |
 |---|---|
 | width, height | :ok: |
+| self_sizing | :x: |
 | padding | :ok: |
 | margin | :ok: |
 | justify_content flex_start | :ok: |
