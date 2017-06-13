@@ -98,7 +98,23 @@ namespace Xamarin.Flex
             }
             flex_layout(item);
         }
-    
+
+        public float Padding
+        {
+            set {
+                this.PaddingTop = this.PaddingLeft = this.PaddingRight =
+                    this.PaddingBottom = value;
+            }
+        }
+
+        public float Margin
+        {
+            set {
+                this.MarginTop = this.MarginLeft = this.MarginRight =
+                    this.MarginBottom = value;
+            }
+        }
+
         public class ItemEnumerator : IEnumerator
         {
             private Item item;

@@ -515,6 +515,64 @@ public class Test
                 typeof(ArgumentOutOfRangeException));
     }
 
+    void test_set_margin_all()
+    {
+        Item item = new Item();
+
+        item.MarginTop = 1;
+        item.MarginBottom = 2;
+        item.MarginLeft = 3;
+        item.MarginRight = 4;
+
+        assert(item.MarginTop == 1);
+        assert(item.MarginBottom == 2);
+        assert(item.MarginLeft == 3);
+        assert(item.MarginRight == 4);
+
+        item.Margin = 42;
+
+        assert(item.MarginTop == 42);
+        assert(item.MarginBottom == 42);
+        assert(item.MarginLeft == 42);
+        assert(item.MarginRight == 42);
+
+        item.Margin = 0;
+
+        assert(item.MarginTop == 0);
+        assert(item.MarginBottom == 0);
+        assert(item.MarginLeft == 0);
+        assert(item.MarginRight == 0);
+    }
+
+    void test_set_padding_all()
+    {
+        Item item = new Item();
+
+        item.PaddingTop = 1;
+        item.PaddingBottom = 2;
+        item.PaddingLeft = 3;
+        item.PaddingRight = 4;
+
+        assert(item.PaddingTop == 1);
+        assert(item.PaddingBottom == 2);
+        assert(item.PaddingLeft == 3);
+        assert(item.PaddingRight == 4);
+
+        item.Padding = 42;
+
+        assert(item.PaddingTop == 42);
+        assert(item.PaddingBottom == 42);
+        assert(item.PaddingLeft == 42);
+        assert(item.PaddingRight == 42);
+
+        item.Padding = 0;
+
+        assert(item.PaddingTop == 0);
+        assert(item.PaddingBottom == 0);
+        assert(item.PaddingLeft == 0);
+        assert(item.PaddingRight == 0);
+    }
+
     void run_gc()
     {
         for (int i = 0; i < 10; i++) {
