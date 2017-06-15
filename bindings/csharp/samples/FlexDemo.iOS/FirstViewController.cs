@@ -51,12 +51,15 @@ namespace FlexDemo.iOS
             float spacing = 20;
 
             var label = new UILabel();
-			label.Text = "This is the list of items you have:";
-            label.TextAlignment = UITextAlignment.Center;
+            label.Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.";
+            label.LineBreakMode = UILineBreakMode.WordWrap;
+            label.Lines = 0;
+			label.TextAlignment = UITextAlignment.Center;
 			var label_item = new Item(label);
-            label_item.Width = root.Width;
-            label_item.Height = 25;
+            label_item.Width = root.Width - 20;
+			label_item.Height = (float)label.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(label_item.Width, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
             label_item.MarginTop = spacing;
+            label_item.MarginLeft = label_item.MarginRight = 10;
             root.Add(label_item);
 
             var list = new UITableView();
