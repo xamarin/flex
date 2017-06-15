@@ -609,12 +609,24 @@ layout_item(struct flex_item *item, float width, float height)
         // Initialize frame.
         child->frame[0] = 0;
         child->frame[1] = 0;
-        child->frame[2] = isnan(child->width) ? 0 : child->width;
-        child->frame[3] = isnan(child->height) ? 0 : child->height;
+        child->frame[2] = child->width;
+        child->frame[3] = child->height;
 
         if (child->basis > 0) {
             // The `basis' property has priority.
             CHILD_SIZE(child) = child->basis;
+        }
+
+        // Main axis size defaults to 0.
+        if (isnan(CHILD_SIZE(child))) {
+            CHILD_SIZE(child) = 0;
+        }
+
+        // Cross axis size defaults to the parent's size.
+        if (isnan(CHILD_SIZE2(child))) {
+            CHILD_SIZE2(child) = (layout->vertical ? width : height)
+                - CHILD_MARGIN(child, left, top)
+                - CHILD_MARGIN(child, right, bottom);
         }
 
         float child_size = CHILD_SIZE(child);

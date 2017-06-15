@@ -128,7 +128,9 @@ test_default_values1(void)
 static void
 test_default_values2(void)
 {
-    // If the width/height property isn't set, it defaults to 0 in the frame.
+    // If the width/height property isn't set on a child, it's frame size
+    // defaults to 0 for the main axis and the parent's size for the cross
+    // axis.
     struct flex_item *root = flex_item_with_size(200, 200);
 
     struct flex_item *child1 = flex_item_new();
@@ -147,10 +149,10 @@ test_default_values2(void)
     TEST_EQUAL(flex_item_get_frame_width(child1), 100);
     TEST_EQUAL(flex_item_get_frame_height(child1), 0);
 
-    TEST_EQUAL(flex_item_get_frame_width(child2), 0);
+    TEST_EQUAL(flex_item_get_frame_width(child2), 200);
     TEST_EQUAL(flex_item_get_frame_height(child2), 100);
 
-    TEST_EQUAL(flex_item_get_frame_width(child3), 0);
+    TEST_EQUAL(flex_item_get_frame_width(child3), 200);
     TEST_EQUAL(flex_item_get_frame_height(child3), 0);
 
     flex_item_free(root);
@@ -2627,6 +2629,72 @@ test_margin7(void)
 }
 
 static void
+test_margin8(void)
+{
+    // When defaulting to the parent's cross axis size, margins must be taken
+    // into account.
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_set_height(child1, 10);
+    flex_item_set_margin_left(child1, 10);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_set_height(child2, 10);
+    flex_item_set_margin_right(child2, 10);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_new();
+    flex_item_set_height(child3, 10);
+    flex_item_set_margin_left(child3, 10);
+    flex_item_set_margin_right(child3, 20);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 10, 0, 90, 10);
+    TEST_FRAME_EQUAL(child2, 0, 10, 90, 10);
+    TEST_FRAME_EQUAL(child3, 10, 20, 70, 10);
+
+    flex_item_free(root);
+}
+
+static void
+test_margin9(void)
+{
+    // When defaulting to the parent's cross axis size, margins must be taken
+    // into account.
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_set_width(child1, 10);
+    flex_item_set_margin_top(child1, 10);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_set_width(child2, 10);
+    flex_item_set_margin_bottom(child2, 10);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_new();
+    flex_item_set_width(child3, 10);
+    flex_item_set_margin_top(child3, 10);
+    flex_item_set_margin_bottom(child3, 20);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 10, 10, 90);
+    TEST_FRAME_EQUAL(child2, 10, 0, 10, 90);
+    TEST_FRAME_EQUAL(child3, 20, 10, 10, 70);
+
+    flex_item_free(root);
+}
+
+static void
 test_padding1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -2856,6 +2924,8 @@ main(void)
     UNIT(margin5);
     UNIT(margin6);
     UNIT(margin7);
+    UNIT(margin8);
+    UNIT(margin9);
 
     UNIT(padding1);
     UNIT(padding2);
