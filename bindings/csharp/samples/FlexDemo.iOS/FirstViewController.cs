@@ -56,8 +56,7 @@ namespace FlexDemo.iOS
             label.Lines = 0;
 			label.TextAlignment = UITextAlignment.Center;
 			var label_item = new Item(label);
-            label_item.Width = root.Width - 20;
-			label_item.Height = (float)label.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(label_item.Width, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
+			label_item.Height = (float)label.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(root.Width - 20, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
             label_item.MarginTop = spacing;
             label_item.MarginLeft = label_item.MarginRight = 10;
             root.Add(label_item);
@@ -65,7 +64,6 @@ namespace FlexDemo.iOS
             var list = new UITableView();
             list.Source = new TableSource();
 			var list_item = new Item(list);
-            list_item.Width = root.Width;
 			list_item.Grow = 1;
             list_item.MarginTop = spacing;
             root.Add(list_item);
@@ -74,14 +72,12 @@ namespace FlexDemo.iOS
             input.Placeholder = "Enter list item";
             input.TextAlignment = UITextAlignment.Center;
             var input_item = new Item(input);
-            input_item.Width = root.Width;
             input_item.Height = 25;
             input_item.MarginTop = spacing;
             root.Add(input_item);
 
             var buttons_row = new Item(new UIView());
             buttons_row.Direction = Xamarin.Flex.Direction.Row;
-            buttons_row.Width = root.Width;
 			buttons_row.Height = 25;
             buttons_row.MarginTop = buttons_row.MarginBottom = spacing;
             root.Add(buttons_row);
