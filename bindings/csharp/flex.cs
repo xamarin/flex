@@ -177,12 +177,11 @@ namespace Xamarin.Flex
     
         private static Item FlexItemFromItem(IntPtr item)
         {
-            if (item == IntPtr.Zero) {
-                return null;
-            }
-            var ret = HandleOfItem(item);
-            if (ret.HasValue) {
-                return (Item)ret.Value.Target;
+            if (item != IntPtr.Zero) {
+                var ret = HandleOfItem(item);
+                if (ret.HasValue) {
+                    return (Item)ret.Value.Target;
+                }
             }
             return null;
         }
