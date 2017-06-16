@@ -1,18 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using UIKit;
 
 namespace FlexDemo.iOS
 {
-    public class Item : Xamarin.Flex.Item
+    abstract public class Base : Xamarin.Flex.Item
     {
-        private UIView view;
+        protected UIView view = null;
 
-        public Item(UIView _view)
-        {
-            view = _view;
-        }
-
-        public void Add(Item item)
+        public void Add(Base item)
         {
             base.Add(item);
             view.AddSubview(item.view);
@@ -20,10 +16,9 @@ namespace FlexDemo.iOS
 
         private void UpdateChildrenFrames()
         {
-			foreach (Item item in this)
-			{
-				item.view.Frame = new CoreGraphics.CGRect((nfloat)item.FrameX, (nfloat)item.FrameY, (nfloat)item.FrameWidth, (nfloat)item.FrameHeight);
-                item.UpdateChildrenFrames();
+            foreach (Base child in this) {
+                child.view.Frame = new CoreGraphics.CGRect((nfloat)child.FrameX, (nfloat)child.FrameY, (nfloat)child.FrameWidth, (nfloat)child.FrameHeight);
+                child.UpdateChildrenFrames();
             }
         }
 
@@ -31,6 +26,28 @@ namespace FlexDemo.iOS
         {
             base.Layout();
             UpdateChildrenFrames();
+        }
+    }
+
+    public class Item <T> : Base where T : UIView
+    {
+        public Item() : base()
+        {
+            View = (T)Activator.CreateInstance(typeof(T), null);
+        }
+
+        public Item(T view) : base()
+        {
+            View = view;
+            var frame_size = view.Frame.Size;
+            Width = (float)frame_size.Width;
+            Height = (float)frame_size.Height;
+        }
+
+        public T View
+        {
+            get { return view as T; }
+            set { view = value; }
         }
     }
 }

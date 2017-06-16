@@ -1,126 +1,128 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using UIKit;
 
 namespace FlexDemo.iOS
 {
-	public class TableSource : UITableViewSource
-	{
-		public ArrayList tableItems;
-		protected string cellIdentifier = "TableCell";
+    public class TableSource : UITableViewSource
+    {
+        public ArrayList tableItems;
+        protected string cellIdentifier = "TableCell";
         public TableSource()
-		{
-			tableItems = new ArrayList();
-		}
-		public override nint RowsInSection(UITableView tableview, nint section)
-		{
-			return tableItems.Count;
-		}
-		public override UITableViewCell GetCell(UITableView tableView, Foundation.NSIndexPath indexPath)
-		{
-			// request a recycled cell to save memory
-			UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
-			// if there are no cells to reuse, create a new one
+        {
+            tableItems = new ArrayList();
+        }
+
+        public override nint RowsInSection(UITableView tableview, nint section)
+        {
+            return tableItems.Count;
+        }
+
+        public override UITableViewCell GetCell(UITableView tableView, Foundation.NSIndexPath indexPath)
+        {
+            // request a recycled cell to save memory
+            UITableViewCell cell = tableView.DequeueReusableCell(cellIdentifier);
+            // if there are no cells to reuse, create a new one
             if (cell == null) {
-				cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
+                cell = new UITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
             }
             cell.TextLabel.Text = (string)tableItems[indexPath.Row];
-			return cell;
-		}
-	}
+            return cell;
+        }
+    }
 
-	public partial class FirstViewController : UIViewController
+    public partial class FirstViewController : UIViewController
     {
         protected FirstViewController(IntPtr handle) : base(handle)
         {
-            // Note: this .ctor should not contain any initialization logic.
         }
 
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
-            // Perform any additional setup after loading the view, typically from a nib.
 
-            var root = new Item(this.View)
+            var root = new Item<UIView>(this.View)
             {
-                Width = (float)this.View.Frame.Size.Width,
-                Height = (float)(this.View.Frame.Size.Height - TabBarController.TabBar.Frame.Size.Height),
                 PaddingTop = 20,
+                PaddingBottom = (float)TabBarController.TabBar.Frame.Size.Height
             };
 
             float spacing = 20;
 
-            var label = new UILabel();
-            label.Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.";
-            label.LineBreakMode = UILineBreakMode.WordWrap;
-            label.Lines = 0;
-			label.TextAlignment = UITextAlignment.Center;
-			var label_item = new Item(label);
-			label_item.Height = (float)label.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(root.Width - 20, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
-            label_item.MarginTop = spacing;
-            label_item.MarginLeft = label_item.MarginRight = 10;
-            root.Add(label_item);
+            var label = new Item<UILabel>()
+            {
+                MarginTop = spacing,
+                MarginLeft = 10,
+                MarginRight = 10
+            };
+            label.View.Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.";
+            label.View.TextAlignment = UITextAlignment.Center;
+            label.View.LineBreakMode = UILineBreakMode.WordWrap;
+            label.View.Lines = 0;
+            label.Height = (float)label.View.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(root.Width - 20, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
+            root.Add(label);
 
-            var list = new UITableView();
-            list.Source = new TableSource();
-			var list_item = new Item(list);
-			list_item.Grow = 1;
-            list_item.MarginTop = spacing;
-            root.Add(list_item);
+            var list = new Item<UITableView>()
+            {
+                Grow = 1,
+                MarginTop = spacing
+            };
+            list.View.Source = new TableSource();
+            root.Add(list);
 
-            var input = new UITextField();
-            input.Placeholder = "Enter list item";
-            input.TextAlignment = UITextAlignment.Center;
-            var input_item = new Item(input);
-            input_item.Height = 25;
-            input_item.MarginTop = spacing;
-            root.Add(input_item);
+            var input = new Item<UITextField>()
+            {
+                Height = 25,
+                MarginTop = spacing
+            };
+            input.View.Placeholder = "Enter list item";
+            input.View.TextAlignment = UITextAlignment.Center;
+            root.Add(input);
 
-            var buttons_row = new Item(new UIView());
-            buttons_row.Direction = Xamarin.Flex.Direction.Row;
-			buttons_row.Height = 25;
-            buttons_row.MarginTop = buttons_row.MarginBottom = spacing;
+            var buttons_row = new Item<UIView>()
+            {
+                Direction = Xamarin.Flex.Direction.Row,
+                Height = 25,
+                MarginTop = spacing,
+                MarginBottom = spacing
+            };
             root.Add(buttons_row);
 
-            var add = new UIButton();
-            add.SetTitle("Add", UIControlState.Normal);
-            add.SetTitleColor(UIColor.Black, UIControlState.Normal);
-            add.TouchUpInside += delegate
+            var add_button = new Item<UIButton>()
             {
-                var s = (TableSource)list.Source;
-                var t = input.Text;
+                Grow = 1,
+                Height = 25
+            };
+            add_button.View.SetTitle("Add", UIControlState.Normal);
+            add_button.View.SetTitleColor(UIColor.Black, UIControlState.Normal);
+            add_button.View.TouchUpInside += delegate
+            {
+                var s = list.View.Source as TableSource;
+                var t = input.View.Text;
                 if (t != "") {
-                    s.tableItems.Add(input.Text);
-                    list.ReloadData();
-                    input.Text = "";
+                    s.tableItems.Add(t);
+                    list.View.ReloadData();
+                    input.View.Text = "";
                 }
             };
-            var add_item = new Item(add);
-            add_item.Grow = 1;
-			add_item.Height = 25;
-            buttons_row.Add(add_item);
+            buttons_row.Add(add_button);
 
-			var clear = new UIButton();
-			clear.SetTitle("Clear", UIControlState.Normal);
-			clear.SetTitleColor(UIColor.Black, UIControlState.Normal);
-			clear.TouchUpInside += delegate
-			{
-				var s = (TableSource)list.Source;
+            var clear_button = new Item<UIButton>()
+            {
+                Grow = 1,
+                Height = 25
+            };
+            clear_button.View.SetTitle("Clear", UIControlState.Normal);
+            clear_button.View.SetTitleColor(UIColor.Black, UIControlState.Normal);
+            clear_button.View.TouchUpInside += delegate
+            {
+                var s = list.View.Source as TableSource;
                 s.tableItems.Clear();
-                list.ReloadData();
-			};
-			var clear_item = new Item(clear);
-            clear_item.Grow = 1;
-			clear_item.Height = 25;
-			buttons_row.Add(clear_item);
+                list.View.ReloadData();
+            };
+            buttons_row.Add(clear_button);
 
-			root.Layout();
-        }
-
-        public override void DidReceiveMemoryWarning()
-        {
-            base.DidReceiveMemoryWarning();
-            // Release any cached data, images, etc that aren't in use.
+            root.Layout();
         }
     }
 }
