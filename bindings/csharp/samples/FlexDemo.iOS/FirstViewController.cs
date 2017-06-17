@@ -44,7 +44,7 @@ namespace FlexDemo.iOS
 
             var root = new Item<UIView>(this.View)
             {
-                PaddingTop = 20,
+                PaddingTop = (float)UIApplication.SharedApplication.StatusBarFrame.Size.Height,
                 PaddingBottom = (float)TabBarController.TabBar.Frame.Size.Height
             };
 
