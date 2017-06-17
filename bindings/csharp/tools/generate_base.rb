@@ -129,7 +129,7 @@ EOS
     out ''
     
     die "no properties?" if properties.empty?
-    out 'abstract public class Base'
+    out 'public partial class Item'
     out '{'
     @indent += 1
     out 'protected IntPtr item = IntPtr.Zero;'

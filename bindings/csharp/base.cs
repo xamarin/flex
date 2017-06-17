@@ -119,7 +119,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_layout (IntPtr arg1);
     }
     
-    abstract public class Base
+    public partial class Item
     {
         protected IntPtr item = IntPtr.Zero;
         

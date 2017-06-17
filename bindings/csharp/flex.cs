@@ -9,7 +9,7 @@ using static Xamarin.Flex.NativeFunctions;
 
 namespace Xamarin.Flex
 {
-    public class Item : Base, IEnumerable
+    public partial class Item : IEnumerable
     {
         public Item()
         {
