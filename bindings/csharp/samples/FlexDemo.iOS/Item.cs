@@ -1,17 +1,40 @@
-﻿using System;
+﻿﻿﻿using System;
 using System.Collections.Generic;
 using UIKit;
 
-namespace FlexDemo.iOS
+using XF = Xamarin.Flex;
+
+namespace Xamarin.Flex.iOS
 {
-    abstract public class Base : Xamarin.Flex.Item
+    abstract public class Base : XF.Item
     {
         protected UIView view = null;
 
-        public void Add(Base item)
+        public new void Add(XF.Item child)
         {
-            base.Add(item);
-            view.AddSubview(item.view);
+            base.Add(child);
+            view.AddSubview((child as Base).view);
+        }
+
+        public new void InsertAt(int index, XF.Item child)
+        {
+            base.InsertAt(index, child);
+            view.InsertSubview((child as Base).view, index);
+        }
+
+        public new XF.Item RemoveAt(int index)
+        {
+            var child = base.RemoveAt(index);
+            if (child != null) {
+                (child as Base).view.RemoveFromSuperview();
+            }
+            return child;
+        }
+
+        public new void Layout()
+        {
+            base.Layout();
+            UpdateChildrenFrames();
         }
 
         private void UpdateChildrenFrames()
@@ -20,12 +43,6 @@ namespace FlexDemo.iOS
                 child.view.Frame = new CoreGraphics.CGRect((nfloat)child.FrameX, (nfloat)child.FrameY, (nfloat)child.FrameWidth, (nfloat)child.FrameHeight);
                 child.UpdateChildrenFrames();
             }
-        }
-
-        public new void Layout()
-        {
-            base.Layout();
-            UpdateChildrenFrames();
         }
     }
 

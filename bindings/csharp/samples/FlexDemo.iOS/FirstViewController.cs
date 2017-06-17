@@ -1,6 +1,7 @@
-﻿﻿using System;
+﻿﻿﻿using System;
 using System.Collections;
 using UIKit;
+using Xamarin.Flex.iOS;
 
 namespace FlexDemo.iOS
 {
