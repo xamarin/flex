@@ -1,5 +1,5 @@
 FLEX_DIR = ../../..
-CS_FILES = ../base.cs ../flex.cs test.cs
+CS_FILES = ../base.cs ../flex.cs test.cs test_*.cs
 
 all: run
 
