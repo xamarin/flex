@@ -1,4 +1,4 @@
-﻿using Android.App;
+﻿﻿using Android.App;
 using Android.Widget;
 using Android.OS;
 using Android.Util;
@@ -20,51 +20,39 @@ namespace FlexDemo.Android
 
             float spacing = 40;
 
-            var root = new LayoutItem()
+            var root = new LayoutItem(this)
             {
                 Width = metrics.WidthPixels,
                 Height = metrics.HeightPixels,
                 PaddingBottom = 80
             };
-            root.view = new FrameLayout(this)
-            {
-                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
-            };
 
-            var label = new Item()
+            var label = new Item<TextView>(this)
             {
                 Margin = spacing
             };
-            var label_view = new TextView(this)
-            {
-                Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.",
-            };
-            label.view = label_view;
-            label.Height = new StaticLayout(label_view.Text, label_view.Paint, (int)root.Width, Layout.Alignment.AlignNormal, 1, 0, true).Height;
+            label.View.Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.";
+            label.Height = new StaticLayout(label.View.Text, label.View.Paint, (int)root.Width, Layout.Alignment.AlignNormal, 1, 0, true).Height;
             root.Add(label);
 
-            var list = new Item()
+            var list = new Item<ListView>(this)
             {
                 Grow = 1,
                 MarginLeft = spacing,
                 MarginRight = spacing
             };
-            var list_view = new ListView(this);
-            list_view.Adapter = new ArrayAdapter(this, Resource.Layout.TextViewItem);
-            list.view = list_view;
+            list.View.Adapter = new ArrayAdapter(this, Resource.Layout.TextViewItem);
             root.Add(list);
 
-            var input = new Item()
+            var input = new Item<EditText>(this)
             {
                 Margin = spacing
             };
-            var input_view = new EditText(this);
-            input_view.Hint = "Enter list item";
+            input.View.Hint = "Enter list item";
             input.Height = 80;
-            input.view = input_view;
             root.Add(input);
 
-            var buttons_row = new LayoutItem()
+            var buttons_row = new LayoutItem(this)
             {
                 Direction = Xamarin.Flex.Direction.Row,
                 Height = 80,
@@ -72,43 +60,35 @@ namespace FlexDemo.Android
                 MarginRight = spacing,
                 MarginBottom = spacing
             };
-            buttons_row.view = new FrameLayout(this)
-            {
-                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
-            };
             root.Add(buttons_row);
 
-            var add_button = new Item()
+            var add_button = new Item<Button>(this)
             {
                 Grow = 1,
                 Height = 80
             };
-            var add_button_view = new Button(this);
-            add_button_view.Text = "Add";
-            add_button_view.Click += delegate
+            add_button.View.Text = "Add";
+            add_button.View.Click += delegate
             {
-                var adapter = (ArrayAdapter)list_view.Adapter;
-                if (input_view.Text != "") {
-                    adapter.Add(input_view.Text);
-                    input_view.Text = "";
+                var adapter = (ArrayAdapter)list.View.Adapter;
+                if (input.View.Text != "") {
+                    adapter.Add(input.View.Text);
+                    input.View.Text = "";
                 }
             };
-            add_button.view = add_button_view;
             buttons_row.Add(add_button);
 
-            var clear_button = new Item()
+            var clear_button = new Item<Button>(this)
             {
                 Grow = 1,
                 Height = 80
             };
-            var clear_button_view = new Button(this);
-            clear_button_view.Text = "Clear";
-            clear_button_view.Click += delegate
+            clear_button.View.Text = "Clear";
+            clear_button.View.Click += delegate
             {
-                var adapter = (ArrayAdapter)list_view.Adapter;
+                var adapter = (ArrayAdapter)list.View.Adapter;
                 adapter.Clear();
             };
-            clear_button.view = clear_button_view;
             buttons_row.Add(clear_button);
 
             root.Layout();

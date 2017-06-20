@@ -1,13 +1,14 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using Android.Widget;
 using Android.Views;
+using Android.Content;
 
 using XF = Xamarin.Flex;
 
 namespace Xamarin.Flex.Android
 {
-    public class Item : XF.Item
+    abstract public class Base : XF.Item
     {
         public View view = null;
 
@@ -36,10 +37,16 @@ namespace Xamarin.Flex.Android
     {
         public FrameLayout view = null;
 
+        public LayoutItem(Context context)
+        {
+            view = new FrameLayout(context);
+            view.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent);
+        }
+
         static private View ViewOfItem(XF.Item item)
         {
-            if (item is Item) {
-                return ((Item)item).view;
+            if (item is Base) {
+                return ((Base)item).view;
             }
             if (item is LayoutItem) {
                 return ((LayoutItem)item).view;
@@ -97,6 +104,20 @@ namespace Xamarin.Flex.Android
 
                 UpdateChildrenFrames(child);
             }
+        }
+    }
+
+    public class Item <T> : Base where T : View
+    {
+        public Item(Context context) : base()
+        {
+            View = (T)Activator.CreateInstance(typeof(T), new object[] { context });
+        }
+
+        public T View
+        {
+            get { return view as T; }
+            set { view = value; }
         }
     }
 }
