@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_order1(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -28,7 +28,7 @@ test_order1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_order2(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -55,7 +55,7 @@ test_order2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_order3(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -79,7 +79,7 @@ test_order3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_order4(void)
 {
     // This test ensures that the insertion order of the children is preserved

@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_position1(void)
 {
     // Items with an absolute position default to the left/top corner.
@@ -19,7 +19,7 @@ test_position1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -58,7 +58,7 @@ test_position2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position3(void)
 {
     // If both left/right or top/bottom are given, left/top get the priority
@@ -85,7 +85,7 @@ test_position3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position4(void)
 {
     // If both left/right or top/bottom are given, the item is properly resized
@@ -114,7 +114,7 @@ test_position4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position5(void)
 {
     // The `basis' property is ignored for items with an absolute position.
@@ -134,7 +134,7 @@ test_position5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position6(void)
 {
     // Items with an absolute position are separated from the other items
@@ -163,7 +163,7 @@ test_position6(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position7(void)
 {
     // Items with an absolute position are separated from the other items
@@ -198,7 +198,7 @@ test_position7(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_position8(void)
 {
     // Items with an absolute position can be nested.

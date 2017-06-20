@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_align_content1(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -27,7 +27,7 @@ test_align_content1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_content2(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -52,7 +52,7 @@ test_align_content2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_content3(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -77,7 +77,7 @@ test_align_content3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_content4(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -102,7 +102,7 @@ test_align_content4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_content5(void)
 {
     struct flex_item *root = flex_item_with_size(200, 120);
@@ -127,7 +127,7 @@ test_align_content5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_content6(void)
 {
     struct flex_item *root = flex_item_with_size(250, 120);

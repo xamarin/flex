@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_margin1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -31,7 +31,7 @@ test_margin1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -60,7 +60,7 @@ test_margin2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin3(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -89,7 +89,7 @@ test_margin3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin4(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -118,7 +118,7 @@ test_margin4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin5(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -145,7 +145,7 @@ test_margin5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin6(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -172,7 +172,7 @@ test_margin6(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin7(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -199,7 +199,7 @@ test_margin7(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin8(void)
 {
     // When defaulting to the parent's cross axis size, margins must be taken
@@ -232,7 +232,7 @@ test_margin8(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_margin9(void)
 {
     // When defaulting to the parent's cross axis size, margins must be taken

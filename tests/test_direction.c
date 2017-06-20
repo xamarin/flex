@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_direction1(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -26,7 +26,7 @@ test_direction1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_direction2(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -50,7 +50,7 @@ test_direction2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_direction3(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);
@@ -74,7 +74,7 @@ test_direction3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_direction4(void)
 {
     struct flex_item *root = flex_item_with_size(200, 200);

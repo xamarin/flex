@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_justify_content1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -22,7 +22,7 @@ test_justify_content1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -42,7 +42,7 @@ test_justify_content2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content3(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -62,7 +62,7 @@ test_justify_content3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content4(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -82,7 +82,7 @@ test_justify_content4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content5(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -106,7 +106,7 @@ test_justify_content5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content6(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -126,7 +126,7 @@ test_justify_content6(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content7(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -150,7 +150,7 @@ test_justify_content7(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content8(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -170,7 +170,7 @@ test_justify_content8(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content9(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -194,7 +194,7 @@ test_justify_content9(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content10(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -215,7 +215,7 @@ test_justify_content10(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content11(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -236,7 +236,7 @@ test_justify_content11(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content12(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -257,7 +257,7 @@ test_justify_content12(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content13(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -278,7 +278,7 @@ test_justify_content13(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content14(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -299,7 +299,7 @@ test_justify_content14(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content15(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -320,7 +320,7 @@ test_justify_content15(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_justify_content16(void)
 {
     // The `justify_content' property is ignored when the children fill up
@@ -352,7 +352,7 @@ test_justify_content16(void)
     }
 }
 
-static void
+void
 test_justify_content17(void)
 {
     // The `justify_content' property is ignored when the children fill up
@@ -392,7 +392,7 @@ test_justify_content17(void)
     }
 }
 
-static void
+void
 test_justify_content18(void)
 {
     // The `justify_content' property is ignored when there are flexible

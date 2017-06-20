@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_basis1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -23,7 +23,7 @@ test_basis1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_basis2(void)
 {
     // The basis attribute has priority over width/height.
@@ -44,7 +44,7 @@ test_basis2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_basis3(void)
 {
     // The basis attribute is ignored if negative.
@@ -66,7 +66,7 @@ test_basis3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_basis4(void)
 {
     // The basis attribute is ignored if negative.
@@ -87,7 +87,7 @@ test_basis4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_basis5(void)
 {
     // The basis attribute is ignored if 0.

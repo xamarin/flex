@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_default_values1(void)
 {
     struct flex_item *item = flex_item_new();
@@ -42,7 +42,7 @@ test_default_values1(void)
     flex_item_free(item);
 }
 
-static void
+void
 test_default_values2(void)
 {
     // If the width/height property isn't set on a child, it's frame size
@@ -76,7 +76,7 @@ test_default_values2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_default_values3(void)
 {
     // If the width/height property isn't set on a child, it's frame size

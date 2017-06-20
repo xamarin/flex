@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_children1(void)
 {
     struct flex_item *root = flex_item_new();
@@ -40,7 +40,7 @@ test_children1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_children2(void)
 {
     struct flex_item *root = flex_item_new();
@@ -67,7 +67,7 @@ test_children2(void)
     TEST(flex_item_child(root, 2) == child1);
 }
 
-static void
+void
 test_children3(void)
 {
     struct flex_item *root = flex_item_new();
@@ -93,7 +93,7 @@ test_children3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_children4(void)
 {
 #define CENTER_ITEM(width, height) \

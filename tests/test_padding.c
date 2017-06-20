@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_padding1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -25,7 +25,7 @@ test_padding1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_padding2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -48,7 +48,7 @@ test_padding2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_padding3(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -71,7 +71,7 @@ test_padding3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_padding4(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -94,7 +94,7 @@ test_padding4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_padding5(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);

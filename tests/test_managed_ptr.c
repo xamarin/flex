@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_managed_ptr1(void)
 {
     struct flex_item *item = flex_item_new();

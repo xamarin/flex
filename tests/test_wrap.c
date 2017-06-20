@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_wrap1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -30,7 +30,7 @@ test_wrap1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
@@ -58,7 +58,7 @@ test_wrap2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap3(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -82,7 +82,7 @@ test_wrap3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap4(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -118,7 +118,7 @@ test_wrap4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap5(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -143,7 +143,7 @@ test_wrap5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap6(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -168,7 +168,7 @@ test_wrap6(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap7(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -193,7 +193,7 @@ test_wrap7(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap8(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -218,7 +218,7 @@ test_wrap8(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap9(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -248,7 +248,7 @@ test_wrap9(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap10(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -281,7 +281,7 @@ test_wrap10(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap11(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -314,7 +314,7 @@ test_wrap11(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap12(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -347,7 +347,7 @@ test_wrap12(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap13(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -387,7 +387,7 @@ test_wrap13(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap14(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);
@@ -411,7 +411,7 @@ test_wrap14(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_wrap15(void)
 {
     struct flex_item *root = flex_item_with_size(120, 120);

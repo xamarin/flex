@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_grow1(void)
 {
     struct flex_item *root = flex_item_with_size(60, 240);
@@ -28,7 +28,7 @@ test_grow1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_grow2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -53,7 +53,7 @@ test_grow2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_grow3(void)
 {
     // The grow attributes aren't taken into account when there is no flexible
@@ -76,7 +76,7 @@ test_grow3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_grow4(void)
 {
     // The grow attribute is not inherited from children.
@@ -100,7 +100,7 @@ test_grow4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_grow5(void)
 {
     // All the container space is used when there is only one item with a
@@ -118,7 +118,7 @@ test_grow5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_grow6(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);

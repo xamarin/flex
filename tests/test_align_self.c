@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_align_self1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -28,7 +28,7 @@ test_align_self1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_self2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -54,7 +54,7 @@ test_align_self2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_self3(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -80,7 +80,7 @@ test_align_self3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_self4(void)
 {
     // Stretch works if the align dimension is not set or is 0.
@@ -109,7 +109,7 @@ test_align_self4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_self5(void)
 {
     // Stretch does not work if the align dimension is set.
@@ -136,7 +136,7 @@ test_align_self5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_self6(void)
 {
     // Mixed config.

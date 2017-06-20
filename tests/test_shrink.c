@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_shrink1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -23,7 +23,7 @@ test_shrink1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_shrink2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -43,7 +43,7 @@ test_shrink2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_shrink3(void)
 {
     // The shrink attributes are not taken into account when there is enough
@@ -66,7 +66,7 @@ test_shrink3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_shrink4(void)
 {
     // The shrink attribute is not inherited from children.
@@ -90,7 +90,7 @@ test_shrink4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_shrink5(void)
 {
     // All the container space is used when there is only one item with a
@@ -108,7 +108,7 @@ test_shrink5(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_shrink6(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);

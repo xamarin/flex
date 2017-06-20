@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-static void
+void
 test_align_items1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -26,7 +26,7 @@ test_align_items1(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_items2(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -50,7 +50,7 @@ test_align_items2(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_items3(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -74,7 +74,7 @@ test_align_items3(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_items4(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
@@ -99,7 +99,7 @@ test_align_items4(void)
     flex_item_free(root);
 }
 
-static void
+void
 test_align_items5(void)
 {
     // The align_items property is ignored for children with a align_self
