@@ -15,7 +15,7 @@ units.c:        $(TESTS_SRC) generate_units.rb
 run:    test
 	@./test
 
-test:   test.c $(OBJS)
+test:   test.c test.h $(FLEX_DIR)/flex.c $(OBJS)
 	$(CC) $(CFLAGS) test.c $(FLEX_DIR)/flex.c -o test $(OBJS)
 
 %.o : %.c test.h $(FLEX_DIR)/flex.h
