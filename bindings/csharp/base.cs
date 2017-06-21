@@ -121,7 +121,7 @@ namespace Xamarin.Flex
     
     public partial class Item
     {
-        protected IntPtr item = IntPtr.Zero;
+        private IntPtr item = IntPtr.Zero;
         
         public Align AlignContent
         {

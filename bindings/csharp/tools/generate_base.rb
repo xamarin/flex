@@ -132,7 +132,7 @@ EOS
     out 'public partial class Item'
     out '{'
     @indent += 1
-    out 'protected IntPtr item = IntPtr.Zero;'
+    out 'private IntPtr item = IntPtr.Zero;'
     properties.each do |name, prop|
       type = prop[0]
       is_enum = type.match(/^[A-Z]/) # good enough
