@@ -1,0 +1,45 @@
+<Type Name="Position" FullName="Xamarin.Flex.Position">
+  <TypeSignature Language="C#" Value="public enum Position" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Position extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>lib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Values for <see cref="P:Xamarin.Flex.Item.Position"/>.</summary>
+    <remarks></remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Absolute">
+      <MemberSignature Language="C#" Value="Absolute" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Position Absolute = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Position</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether the item's frame will be determined by fixed position values (<see cref="P:Xamarin.Flex.Item.Left"/>, <see cref="P:Xamarin.Flex.Item.Right"/>, <see cref="P:Xamarin.Flex.Item.Top"/> and <see cref="P:Xamarin.Flex.Item.Bottom"/>).</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Relative">
+      <MemberSignature Language="C#" Value="Relative" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Position Relative = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Position</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether the item's frame will be determined by the flex rules of the layout system.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

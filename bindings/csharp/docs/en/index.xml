@@ -1,0 +1,25 @@
+<Overview>
+  <Assemblies>
+    <Assembly Name="lib" Version="0.0.0.0">
+      <Attributes>
+        <Attribute>
+          <AttributeName>System.Runtime.CompilerServices.RuntimeCompatibility(WrapNonExceptionThrows=true)</AttributeName>
+        </Attribute>
+      </Attributes>
+    </Assembly>
+  </Assemblies>
+  <Remarks>The Flex C# bindings are defined within the Xamarin.Flex namespace.</Remarks>
+  <Copyright>Copyright (c) Microsoft Corporation. All rights reserved.</Copyright>
+  <Types>
+    <Namespace Name="Xamarin.Flex">
+      <Type Name="Align" Kind="Enumeration" />
+      <Type Name="Direction" Kind="Enumeration" />
+      <Type Name="Item" Kind="Class" />
+      <Type Name="Item+ItemEnumerator" Kind="Class" />
+      <Type Name="NativeFunctions" Kind="Class" />
+      <Type Name="Position" Kind="Enumeration" />
+      <Type Name="Wrap" Kind="Enumeration" />
+    </Namespace>
+  </Types>
+  <Title>Xamarin.Flex</Title>
+</Overview>

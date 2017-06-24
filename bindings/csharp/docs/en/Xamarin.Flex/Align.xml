@@ -1,0 +1,129 @@
+<Type Name="Align" FullName="Xamarin.Flex.Align">
+  <TypeSignature Language="C#" Value="public enum Align" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Align extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>lib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Values for <see cref="P:Xamarin.Flex.Item.JustifyContent"/>, <see cref="P:Xamarin.Flex.Item.AlignContent"/>, <see cref="P:Xamarin.Flex.Item.AlignItems"/> and <see cref="P:Xamarin.Flex.Item.AlignSelf"/>.</summary>
+    <remarks></remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Auto">
+      <MemberSignature Language="C#" Value="Auto" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align Auto = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether an item should be packed according to the alignment value of its parent.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Center">
+      <MemberSignature Language="C#" Value="Center" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align Center = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether an item should be packed around the center.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="End">
+      <MemberSignature Language="C#" Value="End" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align End = int32(4)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether an item should be packed at the end.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SpaceAround">
+      <MemberSignature Language="C#" Value="SpaceAround" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align SpaceAround = int32(6)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether items should be distributed evenly, the first and last items having a half-size space.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SpaceBetween">
+      <MemberSignature Language="C#" Value="SpaceBetween" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align SpaceBetween = int32(5)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether items should be distributed evenly, the first item being at the start and the last item being at the end.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="SpaceEvenly">
+      <MemberSignature Language="C#" Value="SpaceEvenly" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align SpaceEvenly = int32(7)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether items should be distributed evenly, all items having equal space around them.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Start">
+      <MemberSignature Language="C#" Value="Start" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align Start = int32(3)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether an item should be packed at the start.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Stretch">
+      <MemberSignature Language="C#" Value="Stretch" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Align Stretch = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether an item's cross-axis dimension should be stretched out.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

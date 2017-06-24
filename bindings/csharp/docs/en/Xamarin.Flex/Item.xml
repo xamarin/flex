@@ -1,0 +1,783 @@
+<Type Name="Item" FullName="Xamarin.Flex.Item">
+  <TypeSignature Language="C#" Value="public class Item : System.Collections.IEnumerable" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Item extends System.Object implements class System.Collections.IEnumerable" />
+  <AssemblyInfo>
+    <AssemblyName>lib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Object</BaseTypeName>
+  </Base>
+  <Interfaces>
+    <Interface>
+      <InterfaceName>System.Collections.IEnumerable</InterfaceName>
+    </Interface>
+  </Interfaces>
+  <Docs>
+    <summary>A flexible item.</summary>
+    <remarks></remarks>
+  </Docs>
+  <Members>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Item ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor() cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters />
+      <Docs>
+        <summary>Create a new Item object with default values for all properties.</summary>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName=".ctor">
+      <MemberSignature Language="C#" Value="public Item (float width, float height);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig specialname rtspecialname instance void .ctor(float32 width, float32 height) cil managed" />
+      <MemberType>Constructor</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <Parameters>
+        <Parameter Name="width" Type="System.Single" />
+        <Parameter Name="height" Type="System.Single" />
+      </Parameters>
+      <Docs>
+        <param name="width">The value to assign to <see cref="P:Xamarin.Flex.Item.Width"/>.</param>
+        <param name="height">The value to assign to <see cref="P:Xamarin.Flex.Item.Height"/>.</param>
+        <summary>Create a new Item object with a given width and height as well as default values for all other properties.</summary>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Add">
+      <MemberSignature Language="C#" Value="public void Add (Xamarin.Flex.Item child);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Add(class Xamarin.Flex.Item child) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="child" Type="Xamarin.Flex.Item" />
+      </Parameters>
+      <Docs>
+        <param name="child">The child item to be added.</param>
+        <summary>Adds a given child item to the current item.</summary>
+        <remarks></remarks>
+        <exception cref="ArgumentException">Thrown if the child has already been added to another item.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="AlignContent">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Align AlignContent { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Align AlignContent" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines how the layout engine will distribute space between and around child items that have been laid out on multiple lines. This property is ignored if the root item does not have its <see cref="P:Xamarin.Flex.Item.Wrap"/> property set to Wrap or WrapReverse.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Stretch and Auto.</value>
+        <remarks>The default value for this property is Start.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AlignItems">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Align AlignItems { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Align AlignItems" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines how the layout engine will distribute space between and around child items along the cross-axis.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Auto.</value>
+        <remarks>The default value for this property is Start.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="AlignSelf">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Align AlignSelf { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Align AlignSelf" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines how the layout engine will distribute space between and around child items for a specific child along the cross-axis. If this property is set to Auto on a child item, the parent's value for <see cref="P:Xamarin.Flex.Item.AlignItems"/> will be used instead.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration.</value>
+        <remarks>The default value for this property is Auto.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Basis">
+      <MemberSignature Language="C#" Value="public float Basis { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Basis" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the initial main-axis dimension of the item. If the direction is horizontal, it will be used instead of <see cref="T:Xamarin.Flex.Item.Width"/>, and if it's vertical, it will be used instead of <see cref="T:Xamarin.Flex.Item.Height"/>. This property is ignored if set to 0.</summary>
+        <value>The value for the property.</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Bottom">
+      <MemberSignature Language="C#" Value="public float Bottom { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Bottom" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the bottom edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <value>The value for the property.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Count">
+      <MemberSignature Language="C#" Value="public int Count { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Count" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The number of child items that have been added.</summary>
+        <value></value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Direction">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Direction Direction { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Direction Direction" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Direction</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the direction and main-axis of child items. If set to Column (or ColumnReverse), the main-axis will be the y-axis and items will be stacked vertically. If set to Row (or RowReverse), the main-axis will be the x-axis and items will be stacked horizontally.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Direction"/> enumeration.</value>
+        <remarks>The default value for this property is Column.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Finalize">
+      <MemberSignature Language="C#" Value="~Item ();" />
+      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>For internal use only.</summary>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrameHeight">
+      <MemberSignature Language="C#" Value="public float FrameHeight { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 FrameHeight" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The height frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <value>The height frame value.</value>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrameWidth">
+      <MemberSignature Language="C#" Value="public float FrameWidth { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 FrameWidth" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The width frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <value>The width frame value.</value>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrameX">
+      <MemberSignature Language="C#" Value="public float FrameX { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 FrameX" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The x-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <value>The x-axis frame value.</value>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="FrameY">
+      <MemberSignature Language="C#" Value="public float FrameY { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 FrameY" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The y-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <value>The y-axis frame value.</value>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="GetEnumerator">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item.ItemEnumerator GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Flex.Item/ItemEnumerator GetEnumerator() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item+ItemEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>For internal use only.</summary>
+        <returns></returns>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Grow">
+      <MemberSignature Language="C#" Value="public int Grow { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Grow" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the grow factor of the item; the amount of available space it should use on the main-axis.</summary>
+        <value>The item grow factor.</value>
+        <remarks>The default value for this property is 0 (does not take any available space).</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Height">
+      <MemberSignature Language="C#" Value="public float Height { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Height" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the height size dimension of the item.</summary>
+        <value>The height size dimension.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="InsertAt">
+      <MemberSignature Language="C#" Value="public void InsertAt (int index, Xamarin.Flex.Item child);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void InsertAt(int32 index, class Xamarin.Flex.Item child) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+        <Parameter Name="child" Type="Xamarin.Flex.Item" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index position in the container where the child should be added.</param>
+        <param name="child">The child item to be added.</param>
+        <summary>Inserts a given child item to the current item at a given index position.</summary>
+        <remarks></remarks>
+        <exception cref="ArgumentException">Thrown if the child has already been added to another item or if the given index is out of bounds.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="item">
+      <MemberSignature Language="C#" Value="protected IntPtr item;" />
+      <MemberSignature Language="ILAsm" Value=".field family native int item" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.IntPtr</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>To be added.</summary>
+        <remarks>To be added.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="ItemAt">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item ItemAt (int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Flex.Item ItemAt(int32 index) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index of the item to retrieve.</param>
+        <summary>Returns a child in the item at a given index position.</summary>
+        <returns>A child item.</returns>
+        <remarks></remarks>
+        <exception cref="ArgumentException">Thrown if the given index is out of bounds.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="ItemIndexer">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item this[int index] { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Xamarin.Flex.Item ItemIndexer(int32)" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index"></param>
+        <summary>For internal use only.</summary>
+        <value></value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="JustifyContent">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Align JustifyContent { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Align JustifyContent" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Align</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines how the layout engine will distribute space between and around child items along the main-axis.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Stretch and Auto.</value>
+        <remarks>The default value for this property is Start.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Layout">
+      <MemberSignature Language="C#" Value="public void Layout ();" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Layout() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>Determines the frames of each child based on the flex rules that were applied on this item and the children themselves. After this method is called, the <see cref="P:Xamarin.Flex.Item.FrameX"/>, <see cref="P:Xamarin.Flex.Item.FrameY"/>, <see cref="P:Xamarin.Flex.Item.FrameWidth"/> and <see cref="P:Xamarin.Flex.Item.FrameHeight"/> properties can be accessed on child items.</summary>
+        <remarks>This method must be called on a root (without parent) item where the <see cref="P:Xamarin.Flex.Item.Width"/> and <see cref="P:Xamarin.Flex.Item.Height"/> properties have also been set.</remarks>
+        <exception cref="InvalidOperationException">Thrown if the item has a parent (must be root) or if the item does not have a proper value set for <see cref="P:Xamarin.Flex.Item.Width"/> and <see cref="P:Xamarin.Flex.Item.Height"/>.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Left">
+      <MemberSignature Language="C#" Value="public float Left { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Left" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the left edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <value>The value for the property.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Margin">
+      <MemberSignature Language="C#" Value="public float Margin { set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Margin" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A convenience property that sets the same value for all four margin sides.</summary>
+        <value>The margin value to be used for all four sides.</value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MarginBottom">
+      <MemberSignature Language="C#" Value="public float MarginBottom { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 MarginBottom" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the margin space required on the top edge of the item.</summary>
+        <value>The top edge margin space (negative values are allowed).</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MarginLeft">
+      <MemberSignature Language="C#" Value="public float MarginLeft { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 MarginLeft" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the margin space required on the left edge of the item.</summary>
+        <value>The left edge margin space (negative values are allowed).</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MarginRight">
+      <MemberSignature Language="C#" Value="public float MarginRight { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 MarginRight" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the margin space required on the right edge of the item.</summary>
+        <value>The right edge margin space (negative values are allowed).</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="MarginTop">
+      <MemberSignature Language="C#" Value="public float MarginTop { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 MarginTop" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the margin space required on the top edge of the item.</summary>
+        <value>The top edge margin space (negative values are allowed).</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Order">
+      <MemberSignature Language="C#" Value="public int Order { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Order" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property specifies whether this item should be laid out before or after other items in the container. Items are laid out based on the ascending value of this property. Items that have the same value for this property will be laid out in the order they were inserted.</summary>
+        <value>The item order (can be a negative, 0, or positive value).</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Padding">
+      <MemberSignature Language="C#" Value="public float Padding { set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Padding" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>A convenience property that sets the same value for all four padding sides.</summary>
+        <value>The padding value to be used for all four sides.</value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaddingBottom">
+      <MemberSignature Language="C#" Value="public float PaddingBottom { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 PaddingBottom" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the height of the item's bottom edge padding space that should be used when laying out child items.</summary> 
+        <value>The bottom edge padding space.</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaddingLeft">
+      <MemberSignature Language="C#" Value="public float PaddingLeft { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 PaddingLeft" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the width of the item's left edge padding space that should be used when laying out child items.</summary> 
+        <value>The left edge padding space.</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaddingRight">
+      <MemberSignature Language="C#" Value="public float PaddingRight { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 PaddingRight" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the width of the item's right edge padding space that should be used when laying out child items.</summary> 
+        <value>The right edge padding space.</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="PaddingTop">
+      <MemberSignature Language="C#" Value="public float PaddingTop { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 PaddingTop" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the height of the item's top edge padding space that should be used when laying out child items.</summary> 
+        <value>The top edge padding space.</value>
+        <remarks>The default value for this property is 0.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Parent">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item Parent { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Xamarin.Flex.Item Parent" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The parent item.</summary>
+        <value>The parent item, or null if the item is a root item.</value>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Position">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Position Position { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Position Position" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Position</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines whether the item should be positioned by the flex rules of the layout engine (Relative) or have an absolute fixed position (Absolute). If this property is set to Absolute, the <see cref="P:Xamarin.Flex.Item.Left"/>, <see cref="P:Xamarin.Flex.Item.Right"/>, <see cref="P:Xamarin.Flex.Item.Top"/> and <see cref="P:Xamarin.Flex.Item.Bottom"/> properties will then be used to determined the item's fixed position.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Position"/> enumeration.</value>
+        <remarks>The default value for this property is Relative</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="RemoveAt">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item RemoveAt (int index);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance class Xamarin.Flex.Item RemoveAt(int32 index) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="index" Type="System.Int32" />
+      </Parameters>
+      <Docs>
+        <param name="index">The index of the item to remove.</param>
+        <summary>Removes a child in the item at a given index position.</summary>
+        <returns>The child item that has been removed.</returns>
+        <remarks></remarks>
+        <exception cref="ArgumentException">Thrown if the given index is out of bounds.</exception>
+      </Docs>
+    </Member>
+    <Member MemberName="Right">
+      <MemberSignature Language="C#" Value="public float Right { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Right" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the right edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <value>The value for the property.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Root">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Item Root { get; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance class Xamarin.Flex.Item Root" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Item</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>The root item.</summary>
+        <value>The root item.</value>
+        <remarks>This propery returns itself in case the item is a root item, otherwise it walks through the parent chain until it finds the root item.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Shrink">
+      <MemberSignature Language="C#" Value="public int Shrink { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance int32 Shrink" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Int32</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the shrink factor of the item. In case the child items overflow the main-axis of the container, this factor will be used to determine how individual items should shrink so that all items can fill inside the container.</summary>
+        <value>The item shrink factor.</value>
+        <remarks>The default value for this property is 1 (all items will shrink equally).</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="System.Collections.IEnumerable.GetEnumerator">
+      <MemberSignature Language="C#" Value="System.Collections.IEnumerator IEnumerable.GetEnumerator ();" />
+      <MemberSignature Language="ILAsm" Value=".method hidebysig newslot virtual instance class System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Collections.IEnumerator</ReturnType>
+      </ReturnValue>
+      <Parameters />
+      <Docs>
+        <summary>For internal use only.</summary>
+        <returns></returns>
+        <remarks></remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Top">
+      <MemberSignature Language="C#" Value="public float Top { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Top" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the top edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <value>The value for the property.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Width">
+      <MemberSignature Language="C#" Value="public float Width { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Width" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Single</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines the width size dimension of the item.</summary>
+        <value>The width size dimension.</value>
+        <remarks>The default value for this property is NaN.</remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="Wrap">
+      <MemberSignature Language="C#" Value="public Xamarin.Flex.Wrap Wrap { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance valuetype Xamarin.Flex.Wrap Wrap" />
+      <MemberType>Property</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Wrap</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>This property defines whether child items should be laid out in a single line (NoWrap) or multiple lines (Wrap or WrapReverse). If this property is set to Wrap or WrapReverse, <see cref="P:Xamarin.Flex.Item.AlignContent"/> can then be used to specify how the lines should be distributed.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Wrap"/> enumeration.</value>
+        <remarks>The default value for this property is NoWrap.</remarks>
+      </Docs>
+    </Member>
+  </Members>
+</Type>

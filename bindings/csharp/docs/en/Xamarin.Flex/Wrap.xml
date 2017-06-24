@@ -1,0 +1,59 @@
+<Type Name="Wrap" FullName="Xamarin.Flex.Wrap">
+  <TypeSignature Language="C#" Value="public enum Wrap" />
+  <TypeSignature Language="ILAsm" Value=".class public auto ansi sealed Wrap extends System.Enum" />
+  <AssemblyInfo>
+    <AssemblyName>lib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Enum</BaseTypeName>
+  </Base>
+  <Docs>
+    <summary>Values for <see cref="P:Xamarin.Flex.Item.Wrap"/>.</summary>
+    <remarks></remarks>
+  </Docs>
+  <Members>
+    <Member MemberName="Nowrap">
+      <MemberSignature Language="C#" Value="Nowrap" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Wrap Nowrap = int32(0)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Wrap</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether items are laid out in a single line.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="Wrap">
+      <MemberSignature Language="C#" Value="Wrap" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Wrap Wrap = int32(1)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Wrap</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Whether items are laid out in multiple lines if needed.</summary>
+      </Docs>
+    </Member>
+    <Member MemberName="WrapReverse">
+      <MemberSignature Language="C#" Value="WrapReverse" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Wrap WrapReverse = int32(2)" />
+      <MemberType>Field</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.Wrap</ReturnType>
+      </ReturnValue>
+      <Docs>
+        <summary>Like Wrap but in reverse order.</summary>
+      </Docs>
+    </Member>
+  </Members>
+</Type>
