@@ -15,7 +15,8 @@
   </Interfaces>
   <Docs>
     <summary>For internal use only.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -29,9 +30,12 @@
         <Parameter Name="_item" Type="Xamarin.Flex.Item" />
       </Parameters>
       <Docs>
-        <param name="_item"></param>
-        <summary></summary>
-        <remarks></remarks>
+        <param name="_item">
+        </param>
+        <summary>
+        </summary>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Current">
@@ -45,9 +49,12 @@
         <ReturnType>Xamarin.Flex.Item</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary></summary>
-        <value></value>
-        <remarks></remarks>
+        <summary>
+        </summary>
+        <value>
+        </value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MoveNext">
@@ -62,9 +69,12 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary></summary>
-        <returns></returns>
-        <remarks></remarks>
+        <summary>
+        </summary>
+        <returns>
+        </returns>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Reset">
@@ -79,8 +89,10 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary></summary>
-        <remarks></remarks>
+        <summary>
+        </summary>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.IEnumerator.Current">
@@ -94,9 +106,12 @@
         <ReturnType>System.Object</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary></summary>
-        <value></value>
-        <remarks></remarks>
+        <summary>
+        </summary>
+        <value>
+        </value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
   </Members>

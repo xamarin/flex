@@ -9,8 +9,9 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>Values for <see cref="P:Xamarin.Flex.Item.Wrap"/>.</summary>
-    <remarks></remarks>
+    <summary>Values for <see cref="P:Xamarin.Flex.Item.Wrap" />.</summary>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Nowrap">

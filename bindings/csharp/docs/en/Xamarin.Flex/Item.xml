@@ -15,7 +15,8 @@
   </Interfaces>
   <Docs>
     <summary>A flexible item.</summary>
-    <remarks></remarks>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName=".ctor">
@@ -28,7 +29,8 @@
       <Parameters />
       <Docs>
         <summary>Create a new Item object with default values for all properties.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName=".ctor">
@@ -43,10 +45,11 @@
         <Parameter Name="height" Type="System.Single" />
       </Parameters>
       <Docs>
-        <param name="width">The value to assign to <see cref="P:Xamarin.Flex.Item.Width"/>.</param>
-        <param name="height">The value to assign to <see cref="P:Xamarin.Flex.Item.Height"/>.</param>
+        <param name="width">The value to assign to <see cref="P:Xamarin.Flex.Item.Width" />.</param>
+        <param name="height">The value to assign to <see cref="P:Xamarin.Flex.Item.Height" />.</param>
         <summary>Create a new Item object with a given width and height as well as default values for all other properties.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Add">
@@ -65,7 +68,8 @@
       <Docs>
         <param name="child">The child item to be added.</param>
         <summary>Adds a given child item to the current item.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <exception cref="ArgumentException">Thrown if the child has already been added to another item.</exception>
       </Docs>
     </Member>
@@ -80,8 +84,8 @@
         <ReturnType>Xamarin.Flex.Align</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines how the layout engine will distribute space between and around child items that have been laid out on multiple lines. This property is ignored if the root item does not have its <see cref="P:Xamarin.Flex.Item.Wrap"/> property set to Wrap or WrapReverse.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Stretch and Auto.</value>
+        <summary>This property defines how the layout engine will distribute space between and around child items that have been laid out on multiple lines. This property is ignored if the root item does not have its <see cref="P:Xamarin.Flex.Item.Wrap" /> property set to Wrap or WrapReverse.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Stretch and Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
       </Docs>
     </Member>
@@ -97,7 +101,7 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines how the layout engine will distribute space between and around child items along the cross-axis.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Auto.</value>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
       </Docs>
     </Member>
@@ -112,8 +116,8 @@
         <ReturnType>Xamarin.Flex.Align</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines how the layout engine will distribute space between and around child items for a specific child along the cross-axis. If this property is set to Auto on a child item, the parent's value for <see cref="P:Xamarin.Flex.Item.AlignItems"/> will be used instead.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration.</value>
+        <summary>This property defines how the layout engine will distribute space between and around child items for a specific child along the cross-axis. If this property is set to Auto on a child item, the parent's value for <see cref="P:Xamarin.Flex.Item.AlignItems" /> will be used instead.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration.</value>
         <remarks>The default value for this property is Auto.</remarks>
       </Docs>
     </Member>
@@ -128,7 +132,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the initial main-axis dimension of the item. If the direction is horizontal, it will be used instead of <see cref="T:Xamarin.Flex.Item.Width"/>, and if it's vertical, it will be used instead of <see cref="T:Xamarin.Flex.Item.Height"/>. This property is ignored if set to 0.</summary>
+        <summary>This property defines the initial main-axis dimension of the item. If the direction is horizontal, it will be used instead of <see cref="T:Xamarin.Flex.Item.Width" />, and if it's vertical, it will be used instead of <see cref="T:Xamarin.Flex.Item.Height" />. This property is ignored if set to 0.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is 0.</remarks>
       </Docs>
@@ -144,7 +148,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the bottom edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <summary>This property defines the bottom edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -161,8 +165,10 @@
       </ReturnValue>
       <Docs>
         <summary>The number of child items that have been added.</summary>
-        <value></value>
-        <remarks></remarks>
+        <value>
+        </value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Direction">
@@ -177,7 +183,7 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines the direction and main-axis of child items. If set to Column (or ColumnReverse), the main-axis will be the y-axis and items will be stacked vertically. If set to Row (or RowReverse), the main-axis will be the x-axis and items will be stacked horizontally.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Direction"/> enumeration.</value>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Direction" /> enumeration.</value>
         <remarks>The default value for this property is Column.</remarks>
       </Docs>
     </Member>
@@ -194,7 +200,8 @@
       <Parameters />
       <Docs>
         <summary>For internal use only.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="FrameHeight">
@@ -208,9 +215,9 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The height frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <summary>The height frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</summary>
         <value>The height frame value.</value>
-        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FrameWidth">
@@ -224,9 +231,9 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The width frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <summary>The width frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</summary>
         <value>The width frame value.</value>
-        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FrameX">
@@ -240,9 +247,9 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The x-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <summary>The x-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</summary>
         <value>The x-axis frame value.</value>
-        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</remarks>
       </Docs>
     </Member>
     <Member MemberName="FrameY">
@@ -256,9 +263,9 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The y-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</summary>
+        <summary>The y-axis frame value of the item. This is computed when <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</summary>
         <value>The y-axis frame value.</value>
-        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()"/> is called on the root item.</remarks>
+        <remarks>The default value for this property is 0. This property should not be accessed before <see cref="M:Xamarin.Flex.Item.Layout()" /> is called on the root item.</remarks>
       </Docs>
     </Member>
     <Member MemberName="GetEnumerator">
@@ -274,8 +281,10 @@
       <Parameters />
       <Docs>
         <summary>For internal use only.</summary>
-        <returns></returns>
-        <remarks></remarks>
+        <returns>
+        </returns>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Grow">
@@ -328,23 +337,9 @@
         <param name="index">The index position in the container where the child should be added.</param>
         <param name="child">The child item to be added.</param>
         <summary>Inserts a given child item to the current item at a given index position.</summary>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <exception cref="ArgumentException">Thrown if the child has already been added to another item or if the given index is out of bounds.</exception>
-      </Docs>
-    </Member>
-    <Member MemberName="item">
-      <MemberSignature Language="C#" Value="protected IntPtr item;" />
-      <MemberSignature Language="ILAsm" Value=".field family native int item" />
-      <MemberType>Field</MemberType>
-      <AssemblyInfo>
-        <AssemblyVersion>0.0.0.0</AssemblyVersion>
-      </AssemblyInfo>
-      <ReturnValue>
-        <ReturnType>System.IntPtr</ReturnType>
-      </ReturnValue>
-      <Docs>
-        <summary>To be added.</summary>
-        <remarks>To be added.</remarks>
       </Docs>
     </Member>
     <Member MemberName="ItemAt">
@@ -364,7 +359,8 @@
         <param name="index">The index of the item to retrieve.</param>
         <summary>Returns a child in the item at a given index position.</summary>
         <returns>A child item.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <exception cref="ArgumentException">Thrown if the given index is out of bounds.</exception>
       </Docs>
     </Member>
@@ -382,10 +378,13 @@
         <Parameter Name="index" Type="System.Int32" />
       </Parameters>
       <Docs>
-        <param name="index"></param>
+        <param name="index">
+        </param>
         <summary>For internal use only.</summary>
-        <value></value>
-        <remarks></remarks>
+        <value>
+        </value>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="JustifyContent">
@@ -400,7 +399,7 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines how the layout engine will distribute space between and around child items along the main-axis.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Align"/> enumeration, with the exception of Stretch and Auto.</value>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Stretch and Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
       </Docs>
     </Member>
@@ -416,9 +415,9 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Determines the frames of each child based on the flex rules that were applied on this item and the children themselves. After this method is called, the <see cref="P:Xamarin.Flex.Item.FrameX"/>, <see cref="P:Xamarin.Flex.Item.FrameY"/>, <see cref="P:Xamarin.Flex.Item.FrameWidth"/> and <see cref="P:Xamarin.Flex.Item.FrameHeight"/> properties can be accessed on child items.</summary>
-        <remarks>This method must be called on a root (without parent) item where the <see cref="P:Xamarin.Flex.Item.Width"/> and <see cref="P:Xamarin.Flex.Item.Height"/> properties have also been set.</remarks>
-        <exception cref="InvalidOperationException">Thrown if the item has a parent (must be root) or if the item does not have a proper value set for <see cref="P:Xamarin.Flex.Item.Width"/> and <see cref="P:Xamarin.Flex.Item.Height"/>.</exception>
+        <summary>Determines the frames of each child based on the flex rules that were applied on this item and the children themselves. After this method is called, the <see cref="P:Xamarin.Flex.Item.FrameX" />, <see cref="P:Xamarin.Flex.Item.FrameY" />, <see cref="P:Xamarin.Flex.Item.FrameWidth" /> and <see cref="P:Xamarin.Flex.Item.FrameHeight" /> properties can be accessed on child items.</summary>
+        <remarks>This method must be called on a root (without parent) item where the <see cref="P:Xamarin.Flex.Item.Width" /> and <see cref="P:Xamarin.Flex.Item.Height" /> properties have also been set.</remarks>
+        <exception cref="InvalidOperationException">Thrown if the item has a parent (must be root) or if the item does not have a proper value set for <see cref="P:Xamarin.Flex.Item.Width" /> and <see cref="P:Xamarin.Flex.Item.Height" />.</exception>
       </Docs>
     </Member>
     <Member MemberName="Left">
@@ -432,7 +431,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the left edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <summary>This property defines the left edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -450,7 +449,8 @@
       <Docs>
         <summary>A convenience property that sets the same value for all four margin sides.</summary>
         <value>The margin value to be used for all four sides.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="MarginBottom">
@@ -546,7 +546,8 @@
       <Docs>
         <summary>A convenience property that sets the same value for all four padding sides.</summary>
         <value>The padding value to be used for all four sides.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="PaddingBottom">
@@ -560,7 +561,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the height of the item's bottom edge padding space that should be used when laying out child items.</summary> 
+        <summary>This property defines the height of the item's bottom edge padding space that should be used when laying out child items.</summary>
         <value>The bottom edge padding space.</value>
         <remarks>The default value for this property is 0.</remarks>
       </Docs>
@@ -576,7 +577,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the width of the item's left edge padding space that should be used when laying out child items.</summary> 
+        <summary>This property defines the width of the item's left edge padding space that should be used when laying out child items.</summary>
         <value>The left edge padding space.</value>
         <remarks>The default value for this property is 0.</remarks>
       </Docs>
@@ -592,7 +593,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the width of the item's right edge padding space that should be used when laying out child items.</summary> 
+        <summary>This property defines the width of the item's right edge padding space that should be used when laying out child items.</summary>
         <value>The right edge padding space.</value>
         <remarks>The default value for this property is 0.</remarks>
       </Docs>
@@ -608,7 +609,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the height of the item's top edge padding space that should be used when laying out child items.</summary> 
+        <summary>This property defines the height of the item's top edge padding space that should be used when laying out child items.</summary>
         <value>The top edge padding space.</value>
         <remarks>The default value for this property is 0.</remarks>
       </Docs>
@@ -626,7 +627,8 @@
       <Docs>
         <summary>The parent item.</summary>
         <value>The parent item, or null if the item is a root item.</value>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Position">
@@ -640,8 +642,8 @@
         <ReturnType>Xamarin.Flex.Position</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines whether the item should be positioned by the flex rules of the layout engine (Relative) or have an absolute fixed position (Absolute). If this property is set to Absolute, the <see cref="P:Xamarin.Flex.Item.Left"/>, <see cref="P:Xamarin.Flex.Item.Right"/>, <see cref="P:Xamarin.Flex.Item.Top"/> and <see cref="P:Xamarin.Flex.Item.Bottom"/> properties will then be used to determined the item's fixed position.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Position"/> enumeration.</value>
+        <summary>This property defines whether the item should be positioned by the flex rules of the layout engine (Relative) or have an absolute fixed position (Absolute). If this property is set to Absolute, the <see cref="P:Xamarin.Flex.Item.Left" />, <see cref="P:Xamarin.Flex.Item.Right" />, <see cref="P:Xamarin.Flex.Item.Top" /> and <see cref="P:Xamarin.Flex.Item.Bottom" /> properties will then be used to determined the item's fixed position.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Position" /> enumeration.</value>
         <remarks>The default value for this property is Relative</remarks>
       </Docs>
     </Member>
@@ -662,7 +664,8 @@
         <param name="index">The index of the item to remove.</param>
         <summary>Removes a child in the item at a given index position.</summary>
         <returns>The child item that has been removed.</returns>
-        <remarks></remarks>
+        <remarks>
+        </remarks>
         <exception cref="ArgumentException">Thrown if the given index is out of bounds.</exception>
       </Docs>
     </Member>
@@ -677,7 +680,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the right edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <summary>This property defines the right edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -727,8 +730,10 @@
       <Parameters />
       <Docs>
         <summary>For internal use only.</summary>
-        <returns></returns>
-        <remarks></remarks>
+        <returns>
+        </returns>
+        <remarks>
+        </remarks>
       </Docs>
     </Member>
     <Member MemberName="Top">
@@ -742,7 +747,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the top edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position"/> isn't set to Absolute.</summary>
+        <summary>This property defines the top edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -774,8 +779,8 @@
         <ReturnType>Xamarin.Flex.Wrap</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines whether child items should be laid out in a single line (NoWrap) or multiple lines (Wrap or WrapReverse). If this property is set to Wrap or WrapReverse, <see cref="P:Xamarin.Flex.Item.AlignContent"/> can then be used to specify how the lines should be distributed.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Wrap"/> enumeration.</value>
+        <summary>This property defines whether child items should be laid out in a single line (NoWrap) or multiple lines (Wrap or WrapReverse). If this property is set to Wrap or WrapReverse, <see cref="P:Xamarin.Flex.Item.AlignContent" /> can then be used to specify how the lines should be distributed.</summary>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Wrap" /> enumeration.</value>
         <remarks>The default value for this property is NoWrap.</remarks>
       </Docs>
     </Member>

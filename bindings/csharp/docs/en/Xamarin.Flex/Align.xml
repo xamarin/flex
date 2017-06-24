@@ -9,8 +9,9 @@
     <BaseTypeName>System.Enum</BaseTypeName>
   </Base>
   <Docs>
-    <summary>Values for <see cref="P:Xamarin.Flex.Item.JustifyContent"/>, <see cref="P:Xamarin.Flex.Item.AlignContent"/>, <see cref="P:Xamarin.Flex.Item.AlignItems"/> and <see cref="P:Xamarin.Flex.Item.AlignSelf"/>.</summary>
-    <remarks></remarks>
+    <summary>Values for <see cref="P:Xamarin.Flex.Item.JustifyContent" />, <see cref="P:Xamarin.Flex.Item.AlignContent" />, <see cref="P:Xamarin.Flex.Item.AlignItems" /> and <see cref="P:Xamarin.Flex.Item.AlignSelf" />.</summary>
+    <remarks>
+    </remarks>
   </Docs>
   <Members>
     <Member MemberName="Auto">
