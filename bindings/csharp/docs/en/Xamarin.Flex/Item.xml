@@ -87,6 +87,7 @@
         <summary>This property defines how the layout engine will distribute space between and around child items that have been laid out on multiple lines. This property is ignored if the root item does not have its <see cref="P:Xamarin.Flex.Item.Wrap" /> property set to Wrap or WrapReverse.</summary>
         <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Stretch and Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
+        <exception cref="ArgumentException">Thrown if Stretch or Auto are assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="AlignItems">
@@ -103,6 +104,7 @@
         <summary>This property defines how the layout engine will distribute space between and around child items along the cross-axis.</summary>
         <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
+        <exception cref="ArgumentException">Thrown if Auto is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="AlignSelf">
@@ -401,6 +403,7 @@
         <summary>This property defines how the layout engine will distribute space between and around child items along the main-axis.</summary>
         <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Stretch and Auto.</value>
         <remarks>The default value for this property is Start.</remarks>
+        <exception cref="ArgumentException">Thrown if Stretch or Auto are assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="Layout">
