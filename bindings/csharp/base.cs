@@ -119,6 +119,35 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_layout (IntPtr arg1);
     }
     
+    public enum Properties
+    {
+        AlignContent,
+        AlignItems,
+        AlignSelf,
+        Basis,
+        Bottom,
+        Direction,
+        Grow,
+        Height,
+        JustifyContent,
+        Left,
+        MarginBottom,
+        MarginLeft,
+        MarginRight,
+        MarginTop,
+        Order,
+        PaddingBottom,
+        PaddingLeft,
+        PaddingRight,
+        PaddingTop,
+        Position,
+        Right,
+        Shrink,
+        Top,
+        Width,
+        Wrap,
+    }
+    
     public partial class Item
     {
         private IntPtr item = IntPtr.Zero;
@@ -126,37 +155,61 @@ namespace Xamarin.Flex
         public Align AlignContent
         {
             get { return (Align)flex_item_get_align_content(item); }
-            set { flex_item_set_align_content(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.AlignContent, (int)value);
+                flex_item_set_align_content(item, (int)value);
+            }
         }
         
         public Align AlignItems
         {
             get { return (Align)flex_item_get_align_items(item); }
-            set { flex_item_set_align_items(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.AlignItems, (int)value);
+                flex_item_set_align_items(item, (int)value);
+            }
         }
         
         public Align AlignSelf
         {
             get { return (Align)flex_item_get_align_self(item); }
-            set { flex_item_set_align_self(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.AlignSelf, (int)value);
+                flex_item_set_align_self(item, (int)value);
+            }
         }
         
         public float Basis
         {
             get { return flex_item_get_basis(item); }
-            set { flex_item_set_basis(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Basis, value);
+                flex_item_set_basis(item, value);
+            }
         }
         
         public float Bottom
         {
             get { return flex_item_get_bottom(item); }
-            set { flex_item_set_bottom(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Bottom, value);
+                flex_item_set_bottom(item, value);
+            }
         }
         
         public Direction Direction
         {
             get { return (Direction)flex_item_get_direction(item); }
-            set { flex_item_set_direction(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Direction, (int)value);
+                flex_item_set_direction(item, (int)value);
+            }
         }
         
         public float FrameHeight
@@ -182,115 +235,194 @@ namespace Xamarin.Flex
         public int Grow
         {
             get { return flex_item_get_grow(item); }
-            set { flex_item_set_grow(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Grow, value);
+                flex_item_set_grow(item, value);
+            }
         }
         
         public float Height
         {
             get { return flex_item_get_height(item); }
-            set { flex_item_set_height(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Height, value);
+                flex_item_set_height(item, value);
+            }
         }
         
         public Align JustifyContent
         {
             get { return (Align)flex_item_get_justify_content(item); }
-            set { flex_item_set_justify_content(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.JustifyContent, (int)value);
+                flex_item_set_justify_content(item, (int)value);
+            }
         }
         
         public float Left
         {
             get { return flex_item_get_left(item); }
-            set { flex_item_set_left(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Left, value);
+                flex_item_set_left(item, value);
+            }
         }
         
         public float MarginBottom
         {
             get { return flex_item_get_margin_bottom(item); }
-            set { flex_item_set_margin_bottom(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.MarginBottom, value);
+                flex_item_set_margin_bottom(item, value);
+            }
         }
         
         public float MarginLeft
         {
             get { return flex_item_get_margin_left(item); }
-            set { flex_item_set_margin_left(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.MarginLeft, value);
+                flex_item_set_margin_left(item, value);
+            }
         }
         
         public float MarginRight
         {
             get { return flex_item_get_margin_right(item); }
-            set { flex_item_set_margin_right(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.MarginRight, value);
+                flex_item_set_margin_right(item, value);
+            }
         }
         
         public float MarginTop
         {
             get { return flex_item_get_margin_top(item); }
-            set { flex_item_set_margin_top(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.MarginTop, value);
+                flex_item_set_margin_top(item, value);
+            }
         }
         
         public int Order
         {
             get { return flex_item_get_order(item); }
-            set { flex_item_set_order(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Order, value);
+                flex_item_set_order(item, value);
+            }
         }
         
         public float PaddingBottom
         {
             get { return flex_item_get_padding_bottom(item); }
-            set { flex_item_set_padding_bottom(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.PaddingBottom, value);
+                flex_item_set_padding_bottom(item, value);
+            }
         }
         
         public float PaddingLeft
         {
             get { return flex_item_get_padding_left(item); }
-            set { flex_item_set_padding_left(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.PaddingLeft, value);
+                flex_item_set_padding_left(item, value);
+            }
         }
         
         public float PaddingRight
         {
             get { return flex_item_get_padding_right(item); }
-            set { flex_item_set_padding_right(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.PaddingRight, value);
+                flex_item_set_padding_right(item, value);
+            }
         }
         
         public float PaddingTop
         {
             get { return flex_item_get_padding_top(item); }
-            set { flex_item_set_padding_top(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.PaddingTop, value);
+                flex_item_set_padding_top(item, value);
+            }
         }
         
         public Position Position
         {
             get { return (Position)flex_item_get_position(item); }
-            set { flex_item_set_position(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Position, (int)value);
+                flex_item_set_position(item, (int)value);
+            }
         }
         
         public float Right
         {
             get { return flex_item_get_right(item); }
-            set { flex_item_set_right(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Right, value);
+                flex_item_set_right(item, value);
+            }
         }
         
         public int Shrink
         {
             get { return flex_item_get_shrink(item); }
-            set { flex_item_set_shrink(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Shrink, value);
+                flex_item_set_shrink(item, value);
+            }
         }
         
         public float Top
         {
             get { return flex_item_get_top(item); }
-            set { flex_item_set_top(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Top, value);
+                flex_item_set_top(item, value);
+            }
         }
         
         public float Width
         {
             get { return flex_item_get_width(item); }
-            set { flex_item_set_width(item, value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Width, value);
+                flex_item_set_width(item, value);
+            }
         }
         
         public Wrap Wrap
         {
             get { return (Wrap)flex_item_get_wrap(item); }
-            set { flex_item_set_wrap(item, (int)value); }
+            set
+            {
+                ValidatePropertyValue(Properties.Wrap, (int)value);
+                flex_item_set_wrap(item, (int)value);
+            }
         }
+        
+        partial void ValidatePropertyValue(Properties property, int value);
+        partial void ValidatePropertyValue(Properties property, float value);
     }
 }

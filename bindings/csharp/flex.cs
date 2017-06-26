@@ -238,5 +238,23 @@ namespace Xamarin.Flex
                 throw new ArgumentOutOfRangeException();
             }
         }
+
+        partial void ValidatePropertyValue(Properties property, int value)
+        {
+            bool invalid_align = false;
+            if (property == Properties.AlignContent || property == Properties.JustifyContent) {
+                if (value == (int)Align.Auto || value == (int)Align.Stretch) {
+                    invalid_align = true;
+                }
+            }
+            else if (property == Properties.AlignItems) {
+                if (value == (int)Align.Auto) {
+                    invalid_align = true;
+                }
+            }
+            if (invalid_align) {
+                throw new ArgumentException("invalid Align value");
+            }
+        }
     }
 }

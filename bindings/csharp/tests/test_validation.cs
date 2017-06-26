@@ -111,4 +111,68 @@ public partial class Test
 
         assert_no_raised(() => { item2.Layout(); });
     }
+
+    void test_validation_AlignContent()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.AlignContent = Align.Center; });
+        assert_no_raised(() => { item.AlignContent = Align.Start; });
+        assert_no_raised(() => { item.AlignContent = Align.End; });
+        assert_no_raised(() => { item.AlignContent = Align.SpaceBetween; });
+        assert_no_raised(() => { item.AlignContent = Align.SpaceAround; });
+        assert_no_raised(() => { item.AlignContent = Align.SpaceEvenly; });
+       
+        assert_raised(() => { item.AlignContent = Align.Auto; },
+                typeof(ArgumentException));
+        assert_raised(() => { item.AlignContent = Align.Stretch; },
+                typeof(ArgumentException));
+    }
+
+    void test_validation_AlignItems()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.AlignItems = Align.Center; });
+        assert_no_raised(() => { item.AlignItems = Align.Start; });
+        assert_no_raised(() => { item.AlignItems = Align.End; });
+        assert_no_raised(() => { item.AlignItems = Align.SpaceBetween; });
+        assert_no_raised(() => { item.AlignItems = Align.SpaceAround; });
+        assert_no_raised(() => { item.AlignItems = Align.SpaceEvenly; });
+        assert_no_raised(() => { item.AlignItems = Align.Stretch; });
+       
+        assert_raised(() => { item.AlignItems = Align.Auto; },
+                typeof(ArgumentException));
+    }
+
+    void test_validation_AlignSelf()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.AlignSelf = Align.Center; });
+        assert_no_raised(() => { item.AlignSelf = Align.Start; });
+        assert_no_raised(() => { item.AlignSelf = Align.End; });
+        assert_no_raised(() => { item.AlignSelf = Align.SpaceBetween; });
+        assert_no_raised(() => { item.AlignSelf = Align.SpaceAround; });
+        assert_no_raised(() => { item.AlignSelf = Align.SpaceEvenly; });
+        assert_no_raised(() => { item.AlignSelf = Align.Stretch; });
+        assert_no_raised(() => { item.AlignSelf = Align.Auto; });
+    }
+
+    void test_validation_JustifyContent()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.JustifyContent = Align.Center; });
+        assert_no_raised(() => { item.JustifyContent = Align.Start; });
+        assert_no_raised(() => { item.JustifyContent = Align.End; });
+        assert_no_raised(() => { item.JustifyContent = Align.SpaceBetween; });
+        assert_no_raised(() => { item.JustifyContent = Align.SpaceAround; });
+        assert_no_raised(() => { item.JustifyContent = Align.SpaceEvenly; });
+       
+        assert_raised(() => { item.JustifyContent = Align.Auto; },
+                typeof(ArgumentException));
+        assert_raised(() => { item.JustifyContent = Align.Stretch; },
+                typeof(ArgumentException));
+    }
 }

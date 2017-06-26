@@ -90,7 +90,7 @@ EOS
       out '}'
       out ''
     end
-    
+
     out 'public class NativeFunctions'
     out '{'
     @indent += 1
@@ -129,6 +129,19 @@ EOS
     out ''
     
     die "no properties?" if properties.empty?
+
+    out 'public enum Properties'
+    out '{'
+    @indent += 1
+    properties.each do |name, prop|
+      if prop[1..-1].include?(:set)
+        out "#{csharp_name(name)},"
+      end
+    end
+    @indent -= 1
+    out '}'
+    out ''
+ 
     out 'public partial class Item'
     out '{'
     @indent += 1
@@ -148,12 +161,21 @@ EOS
             out "get { return #{cast}flex_item_get_#{name}(item); }"
           when :set
             cast = is_enum ? "(int)" : ''
-            out "set { flex_item_set_#{name}(item, #{cast}value); }"
+            out 'set'
+            out '{'
+            @indent += 1
+            out "ValidatePropertyValue(Properties.#{csharp_name(name)}, #{cast}value);"
+            out "flex_item_set_#{name}(item, #{cast}value);"
+            @indent -= 1
+            out '}'
         end
       end
       @indent -= 1
       out '}'
     end
+    out ''
+    out 'partial void ValidatePropertyValue(Properties property, int value);'
+    out 'partial void ValidatePropertyValue(Properties property, float value);'
     @indent -= 1
     out '}'
     @indent -= 1
