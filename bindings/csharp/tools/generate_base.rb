@@ -130,7 +130,7 @@ EOS
     
     die "no properties?" if properties.empty?
 
-    out 'public enum Properties'
+    out 'enum Properties'
     out '{'
     @indent += 1
     properties.each do |name, prop|

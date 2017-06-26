@@ -119,7 +119,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_layout (IntPtr arg1);
     }
     
-    public enum Properties
+    enum Properties
     {
         AlignContent,
         AlignItems,
