@@ -14,7 +14,7 @@
     </Interface>
   </Interfaces>
   <Docs>
-    <summary>A flexible item.</summary>
+    <summary>An item with flexbox properties. Items can also contain other items and be enumerated.</summary>
     <remarks>
     </remarks>
   </Docs>
@@ -150,7 +150,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the bottom edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
+        <summary>This property defines the bottom edge absolute position of the item. It also defines the item's height if <see cref="P:Xamarin.Flex.Item.Top" /> is also set and if <see cref="P:Xamarin.Flex.Item.Height" /> isn't set. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -282,7 +282,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>For internal use only.</summary>
+        <summary>Returns an enumerator object that will iterate over the child items.</summary>
         <returns>
         </returns>
         <remarks>
@@ -418,7 +418,7 @@
       </ReturnValue>
       <Parameters />
       <Docs>
-        <summary>Determines the frames of each child based on the flex rules that were applied on this item and the children themselves. After this method is called, the <see cref="P:Xamarin.Flex.Item.FrameX" />, <see cref="P:Xamarin.Flex.Item.FrameY" />, <see cref="P:Xamarin.Flex.Item.FrameWidth" /> and <see cref="P:Xamarin.Flex.Item.FrameHeight" /> properties can be accessed on child items.</summary>
+        <summary>Determines the frames of each child (included nested ones) based on the flexbox rules that were applied on this item and the children themselves. After this method is called, the <see cref="P:Xamarin.Flex.Item.FrameX" />, <see cref="P:Xamarin.Flex.Item.FrameY" />, <see cref="P:Xamarin.Flex.Item.FrameWidth" /> and <see cref="P:Xamarin.Flex.Item.FrameHeight" /> properties can be accessed on child items.</summary>
         <remarks>This method must be called on a root (without parent) item where the <see cref="P:Xamarin.Flex.Item.Width" /> and <see cref="P:Xamarin.Flex.Item.Height" /> properties have also been set.</remarks>
         <exception cref="InvalidOperationException">Thrown if the item has a parent (must be root) or if the item does not have a proper value set for <see cref="P:Xamarin.Flex.Item.Width" /> and <see cref="P:Xamarin.Flex.Item.Height" />.</exception>
       </Docs>
@@ -434,7 +434,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the left edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
+        <summary>This property defines the left edge absolute position of the item. It also defines the item's width if <see cref="P:Xamarin.Flex.Item.Right" /> is also set and if <see cref="P:Xamarin.Flex.Item.Width" /> isn't set. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -645,7 +645,7 @@
         <ReturnType>Xamarin.Flex.Position</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines whether the item should be positioned by the flex rules of the layout engine (Relative) or have an absolute fixed position (Absolute). If this property is set to Absolute, the <see cref="P:Xamarin.Flex.Item.Left" />, <see cref="P:Xamarin.Flex.Item.Right" />, <see cref="P:Xamarin.Flex.Item.Top" /> and <see cref="P:Xamarin.Flex.Item.Bottom" /> properties will then be used to determined the item's fixed position.</summary>
+        <summary>This property defines whether the item should be positioned by the flexbox rules of the layout engine (Relative) or have an absolute fixed position (Absolute). If this property is set to Absolute, the <see cref="P:Xamarin.Flex.Item.Left" />, <see cref="P:Xamarin.Flex.Item.Right" />, <see cref="P:Xamarin.Flex.Item.Top" /> and <see cref="P:Xamarin.Flex.Item.Bottom" /> properties will then be used to determine the item's fixed position in its container.</summary>
         <value>Any value part of the <see cref="T:Xamarin.Flex.Position" /> enumeration.</value>
         <remarks>The default value for this property is Relative</remarks>
       </Docs>
@@ -683,7 +683,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the right edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
+        <summary>This property defines the right edge absolute position of the item. It also defines the item's width if <see cref="P:Xamarin.Flex.Item.Left" /> is also set and if <see cref="P:Xamarin.Flex.Item.Width" /> isn't set. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
@@ -699,7 +699,7 @@
         <ReturnType>Xamarin.Flex.Item</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>The root item.</summary>
+        <summary>The root item in the item's parent hierarchy. A root item is an item that does not have a parent.</summary>
         <value>The root item.</value>
         <remarks>This propery returns itself in case the item is a root item, otherwise it walks through the parent chain until it finds the root item.</remarks>
       </Docs>
@@ -750,7 +750,7 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the top edge position of the item. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
+        <summary>This property defines the top edge absolute position of the item. It also defines the item's height if <see cref="P:Xamarin.Flex.Item.Bottom" /> is also set and if <see cref="P:Xamarin.Flex.Item.Height" /> isn't set. It is ignored if <see cref="P:Xamarin.Flex.Item.Position" /> isn't set to Absolute.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
       </Docs>
