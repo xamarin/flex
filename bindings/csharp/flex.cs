@@ -256,5 +256,15 @@ namespace Xamarin.Flex
                 throw new ArgumentException("invalid Align value");
             }
         }
+
+        partial void ValidatePropertyValue(Properties property, float value)
+        {
+            if (property == Properties.PaddingLeft || property == Properties.PaddingRight
+                    || property == Properties.PaddingTop || property == Properties.PaddingBottom) {
+                if (value < 0) {
+                    throw new ArgumentException("invalid Padding value (should be positive or zero)");
+                }
+            }
+        }
     }
 }

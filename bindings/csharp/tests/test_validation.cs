@@ -175,4 +175,30 @@ public partial class Test
         assert_raised(() => { item.JustifyContent = Align.Stretch; },
                 typeof(ArgumentException));
     }
+
+    void test_validation_padding()
+    {
+        Item item = new Item();
+        
+        assert_no_raised(() => { item.Padding = 0; });
+        assert_no_raised(() => { item.Padding = 1; });
+        assert_no_raised(() => { item.PaddingLeft = 0; });
+        assert_no_raised(() => { item.PaddingLeft = 1; });
+        assert_no_raised(() => { item.PaddingRight = 0; });
+        assert_no_raised(() => { item.PaddingRight = 1; });
+        assert_no_raised(() => { item.PaddingTop = 0; });
+        assert_no_raised(() => { item.PaddingTop = 1; });
+        assert_no_raised(() => { item.PaddingBottom = 0; });
+        assert_no_raised(() => { item.PaddingBottom = 1; });
+
+        assert_raised(() => { item.Padding = -1; }, typeof(ArgumentException));
+        assert_raised(() => { item.PaddingLeft = -1; },
+                typeof(ArgumentException));
+        assert_raised(() => { item.PaddingRight = -1; },
+                typeof(ArgumentException));
+        assert_raised(() => { item.PaddingTop = -1; },
+                typeof(ArgumentException));
+        assert_raised(() => { item.PaddingBottom = -1; },
+                typeof(ArgumentException));
+    }
 }
