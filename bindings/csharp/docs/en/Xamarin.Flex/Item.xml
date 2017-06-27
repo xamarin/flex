@@ -548,9 +548,10 @@
       </ReturnValue>
       <Docs>
         <summary>A convenience property that sets the same value for all four padding sides.</summary>
-        <value>The padding value to be used for all four sides.</value>
+        <value>The padding value to be used for all four sides. Negative values are not allowed.</value>
         <remarks>
         </remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="PaddingBottom">
@@ -565,8 +566,9 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines the height of the item's bottom edge padding space that should be used when laying out child items.</summary>
-        <value>The bottom edge padding space.</value>
+        <value>The bottom edge padding space. Negative values are not allowed.</value>
         <remarks>The default value for this property is 0.</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="PaddingLeft">
@@ -581,8 +583,9 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines the width of the item's left edge padding space that should be used when laying out child items.</summary>
-        <value>The left edge padding space.</value>
+        <value>The left edge padding space. Negative values are not allowed.</value>
         <remarks>The default value for this property is 0.</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="PaddingRight">
@@ -597,8 +600,9 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines the width of the item's right edge padding space that should be used when laying out child items.</summary>
-        <value>The right edge padding space.</value>
+        <value>The right edge padding space. Negative values are not allowed.</value>
         <remarks>The default value for this property is 0.</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="PaddingTop">
@@ -613,8 +617,9 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines the height of the item's top edge padding space that should be used when laying out child items.</summary>
-        <value>The top edge padding space.</value>
+        <value>The top edge padding space. Negative values are not allowed.</value>
         <remarks>The default value for this property is 0.</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="Parent">
