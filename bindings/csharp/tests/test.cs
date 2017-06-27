@@ -28,8 +28,11 @@ public partial class Test
 
     public Test()
     {
+        handle1 = null;
         current_unit = null;
         errors = new List<Error>();
+
+        if (handle1 != null) {} // needed to remove a compiler warning about the instance variable assigned but never used
     }
 
     void run_gc()
