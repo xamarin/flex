@@ -244,6 +244,10 @@ static void
 layout_init(struct flex_item *item, float width, float height,
         struct flex_layout *layout)
 {
+    assert(item->padding_left >= 0);
+    assert(item->padding_right >= 0);
+    assert(item->padding_top >= 0);
+    assert(item->padding_bottom >= 0);
     width -= item->padding_left + item->padding_right;
     height -= item->padding_top + item->padding_bottom;
     assert(width >= 0);
