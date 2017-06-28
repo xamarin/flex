@@ -18,7 +18,7 @@ Now that the native code is built, you can build the C# code. Running `make` in 
 $ make
 ```
 
-After this command you can generate the NuGet file by running the `create_nuget.sh` script in the root directory/
+After this command you can generate the NuGet file by running the `create_nuget.sh` script in the root directory:
 
 ```
 $ cd ../..
