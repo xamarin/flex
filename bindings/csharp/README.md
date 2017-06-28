@@ -4,28 +4,19 @@ This directory contains the C# bindings for the Flex library. The bindings are m
 
 ## Building the bindings
 
-The first thing to do is to build the native library for all the platforms that you might need. You can simply run `make` in the root project directory (you may have to tweak the `Makefile` for your environment):
+The first thing to do is to build the native code for all the platforms that you might need. You can simply run `make` in the root project directory (you may have to tweak the `Makefile` according to your environment):
 
 ```
-$ cd ../..
-$ make
-$ cd -
+$ (cd ../.. && make)
 ```
 
-Now that the native code is built, you can build the C# code. Running `make` in this directory will build the code twice; one for projects where the native library is statically linked, and one for projects where the native library is dynamically loaded at runtime:
+Now that the native code is built, you can build the C# bindings. Running `make` in this directory will build 2 Xamarin.Flex.dll files (one for projects where the native code is statically linked, such as iOS and macOS, and one for projects where the native code is dynamically loaded at runtime, such as Android), then create a NuGet package:
 
 ```
 $ make
 ```
 
-After this command you can generate the NuGet file by running the `create_nuget.sh` script in the root directory:
-
-```
-$ cd ../..
-$ sh create_nuget.sh
-```
-
-This should leave you with a `Xamarin.Flex.???.nupkg` file that you can add to your Xamarin project, and you should be good to go!
+This should leave you with a `Xamarin.Flex.???.nupkg` file in this directory that you can add to your Xamarin project. Once added, the API should be available in your project and you should be good to go!
 
 ## Documentation
 
