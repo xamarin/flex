@@ -22,4 +22,4 @@ clean:
 	/bin/rm -rf build
 
 nuget:  $(STATIC_DLL) $(DYNAMIC_DLL)
-	(cd ../.. && nuget pack bindings/csharp/nuget/Xamarin.Flex.nuspec -BasePath . -OutputDirectory bindings/csharp)
+	nuget pack nuget/Xamarin.Flex.nuspec -BasePath ../..
