@@ -8,6 +8,8 @@ flex supports both single and multiple (wrap) lines layouts.
 
 ## Getting Started
 
+If you program in C# you can go straight to the [bindings/csharp](bindings/csharp) directory.
+
 If you program in a C-compatible environment you can simply copy the `flex.c` and `flex.h` files to your project. The code was written to be cross-platform and does not require dependencies.
 
 You can also generate static and dynamic libraries for iOS, Android and macOS using `make`:
@@ -20,8 +22,6 @@ $ make             # builds everything
 ```
 
 Make sure to have the `ANDROID_NDK` environment variable set to the path where the Android NDK is located in your system. You can also tweak build variables by editing the `Makefile` file.
-
-If you program in C# see the `bindings/csharp` directory for bindings (currently a work in progress).
 
 ## Demo App
 
