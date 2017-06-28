@@ -39,6 +39,10 @@ $ make
 $ open en.html
 ```
 
+## Samples
+
+You will find under the `samples` directory a few projects using the bindings. These projects require the Xamarin.Flex NuGet package.
+
 ## Tests
 
 The bindings are covered by tests. The tests specifically cover logic added by the bindings themselves, the native test suite (in the `tests` directory of the root project) covers the flexbox implementation itself.
