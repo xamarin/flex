@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<monodoc>
+  <node label="Flex" name="flex" parent="libraries"/>
+  <source provider="ecma" basefile="flex" path="flex"/>
+</monodoc>
