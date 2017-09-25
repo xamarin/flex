@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include <math.h>
 #include <tgmath.h>
 
@@ -61,6 +62,7 @@ extern unsigned int failures_n;
             (_Generic((expr), \
                       unsigned int: "%u", \
                       int: "%d", \
+                      bool: "%d", \
                       float: "%0.1f")))
 
 #define TEST_FRAME_EQUAL(item, x, y, width, height) \
