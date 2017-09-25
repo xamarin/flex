@@ -1,0 +1,245 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See the LICENSE.txt file in the project root
+// for the license information.
+
+static bool dummy_self_sizing_called;
+static float dummy_self_sizing_size[2];
+
+static void
+dummy_self_sizing(struct flex_item *item, float size[2])
+{
+    dummy_self_sizing_called = true;
+    dummy_self_sizing_size[0] = size[0];
+    dummy_self_sizing_size[1] = size[1];
+}
+
+#define DUMMY_SELF_SIZING_RESET() \
+    do { \
+        dummy_self_sizing_called = false; \
+        dummy_self_sizing_size[0] = 0; \
+        dummy_self_sizing_size[1] = 0; \
+    } \
+    while (0)
+
+void
+test_self_sizing_dummy0(void)
+{
+    struct flex_item *item = flex_item_new();
+
+    TEST(flex_item_get_self_sizing(item) == NULL);
+
+    flex_item_set_self_sizing(item, dummy_self_sizing);
+    TEST(flex_item_get_self_sizing(item) == dummy_self_sizing);
+
+    flex_item_set_self_sizing(item, NULL);
+    TEST(flex_item_get_self_sizing(item) == NULL);
+
+    flex_item_free(item);
+}
+
+void
+test_self_sizing_dummy1(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_self_sizing(child, dummy_self_sizing);
+    flex_item_add(root, child);
+
+    DUMMY_SELF_SIZING_RESET();
+
+    flex_layout(root);
+
+    TEST_EQUAL(dummy_self_sizing_called, true);
+    TEST_EQUAL(dummy_self_sizing_size[0], 100);
+    TEST_EQUAL(dummy_self_sizing_size[1], 0);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing_dummy2(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_width(child, 50);
+    flex_item_set_self_sizing(child, dummy_self_sizing);
+    flex_item_add(root, child);
+
+    DUMMY_SELF_SIZING_RESET();
+
+    flex_layout(root);
+
+    TEST_EQUAL(dummy_self_sizing_called, true);
+    TEST_EQUAL(dummy_self_sizing_size[0], 50);
+    TEST_EQUAL(dummy_self_sizing_size[1], 0);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing_dummy3(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_height(child, 50);
+    flex_item_set_self_sizing(child, dummy_self_sizing);
+    flex_item_add(root, child);
+
+    DUMMY_SELF_SIZING_RESET();
+
+    flex_layout(root);
+
+    TEST_EQUAL(dummy_self_sizing_called, true);
+    TEST_EQUAL(dummy_self_sizing_size[0], 100);
+    TEST_EQUAL(dummy_self_sizing_size[1], 50);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing_dummy4(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_width(child, 50);
+    flex_item_set_height(child, 50);
+    flex_item_set_self_sizing(child, dummy_self_sizing);
+    flex_item_add(root, child);
+
+    DUMMY_SELF_SIZING_RESET();
+
+    flex_layout(root);
+
+    TEST_EQUAL(dummy_self_sizing_called, true);
+    TEST_EQUAL(dummy_self_sizing_size[0], 50);
+    TEST_EQUAL(dummy_self_sizing_size[1], 50);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing_dummy5(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_grow(child, 1);
+    flex_item_set_self_sizing(child, dummy_self_sizing);
+    flex_item_add(root, child);
+
+    DUMMY_SELF_SIZING_RESET();
+
+    flex_layout(root);
+
+    TEST_EQUAL(dummy_self_sizing_called, true);
+    TEST_EQUAL(dummy_self_sizing_size[0], 100);
+    TEST_EQUAL(dummy_self_sizing_size[1], 0);
+
+    flex_item_free(root);
+}
+
+static void
+simulate_wrapping_text(struct flex_item *item, float size[2])
+{
+    if (size[0] >= 68) {
+        size[0] = 68;
+        size[1] = 16;
+    }
+    else if (size[0] >= 50) {
+        size[0] = 50;
+        size[1] = 32;
+    }
+    else {
+        // Do nothing.
+    }
+}
+
+void
+test_self_sizing1(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_self_sizing(child, simulate_wrapping_text);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 68, 16);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing2(void)
+{
+    struct flex_item *root = flex_item_with_size(55, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_self_sizing(child, simulate_wrapping_text);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 50, 32);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing3(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_width(child, 10);
+    flex_item_set_height(child, 10);
+    flex_item_set_self_sizing(child, simulate_wrapping_text);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 10, 10);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing4(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_width(child, 10);
+    flex_item_set_height(child, 10);
+    flex_item_set_grow(child, 1);
+    flex_item_set_self_sizing(child, simulate_wrapping_text);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 10, 100);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing5(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_self_sizing(child, simulate_wrapping_text);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 0, 100);
+
+    flex_item_free(root);
+}

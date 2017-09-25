@@ -3,7 +3,7 @@ FLEX_DIR = ..
 CC = /usr/bin/clang
 CFLAGS = -Wall -Werror -O3 -I$(FLEX_DIR)
 
-TESTS_SRC = test_default_values.c test_children.c test_managed_ptr.c test_basis.c test_grow.c test_shrink.c test_direction.c test_order.c test_align_self.c test_align_items.c test_wrap.c test_justify_content.c test_align_content.c test_position.c test_margin.c test_padding.c
+TESTS_SRC = test_default_values.c test_children.c test_managed_ptr.c test_basis.c test_grow.c test_shrink.c test_direction.c test_order.c test_align_self.c test_align_items.c test_wrap.c test_justify_content.c test_align_content.c test_position.c test_margin.c test_padding.c test_self_sizing.c
 TESTS_OBJ = $(patsubst %.c,%.o,$(TESTS_SRC))
 OBJS = $(TESTS_OBJ) units.o
 

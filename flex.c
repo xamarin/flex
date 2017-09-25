@@ -633,6 +633,10 @@ layout_item(struct flex_item *item, float width, float height)
                 - CHILD_MARGIN(child, right, bottom);
         }
 
+        if (child->self_sizing != NULL) {
+            child->self_sizing(child, &child->frame[2]);
+        }
+
         float child_size = CHILD_SIZE(child);
         if (layout->wrap) {
             if (layout->flex_dim < child_size) {
@@ -731,6 +735,7 @@ flex_layout(struct flex_item *item)
     assert(item->parent == NULL);
     assert(!isnan(item->width));
     assert(!isnan(item->height));
+    assert(item->self_sizing == NULL);
 
     layout_item(item, item->width, item->height);
 }

@@ -9,6 +9,7 @@ test_default_values1(void)
 
     TEST(isnan(flex_item_get_width(item)));
     TEST(isnan(flex_item_get_height(item)));
+    TEST(flex_item_get_self_sizing(item) == NULL);
 
     TEST(isnan(flex_item_get_left(item)));
     TEST(isnan(flex_item_get_right(item)));

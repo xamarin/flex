@@ -70,6 +70,9 @@ typedef enum {
     FLEX_WRAP_WRAP_REVERSE
 } flex_wrap;
 
+// size[0] == width, size[1] == height
+typedef void (*flex_self_sizing)(struct flex_item *item, float size[2]);
+
 # ifndef FLEX_ATTRIBUTE
 #  define FLEX_ATTRIBUTE(name, type, def) \
     type flex_item_get_##name(struct flex_item *item); \
@@ -94,6 +97,7 @@ typedef enum {
 
 FLEX_ATTRIBUTE(width, float, NAN)
 FLEX_ATTRIBUTE(height, float, NAN)
+FLEX_ATTRIBUTE(self_sizing, flex_self_sizing, NULL)
 
 FLEX_ATTRIBUTE(left, float, NAN)
 FLEX_ATTRIBUTE(right, float, NAN)
