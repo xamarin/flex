@@ -21,7 +21,7 @@ extern unsigned int failures_n;
     do { \
         if (failures_n < MAX_FAILURES) { \
             printf("E"); \
-            char _buf[100] = { 0 }; \
+            char _buf[1024] = { 0 }; \
             int _p = snprintf(_buf, sizeof(_buf), "%s (%s:%d): ", \
                     current_unit, __FILE__, __LINE__); \
             snprintf(_buf + _p, sizeof(_buf) - _p, fmt, __VA_ARGS__); \
@@ -49,7 +49,7 @@ extern unsigned int failures_n;
             _PASS(); \
         } \
         else { \
-            char _fmt[100] = { 0 }; \
+            char _fmt[1024] = { 0 }; \
             snprintf(_fmt, sizeof _fmt, "failed test `%%s == %s' (is %s)", \
                     type_fmt, type_fmt); \
             _FAIL(_fmt, #expr, _val, _res); \
