@@ -49,16 +49,14 @@ class Generator
     end
 
     @functions = []
+    @delegates = {}
     root.get_elements('function').each do |elem|
       name = elem.attributes['name']
-      retval_elem = elem.get_elements('retval')
-      retval = retval_elem.size == 1 ? convert_type(retval_elem[0]) : 'void'
-      args = elem.get_elements('arg').map { |arg_elem| convert_type(arg_elem) }
-      @functions << [name, retval, args]
+      @functions << [name, *convert_function_type(elem)]
     end
     @functions.sort { |x, y| x[0] <=> y[0] }
   end
-    
+
   def gen_base_cs
     @io = File.open(OUTPUT_FILE, 'w')
     @indent = 0
@@ -119,10 +117,18 @@ EOS
           enum_type = (FORCE_ENUM_PROPERTIES[name] or name.capitalize)
           type = enum_type if @enums.has_key?(enum_type)
         end
-        if type != 'IntPtr' # ignore 'internal' properties
+        unless type.match(/^(IntPtr|Delegate)/) # ignore 'internal' properties
           (properties[name] ||= [type]) << what
         end
       end
+    end
+    out ''
+    @delegates.each do |types, name|
+      retval = types[0]
+      i = 0
+      args = types[1]
+      args_list = args.map { |x| x + " arg#{i += 1}" }.join(', ')
+      out "public delegate #{retval} #{name} (#{args_list});"
     end
     @indent -= 1
     out '}'
@@ -193,16 +199,30 @@ EOS
     name.capitalize.gsub(/_(.)/) { |md| md[1].upcase }
   end
 
-  def convert_type(type)
-    case type.attributes['type']
-      when 'I', 'i'
-        'int'
-      when 'f'
-        'float'
-      when /^\^/
-        'IntPtr'
-      else
-        die "invalid type #{type}"
+  def convert_function_type(elem)
+    retval_elem = elem.get_elements('retval')
+    retval = retval_elem.size == 1 ? convert_type(retval_elem[0]) : 'void'
+    args = elem.get_elements('arg').map { |arg_elem| convert_type(arg_elem) }
+    [retval, args]
+  end
+ 
+  def convert_type(elem)
+    if elem.attributes['function_pointer'] == 'true'
+      ftype = convert_function_type(elem)
+      @delegates[ftype] ||= "Delegate#{@delegates.size}"
+    else
+      case type = elem.attributes['type']
+        when 'I', 'i'
+          'int'
+        when 'v'
+          'void'
+        when 'f'
+          'float'
+        when /^\^/
+          'IntPtr'
+        else
+          die "invalid type #{type}"
+      end
     end
   end
 
