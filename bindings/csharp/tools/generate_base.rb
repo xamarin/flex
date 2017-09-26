@@ -184,7 +184,9 @@ EOS
   end
 
   def out(str)
-    @io.puts "#{' ' * (@indent * 4)}#{str}"
+    line = "#{' ' * (@indent * 4)}#{str}"
+    line = '' if line.strip.empty?
+    @io.puts line
   end
 
   def csharp_name(name)
