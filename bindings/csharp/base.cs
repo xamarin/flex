@@ -21,7 +21,7 @@ namespace Xamarin.Flex
         SpaceAround = 6,
         SpaceEvenly = 7,
     }
-    
+
     public enum Direction : int
     {
         Row = 0,
@@ -29,20 +29,20 @@ namespace Xamarin.Flex
         Column = 2,
         ColumnReverse = 3,
     }
-    
+
     public enum Position : int
     {
         Relative = 0,
         Absolute = 1,
     }
-    
+
     public enum Wrap : int
     {
         Nowrap = 0,
         Wrap = 1,
         WrapReverse = 2,
     }
-    
+
     public class NativeFunctions
     {
         private const string dll_name =
@@ -82,6 +82,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern float flex_item_get_padding_top (IntPtr arg1);
         [DllImport(dll_name)] public static extern int flex_item_get_position (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_right (IntPtr arg1);
+        [DllImport(dll_name)] public static extern Delegate0 flex_item_get_self_sizing (IntPtr arg1);
         [DllImport(dll_name)] public static extern int flex_item_get_shrink (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_top (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_width (IntPtr arg1);
@@ -112,13 +113,16 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_item_set_padding_top (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_position (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_right (IntPtr arg1, float arg2);
+        [DllImport(dll_name)] public static extern void flex_item_set_self_sizing (IntPtr arg1, Delegate0 arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_shrink (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_top (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_width (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_wrap (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern void flex_layout (IntPtr arg1);
+
+        public delegate void Delegate0 (IntPtr arg1, IntPtr arg2);
     }
-    
+
     enum Properties
     {
         AlignContent,
@@ -147,11 +151,11 @@ namespace Xamarin.Flex
         Width,
         Wrap,
     }
-    
+
     public partial class Item
     {
         private IntPtr item = IntPtr.Zero;
-        
+
         public Align AlignContent
         {
             get { return (Align)flex_item_get_align_content(item); }
@@ -161,7 +165,7 @@ namespace Xamarin.Flex
                 flex_item_set_align_content(item, (int)value);
             }
         }
-        
+
         public Align AlignItems
         {
             get { return (Align)flex_item_get_align_items(item); }
@@ -171,7 +175,7 @@ namespace Xamarin.Flex
                 flex_item_set_align_items(item, (int)value);
             }
         }
-        
+
         public Align AlignSelf
         {
             get { return (Align)flex_item_get_align_self(item); }
@@ -181,7 +185,7 @@ namespace Xamarin.Flex
                 flex_item_set_align_self(item, (int)value);
             }
         }
-        
+
         public float Basis
         {
             get { return flex_item_get_basis(item); }
@@ -191,7 +195,7 @@ namespace Xamarin.Flex
                 flex_item_set_basis(item, value);
             }
         }
-        
+
         public float Bottom
         {
             get { return flex_item_get_bottom(item); }
@@ -201,7 +205,7 @@ namespace Xamarin.Flex
                 flex_item_set_bottom(item, value);
             }
         }
-        
+
         public Direction Direction
         {
             get { return (Direction)flex_item_get_direction(item); }
@@ -211,27 +215,27 @@ namespace Xamarin.Flex
                 flex_item_set_direction(item, (int)value);
             }
         }
-        
+
         public float FrameHeight
         {
             get { return flex_item_get_frame_height(item); }
         }
-        
+
         public float FrameWidth
         {
             get { return flex_item_get_frame_width(item); }
         }
-        
+
         public float FrameX
         {
             get { return flex_item_get_frame_x(item); }
         }
-        
+
         public float FrameY
         {
             get { return flex_item_get_frame_y(item); }
         }
-        
+
         public int Grow
         {
             get { return flex_item_get_grow(item); }
@@ -241,7 +245,7 @@ namespace Xamarin.Flex
                 flex_item_set_grow(item, value);
             }
         }
-        
+
         public float Height
         {
             get { return flex_item_get_height(item); }
@@ -251,7 +255,7 @@ namespace Xamarin.Flex
                 flex_item_set_height(item, value);
             }
         }
-        
+
         public Align JustifyContent
         {
             get { return (Align)flex_item_get_justify_content(item); }
@@ -261,7 +265,7 @@ namespace Xamarin.Flex
                 flex_item_set_justify_content(item, (int)value);
             }
         }
-        
+
         public float Left
         {
             get { return flex_item_get_left(item); }
@@ -271,7 +275,7 @@ namespace Xamarin.Flex
                 flex_item_set_left(item, value);
             }
         }
-        
+
         public float MarginBottom
         {
             get { return flex_item_get_margin_bottom(item); }
@@ -281,7 +285,7 @@ namespace Xamarin.Flex
                 flex_item_set_margin_bottom(item, value);
             }
         }
-        
+
         public float MarginLeft
         {
             get { return flex_item_get_margin_left(item); }
@@ -291,7 +295,7 @@ namespace Xamarin.Flex
                 flex_item_set_margin_left(item, value);
             }
         }
-        
+
         public float MarginRight
         {
             get { return flex_item_get_margin_right(item); }
@@ -301,7 +305,7 @@ namespace Xamarin.Flex
                 flex_item_set_margin_right(item, value);
             }
         }
-        
+
         public float MarginTop
         {
             get { return flex_item_get_margin_top(item); }
@@ -311,7 +315,7 @@ namespace Xamarin.Flex
                 flex_item_set_margin_top(item, value);
             }
         }
-        
+
         public int Order
         {
             get { return flex_item_get_order(item); }
@@ -321,7 +325,7 @@ namespace Xamarin.Flex
                 flex_item_set_order(item, value);
             }
         }
-        
+
         public float PaddingBottom
         {
             get { return flex_item_get_padding_bottom(item); }
@@ -331,7 +335,7 @@ namespace Xamarin.Flex
                 flex_item_set_padding_bottom(item, value);
             }
         }
-        
+
         public float PaddingLeft
         {
             get { return flex_item_get_padding_left(item); }
@@ -341,7 +345,7 @@ namespace Xamarin.Flex
                 flex_item_set_padding_left(item, value);
             }
         }
-        
+
         public float PaddingRight
         {
             get { return flex_item_get_padding_right(item); }
@@ -351,7 +355,7 @@ namespace Xamarin.Flex
                 flex_item_set_padding_right(item, value);
             }
         }
-        
+
         public float PaddingTop
         {
             get { return flex_item_get_padding_top(item); }
@@ -361,7 +365,7 @@ namespace Xamarin.Flex
                 flex_item_set_padding_top(item, value);
             }
         }
-        
+
         public Position Position
         {
             get { return (Position)flex_item_get_position(item); }
@@ -371,7 +375,7 @@ namespace Xamarin.Flex
                 flex_item_set_position(item, (int)value);
             }
         }
-        
+
         public float Right
         {
             get { return flex_item_get_right(item); }
@@ -381,7 +385,7 @@ namespace Xamarin.Flex
                 flex_item_set_right(item, value);
             }
         }
-        
+
         public int Shrink
         {
             get { return flex_item_get_shrink(item); }
@@ -391,7 +395,7 @@ namespace Xamarin.Flex
                 flex_item_set_shrink(item, value);
             }
         }
-        
+
         public float Top
         {
             get { return flex_item_get_top(item); }
@@ -401,7 +405,7 @@ namespace Xamarin.Flex
                 flex_item_set_top(item, value);
             }
         }
-        
+
         public float Width
         {
             get { return flex_item_get_width(item); }
@@ -411,7 +415,7 @@ namespace Xamarin.Flex
                 flex_item_set_width(item, value);
             }
         }
-        
+
         public Wrap Wrap
         {
             get { return (Wrap)flex_item_get_wrap(item); }
@@ -421,7 +425,7 @@ namespace Xamarin.Flex
                 flex_item_set_wrap(item, (int)value);
             }
         }
-        
+
         partial void ValidatePropertyValue(Properties property, int value);
         partial void ValidatePropertyValue(Properties property, float value);
     }
