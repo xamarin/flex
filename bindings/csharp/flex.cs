@@ -115,6 +115,21 @@ namespace Xamarin.Flex
             }
         }
 
+        public delegate void SelfSizingDelegate(Item item, ref float width, ref float height);
+
+        public SelfSizingDelegate SelfSizing
+        {
+            set {
+                flex_item_set_self_sizing(item,
+                        delegate(IntPtr item, IntPtr sizebuf) {
+                            float[] size = { 0, 0 };
+                            Marshal.Copy(sizebuf, size, 0, 2);
+                            value(FlexItemFromItem(item), ref size[0], ref size[1]);
+                            Marshal.Copy(size, 0, sizebuf, 2);
+                        });
+            }
+        }
+
         public class ItemEnumerator : IEnumerator
         {
             private Item item;
