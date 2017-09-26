@@ -92,7 +92,6 @@ typedef void (*flex_self_sizing)(struct flex_item *item, float size[2]);
 
 FLEX_ATTRIBUTE(width, float, NAN)
 FLEX_ATTRIBUTE(height, float, NAN)
-FLEX_ATTRIBUTE(self_sizing, flex_self_sizing, NULL)
 
 FLEX_ATTRIBUTE(left, float, NAN)
 FLEX_ATTRIBUTE(right, float, NAN)
@@ -126,5 +125,10 @@ FLEX_ATTRIBUTE(basis, float, 0)
 // An item can store an arbitrary pointer, which can be used by bindings as
 // the address of a managed object.
 FLEX_ATTRIBUTE(managed_ptr, void *, NULL)
+
+// An item can provide a self_sizing callback function that will be called
+// during layout and which can customize the dimensions (width and height)
+// of the item.
+FLEX_ATTRIBUTE(self_sizing, flex_self_sizing, NULL)
 
 #undef FLEX_ATTRIBUTE
