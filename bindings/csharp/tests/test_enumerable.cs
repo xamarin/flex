@@ -49,6 +49,9 @@ public partial class Test
         assert(items.Count == 2);
         assert(items[0] == item2);
         assert(items[1] == item4);
+
+        item3.Dispose();
+        item.Dispose();
     }
 
     void test_enumerable2()
@@ -71,6 +74,8 @@ public partial class Test
                 foreach (var child in item) {
                     item.Add(new Item());
                 }}, typeof(InvalidOperationException));
+
+        item.Dispose();
     }
 
     void test_enumerable4()
@@ -82,5 +87,7 @@ public partial class Test
                 foreach (var child in item) {
                     item.InsertAt(0, new Item());
                 }}, typeof(InvalidOperationException));
+
+        item.Dispose();
     }
 }

@@ -34,5 +34,7 @@ public partial class Test
         assert(item.MarginBottom == 0);
         assert(item.MarginLeft == 0);
         assert(item.MarginRight == 0);
+
+        item.Dispose();
     }
 }

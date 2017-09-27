@@ -57,6 +57,10 @@ public partial class Test
             assert_raised(() => { item.InsertAt(val, item2); },
                     typeof(ArgumentOutOfRangeException));
         }
+
+        item3.Dispose();
+        item2.Dispose();
+        item.Dispose();
     }
 
     void test_validation_add()
@@ -83,6 +87,9 @@ public partial class Test
         item3.RemoveAt(0);
 
         assert_no_raised(() => { item3.InsertAt(0, item2); });
+
+        item3.Dispose();
+        item.Dispose();
     }
 
     void test_validation_layout()
@@ -117,6 +124,8 @@ public partial class Test
 
         assert_raised(() => { item.Layout(); },
                 typeof(InvalidOperationException));
+
+        item.Dispose();
     }
 
     void test_validation_AlignContent()
@@ -134,6 +143,8 @@ public partial class Test
                 typeof(ArgumentException));
         assert_raised(() => { item.AlignContent = Align.Stretch; },
                 typeof(ArgumentException));
+
+        item.Dispose();
     }
 
     void test_validation_AlignItems()
@@ -150,6 +161,8 @@ public partial class Test
        
         assert_raised(() => { item.AlignItems = Align.Auto; },
                 typeof(ArgumentException));
+
+        item.Dispose();
     }
 
     void test_validation_AlignSelf()
@@ -164,6 +177,8 @@ public partial class Test
         assert_no_raised(() => { item.AlignSelf = Align.SpaceEvenly; });
         assert_no_raised(() => { item.AlignSelf = Align.Stretch; });
         assert_no_raised(() => { item.AlignSelf = Align.Auto; });
+
+        item.Dispose();
     }
 
     void test_validation_JustifyContent()
@@ -181,6 +196,8 @@ public partial class Test
                 typeof(ArgumentException));
         assert_raised(() => { item.JustifyContent = Align.Stretch; },
                 typeof(ArgumentException));
+
+        item.Dispose();
     }
 
     void test_validation_padding()
@@ -207,5 +224,7 @@ public partial class Test
                 typeof(ArgumentException));
         assert_raised(() => { item.PaddingBottom = -1; },
                 typeof(ArgumentException));
+
+        item.Dispose();
     }
 }

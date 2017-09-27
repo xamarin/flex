@@ -9,25 +9,26 @@ public partial class Test
 {
     void test_self_sizing()
     {
-        Item root = new Item(500, 500);
+        using (Item root = new Item(500, 500)) {
+            Item item = new Item(10, 20);
+            item.SelfSizing = delegate(Item _, ref float width,
+                    ref float height) {
+                width += 100;
+                height += 100;
+            };
+            root.Add(item);
 
-        Item item = new Item(10, 20);
-        item.SelfSizing = delegate(Item _, ref float width, ref float height) {
-            width += 100;
-            height += 100;
-        };
-        root.Add(item);
+            root.Layout();
 
-        root.Layout();
+            assert(item.FrameWidth == 110);
+            assert(item.FrameHeight == 120);
 
-        assert(item.FrameWidth == 110);
-        assert(item.FrameHeight == 120);
+            item.SelfSizing = null;
 
-        item.SelfSizing = null;
+            root.Layout();
 
-        root.Layout();
-
-        assert(item.FrameWidth == 10);
-        assert(item.FrameHeight == 20);
+            assert(item.FrameWidth == 10);
+            assert(item.FrameHeight == 20);
+        }
     }
 }

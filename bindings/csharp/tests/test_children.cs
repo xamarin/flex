@@ -45,6 +45,8 @@ public partial class Test
         assert(item3.ItemAt(0) == item2);
         assert(item2.Root == item1);
         assert(item2.Parent == item3);
+
+        item1.Dispose();
     }
 
     void test_children2()
@@ -86,5 +88,10 @@ public partial class Test
         assert(item1.RemoveAt(0) == item3);
 
         assert(item1.Count == 0);
+
+        item4.Dispose();
+        item3.Dispose();
+        item2.Dispose();
+        item1.Dispose();
     }
 }

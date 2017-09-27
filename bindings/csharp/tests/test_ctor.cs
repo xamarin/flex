@@ -47,6 +47,8 @@ public partial class Test
         assert(Double.IsNaN(item.Height));
 
         _test_default_values_except_size(item);
+
+        item.Dispose();
     }
 
     void test_ctor2()
@@ -57,5 +59,7 @@ public partial class Test
         assert(item.Height == 200);
 
         _test_default_values_except_size(item);
+
+        item.Dispose();
     }
 }
