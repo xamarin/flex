@@ -110,6 +110,13 @@ public partial class Test
         item.RemoveAt(0);
 
         assert_no_raised(() => { item2.Layout(); });
+
+        item.SelfSizing = delegate(Item _, ref float width, ref float height) {
+            // Do nothing.
+        };
+
+        assert_raised(() => { item.Layout(); },
+                typeof(InvalidOperationException));
     }
 
     void test_validation_AlignContent()

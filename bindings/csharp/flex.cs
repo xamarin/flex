@@ -96,6 +96,9 @@ namespace Xamarin.Flex
             if (Double.IsNaN(Width) || Double.IsNaN(Height)) {
                 throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
             }
+            if (_SelfSizing != null) {
+                throw new InvalidOperationException("Layout() cannot be called on an item that has the SelfSizing property set");
+            }
             flex_layout(item);
         }
 
@@ -118,7 +121,7 @@ namespace Xamarin.Flex
         public delegate void SelfSizingDelegate(Item item, ref float width,
                 ref float height);
 
-        private Delegate0 _SelfSizing;
+        private Delegate0 _SelfSizing = null;
 
         public SelfSizingDelegate SelfSizing
         {
