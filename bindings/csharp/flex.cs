@@ -266,7 +266,8 @@ namespace Xamarin.Flex
         partial void ValidatePropertyValue(Properties property, int value)
         {
             bool invalid_align = false;
-            if (property == Properties.AlignContent || property == Properties.JustifyContent) {
+            if (property == Properties.AlignContent
+                    || property == Properties.JustifyContent) {
                 if (value == (int)Align.Auto || value == (int)Align.Stretch) {
                     invalid_align = true;
                 }
@@ -283,8 +284,10 @@ namespace Xamarin.Flex
 
         partial void ValidatePropertyValue(Properties property, float value)
         {
-            if (property == Properties.PaddingLeft || property == Properties.PaddingRight
-                    || property == Properties.PaddingTop || property == Properties.PaddingBottom) {
+            if (property == Properties.PaddingLeft
+                    || property == Properties.PaddingRight
+                    || property == Properties.PaddingTop
+                    || property == Properties.PaddingBottom) {
                 if (value < 0) {
                     throw new ArgumentException("invalid Padding value (should be positive or zero)");
                 }
