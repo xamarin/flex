@@ -9,7 +9,7 @@ using static Xamarin.Flex.NativeFunctions;
 
 namespace Xamarin.Flex
 {
-    public partial class Item : IEnumerable
+    public partial class Item : IEnumerable, IDisposable
     {
         public Item()
         {
@@ -22,16 +22,24 @@ namespace Xamarin.Flex
             this.Width = width;
             this.Height = height;
         }
-    
-        ~Item()
+   
+        public void Dispose()
         {
-            if (item != IntPtr.Zero) {
-                ReleaseHandlesWithinItem(item, false);
-                flex_item_free(item);
-                item = IntPtr.Zero;
+            Dispose(true);  
+            GC.SuppressFinalize(this);  
+        }
+ 
+        protected virtual void Dispose(bool disposing)
+        {  
+            if (disposing) {
+                if (item != IntPtr.Zero) {
+                    ReleaseHandlesWithinItem(item, false);
+                    flex_item_free(item);
+                    item = IntPtr.Zero;
+                }
             }
         }
-    
+
         public void Add(Item child)
         {
             ValidateNewChild(child);

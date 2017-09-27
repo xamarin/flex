@@ -78,6 +78,8 @@ public partial class Test
             ref1 = new WeakReference(item1);
             ref2 = new WeakReference(item2);
             ref3 = new WeakReference(item3);
+
+            item1.Dispose();
         })();
 
         run_gc();
@@ -109,6 +111,8 @@ public partial class Test
             ref1 = new WeakReference(item1);
             ref2 = new WeakReference(item2);
             ref3 = new WeakReference(item3);
+
+            item2.Dispose();
         })();
 
         run_gc();
