@@ -115,18 +115,27 @@ namespace Xamarin.Flex
             }
         }
 
-        public delegate void SelfSizingDelegate(Item item, ref float width, ref float height);
+        public delegate void SelfSizingDelegate(Item item, ref float width,
+                ref float height);
+
+        private Delegate0 _SelfSizing;
 
         public SelfSizingDelegate SelfSizing
         {
             set {
-                flex_item_set_self_sizing(item,
-                        delegate(IntPtr item, IntPtr sizebuf) {
-                            float[] size = { 0, 0 };
-                            Marshal.Copy(sizebuf, size, 0, 2);
-                            value(FlexItemFromItem(item), ref size[0], ref size[1]);
-                            Marshal.Copy(size, 0, sizebuf, 2);
-                        });
+                if (value != null) {
+                    _SelfSizing = delegate(IntPtr item, IntPtr sizebuf) {
+                        float[] size = { 0, 0 };
+                        Marshal.Copy(sizebuf, size, 0, 2);
+                        value(FlexItemFromItem(item), ref size[0],
+                                ref size[1]);
+                        Marshal.Copy(size, 0, sizebuf, 2);
+                    };
+                }
+                else {
+                    _SelfSizing = null;
+                }
+                flex_item_set_self_sizing(item, _SelfSizing);
             }
         }
 

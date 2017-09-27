@@ -22,5 +22,12 @@ public partial class Test
 
         assert(item.FrameWidth == 110);
         assert(item.FrameHeight == 120);
+
+        item.SelfSizing = null;
+
+        root.Layout();
+
+        assert(item.FrameWidth == 10);
+        assert(item.FrameHeight == 20);
     }
 }
