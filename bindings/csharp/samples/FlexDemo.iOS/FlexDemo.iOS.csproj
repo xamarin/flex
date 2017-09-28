@@ -85,7 +85,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.iOS" />
     <Reference Include="Xamarin.Flex">
-      <HintPath>packages\Xamarin.Flex.0.1\lib\XamariniOS\Xamarin.Flex.dll</HintPath>
+      <HintPath>packages\Xamarin.Flex.0.2\lib\XamariniOS\Xamarin.Flex.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -122,5 +122,5 @@
     <Compile Include="Item.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
-  <Import Project="packages\Xamarin.Flex.0.1\build\XamariniOS\Xamarin.Flex.targets" Condition="Exists('packages\Xamarin.Flex.0.1\build\XamariniOS\Xamarin.Flex.targets')" />
+  <Import Project="packages\Xamarin.Flex.0.2\build\XamariniOS\Xamarin.Flex.targets" Condition="Exists('packages\Xamarin.Flex.0.2\build\XamariniOS\Xamarin.Flex.targets')" />
 </Project>
