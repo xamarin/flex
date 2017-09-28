@@ -32,7 +32,10 @@ namespace FlexDemo.Android
                 Margin = spacing
             };
             label.View.Text = "This is the list of items you have added. You can add new items and clear the list using the buttons at the bottom. This label has extra lines on purpose.";
-            label.Height = new StaticLayout(label.View.Text, label.View.Paint, (int)root.Width, Layout.Alignment.AlignNormal, 1, 0, true).Height;
+            label.SelfSizing = delegate (Xamarin.Flex.Item item, ref float width, ref float height)
+            {
+				height = new StaticLayout(label.View.Text, label.View.Paint, (int)width, Layout.Alignment.AlignNormal, 1, 0, true).Height;
+			};
             root.Add(label);
 
             var list = new Item<ListView>(this)

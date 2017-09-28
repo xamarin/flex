@@ -60,7 +60,11 @@ namespace FlexDemo.iOS
             label.View.TextAlignment = UITextAlignment.Center;
             label.View.LineBreakMode = UILineBreakMode.WordWrap;
             label.View.Lines = 0;
-            label.Height = (float)label.View.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(root.Width - 20, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
+            label.SelfSizing = delegate (Xamarin.Flex.Item item, ref float width, ref float height)
+            {
+				height = (float)label.View.AttributedText.GetBoundingRect(new CoreGraphics.CGSize(width - 20, Double.MaxValue), Foundation.NSStringDrawingOptions.UsesLineFragmentOrigin, null).Size.Height;
+
+			};
             root.Add(label);
 
             var list = new Item<UITableView>()
