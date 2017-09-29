@@ -779,6 +779,26 @@
         </remarks>
       </Docs>
     </Member>
+    <Member MemberName="flex_item_get_self_sizing">
+      <MemberSignature Language="C#" Value="public static Xamarin.Flex.NativeFunctions.Delegate0 flex_item_get_self_sizing (IntPtr arg1);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig pinvokeimpl (&quot;flex&quot; as &quot;flex_item_get_self_sizing&quot; winapi)class Xamarin.Flex.NativeFunctions/Delegate0 flex_item_get_self_sizing(native int arg1) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>Xamarin.Flex.NativeFunctions+Delegate0</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="arg1" Type="System.IntPtr" />
+      </Parameters>
+      <Docs>
+        <param name="arg1"></param>
+        <summary></summary>
+        <returns></returns>
+        <remarks></remarks>
+      </Docs>
+    </Member>
     <Member MemberName="flex_item_get_shrink">
       <MemberSignature Language="C#" Value="public static int flex_item_get_shrink (IntPtr arg1);" />
       <MemberSignature Language="ILAsm" Value=".method public static hidebysig pinvokeimpl (&quot;flex&quot; as &quot;flex_item_get_shrink&quot; winapi)int32 flex_item_get_shrink(native int arg1) cil managed" />
@@ -1519,6 +1539,27 @@
         </summary>
         <remarks>
         </remarks>
+      </Docs>
+    </Member>
+    <Member MemberName="flex_item_set_self_sizing">
+      <MemberSignature Language="C#" Value="public static void flex_item_set_self_sizing (IntPtr arg1, Xamarin.Flex.NativeFunctions.Delegate0 arg2);" />
+      <MemberSignature Language="ILAsm" Value=".method public static hidebysig pinvokeimpl (&quot;flex&quot; as &quot;flex_item_set_self_sizing&quot; winapi)void flex_item_set_self_sizing(native int arg1, class Xamarin.Flex.NativeFunctions/Delegate0 arg2) cil managed" />
+      <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
+      <ReturnValue>
+        <ReturnType>System.Void</ReturnType>
+      </ReturnValue>
+      <Parameters>
+        <Parameter Name="arg1" Type="System.IntPtr" />
+        <Parameter Name="arg2" Type="Xamarin.Flex.NativeFunctions+Delegate0" />
+      </Parameters>
+      <Docs>
+        <param name="arg1"></param>
+        <param name="arg2"></param>
+        <summary></summary>
+        <remarks></remarks>
       </Docs>
     </Member>
     <Member MemberName="flex_item_set_shrink">
