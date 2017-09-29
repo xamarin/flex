@@ -31,4 +31,28 @@ public partial class Test
             assert(item.FrameHeight == 20);
         }
     }
+
+    void test_self_sizing2()
+    {
+        Item root = new Item(100, 100);
+
+        new Action(() => {
+            Item item = new Item(10, 10);
+            item.SelfSizing = delegate(Item _, ref float width,
+                    ref float height) {
+                width = 12;
+                height = 34;
+            };
+            root.Add(item); 
+        })();
+
+        run_gc();
+
+        root.Layout();
+
+        assert(root[0].FrameWidth == 12);
+        assert(root[0].FrameHeight == 34);
+
+        root.Dispose();
+    }
 }
