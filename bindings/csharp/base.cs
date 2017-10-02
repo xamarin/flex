@@ -43,7 +43,7 @@ namespace Xamarin.Flex
         WrapReverse = 2,
     }
 
-    public class NativeFunctions
+    internal class NativeFunctions
     {
         private const string dll_name =
         #if LIBFLEX_STATIC

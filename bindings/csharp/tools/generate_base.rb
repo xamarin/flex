@@ -89,7 +89,7 @@ EOS
       out ''
     end
 
-    out 'public class NativeFunctions'
+    out 'internal class NativeFunctions'
     out '{'
     @indent += 1
     out 'private const string dll_name ='
