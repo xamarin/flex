@@ -17,8 +17,6 @@
       <Type Name="Item" Kind="Class" />
       <Type Name="Item+ItemEnumerator" Kind="Class" />
       <Type Name="Item+SelfSizingDelegate" Kind="Delegate" />
-      <Type Name="NativeFunctions" Kind="Class" />
-      <Type Name="NativeFunctions+Delegate0" Kind="Delegate" />
       <Type Name="Position" Kind="Enumeration" />
       <Type Name="Wrap" Kind="Enumeration" />
     </Namespace>

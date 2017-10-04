@@ -756,7 +756,8 @@
       </ReturnValue>
       <Docs>
         <summary>A write-only property that can be set to a delegate that will be called during layout and that can customize the width and height of the given item.</summary>
-        <value></value>
+        <value>
+        </value>
         <remarks>By default an item does not have a self-sizing delegate. You can set this property to null in order to remove a previously-added delegate.</remarks>
       </Docs>
     </Member>

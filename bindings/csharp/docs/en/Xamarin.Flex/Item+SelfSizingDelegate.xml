@@ -1,0 +1,26 @@
+<Type Name="Item+SelfSizingDelegate" FullName="Xamarin.Flex.Item+SelfSizingDelegate">
+  <TypeSignature Language="C#" Value="public delegate void Item.SelfSizingDelegate(Item item, ref float width, ref float height);" />
+  <TypeSignature Language="ILAsm" Value=".class nested public auto ansi sealed Item/SelfSizingDelegate extends System.MulticastDelegate" />
+  <AssemblyInfo>
+    <AssemblyName>lib</AssemblyName>
+    <AssemblyVersion>0.0.0.0</AssemblyVersion>
+  </AssemblyInfo>
+  <Base>
+    <BaseTypeName>System.Delegate</BaseTypeName>
+  </Base>
+  <Parameters>
+    <Parameter Name="item" Type="Xamarin.Flex.Item" />
+    <Parameter Name="width" Type="System.Single&amp;" RefType="ref" />
+    <Parameter Name="height" Type="System.Single&amp;" RefType="ref" />
+  </Parameters>
+  <ReturnValue>
+    <ReturnType>System.Void</ReturnType>
+  </ReturnValue>
+  <Docs>
+    <param name="item">To be added.</param>
+    <param name="width">To be added.</param>
+    <param name="height">To be added.</param>
+    <summary>To be added.</summary>
+    <remarks>To be added.</remarks>
+  </Docs>
+</Type>
