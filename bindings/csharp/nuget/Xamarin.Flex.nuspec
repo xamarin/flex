@@ -14,6 +14,11 @@
     <tags>flex flexbox css xamarin microsoft</tags>
   </metadata>
   <files>
+    <!-- Desktop / netstandard (macos only for now) -->
+    <file src="bindings/csharp/nuget/Desktop/Xamarin.Flex.targets" target="build/netstandard"/>
+    <file src="bindings/csharp/build/dynamic/Xamarin.Flex.dll" target="lib/netstandard"/>
+    <file src="build/macos/libflex.dylib" target="native/macos/libflex.dylib"/>
+
     <!-- Android -->  
     <file src="bindings/csharp/nuget/Android/Xamarin.Flex.targets" target="build/MonoAndroid"/>
     <file src="bindings/csharp/build/dynamic/Xamarin.Flex.dll" target="lib/MonoAndroid/Xamarin.Flex.dll"/>

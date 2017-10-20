@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <PreferredOSXNativeFlexPath>$(MSBuildThisFileDirectory)..\..\native\macos\libflex.dylib</PreferredOSXNativeFlexPath>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(PreferredOSXNativeFlexPath)" Condition=" Exists('$(PreferredOSXNativeFlexPath)') ">
+            <Link>$([System.IO.Path]::GetFilename('$(PreferredOSXNativeFlexPath)'))</Link>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+</Project>
+
