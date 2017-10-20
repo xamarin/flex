@@ -40,6 +40,10 @@ $ make
 $ open en.html
 ```
 
+The documentation is also available online here:
+
+https://developer.xamarin.com/api/namespace/Xamarin.Flex
+
 ## Samples
 
 You will find under the `samples` directory a few projects using the bindings. These projects require the Xamarin.Flex NuGet package.
