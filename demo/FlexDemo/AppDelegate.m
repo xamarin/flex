@@ -169,7 +169,7 @@
 
 - (void)_propertyChanged
 {
-    [alignContent setEnabled:[wrap selectedTag] != FLEX_WRAP_NOWRAP];
+    [alignContent setEnabled:[wrap selectedTag] != FLEX_WRAP_NO_WRAP];
 
     bool position_enabled = [position selectedTag] == FLEX_POSITION_ABSOLUTE;
     [positionLeft setEnabled:position_enabled];
