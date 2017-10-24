@@ -172,6 +172,7 @@ test_position7(void)
     struct flex_item *root = flex_item_with_size(120, 120);
     flex_item_set_wrap(root, FLEX_WRAP_WRAP);
     flex_item_set_justify_content(root, FLEX_ALIGN_SPACE_AROUND);
+    flex_item_set_align_content(root, FLEX_ALIGN_START);
 
     struct flex_item *child1 = flex_item_with_size(50, 50);
     flex_item_add(root, child1);

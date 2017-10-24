@@ -27,7 +27,7 @@ test_default_values1(void)
     TEST_EQUAL(flex_item_get_margin_bottom(item), 0);
 
     TEST(flex_item_get_justify_content(item) == FLEX_ALIGN_START);
-    TEST(flex_item_get_align_content(item) == FLEX_ALIGN_START);
+    TEST(flex_item_get_align_content(item) == FLEX_ALIGN_STRETCH);
     TEST(flex_item_get_align_items(item) == FLEX_ALIGN_START);
     TEST(flex_item_get_align_self(item) == FLEX_ALIGN_AUTO);
 
