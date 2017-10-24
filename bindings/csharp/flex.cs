@@ -126,6 +126,19 @@ namespace Xamarin.Flex
             }
         }
 
+        public void Flex(int grow=-1, int shrink=-1, float basis=0)
+        {
+            if (grow != -1) {
+                this.Grow = grow;
+            }
+            if (shrink != -1) {
+                this.Shrink = shrink;
+            }
+            if (basis >= 0) {
+                this.Basis = basis;
+            }
+        }
+
         public delegate void SelfSizingDelegate(Item item, ref float width,
                 ref float height);
 
