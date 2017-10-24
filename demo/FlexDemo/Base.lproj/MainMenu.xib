@@ -1039,6 +1039,7 @@
                                     <menuItem title="Space Around" tag="6" id="IKA-h5-0XD"/>
                                     <menuItem title="Space Between" tag="5" id="p1Q-2K-LWq"/>
                                     <menuItem title="Space Evenly" tag="7" id="SFm-Je-IwL"/>
+                                    <menuItem title="Stretch" tag="1" id="d2m-bD-kED"/>
                                 </items>
                             </menu>
                         </popUpButtonCell>
