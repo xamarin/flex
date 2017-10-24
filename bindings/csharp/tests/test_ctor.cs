@@ -31,7 +31,7 @@ public partial class Test
 
         assert(item.Position == Position.Relative);
         assert(item.Direction == Direction.Column);
-        assert(item.Wrap == Wrap.Nowrap);
+        assert(item.Wrap == Wrap.NoWrap);
 
         assert(item.Grow == 0);
         assert(item.Shrink == 1);

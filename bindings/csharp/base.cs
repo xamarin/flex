@@ -38,7 +38,7 @@ namespace Xamarin.Flex
 
     public enum Wrap : int
     {
-        Nowrap = 0,
+        NoWrap = 0,
         Wrap = 1,
         WrapReverse = 2,
     }

@@ -6,7 +6,7 @@ void
 test_wrap1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 300);
-    flex_item_set_wrap(root, FLEX_WRAP_NOWRAP);
+    flex_item_set_wrap(root, FLEX_WRAP_NO_WRAP);
 
     struct flex_item *child1 = flex_item_with_size(100, 150);
     flex_item_add(root, child1);

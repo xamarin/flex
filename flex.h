@@ -60,7 +60,7 @@ typedef enum {
 } flex_direction;
 
 typedef enum {
-    FLEX_WRAP_NOWRAP = 0,
+    FLEX_WRAP_NO_WRAP = 0,
     FLEX_WRAP_WRAP,
     FLEX_WRAP_WRAP_REVERSE
 } flex_wrap;
@@ -115,7 +115,7 @@ FLEX_ATTRIBUTE(align_self, flex_align, FLEX_ALIGN_AUTO)
 
 FLEX_ATTRIBUTE(position, flex_position, FLEX_POSITION_RELATIVE)
 FLEX_ATTRIBUTE(direction, flex_direction, FLEX_DIRECTION_COLUMN)
-FLEX_ATTRIBUTE(wrap, flex_wrap, FLEX_WRAP_NOWRAP)
+FLEX_ATTRIBUTE(wrap, flex_wrap, FLEX_WRAP_NO_WRAP)
 
 FLEX_ATTRIBUTE(grow, unsigned int, 0)
 FLEX_ATTRIBUTE(shrink, unsigned int, 1)

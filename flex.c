@@ -300,7 +300,7 @@ layout_init(struct flex_item *item, float width, float height,
     layout->flex_shrinks = 0;
 
     layout->reverse2 = false;
-    layout->wrap = item->wrap != FLEX_WRAP_NOWRAP;
+    layout->wrap = item->wrap != FLEX_WRAP_NO_WRAP;
     if (layout->wrap) {
         if (item->wrap == FLEX_WRAP_WRAP_REVERSE) {
             layout->reverse2 = true;
