@@ -292,3 +292,101 @@ test_self_sizing5(void)
 
     flex_item_free(root);
 }
+
+// Items with a self_sizing callback returning a positive value for the
+// cross-axis size will be ignored if said item is configured to stretch.
+
+static int self_sizing_align_measure_size = 0;
+static float self_sizing_align_measure_value = 0;
+
+static void
+self_sizing_align_measure(struct flex_item *item, float size[2])
+{
+    size[self_sizing_align_measure_size] = self_sizing_align_measure_value;
+}
+
+void
+test_self_sizing6(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_height(child, 100);
+    flex_item_set_self_sizing(child, self_sizing_align_measure);
+    flex_item_set_align_self(child, FLEX_ALIGN_STRETCH);
+    flex_item_add(root, child);
+
+    self_sizing_align_measure_size = 0;
+    self_sizing_align_measure_value = 10;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    self_sizing_align_measure_size = 0;
+    self_sizing_align_measure_value = 0;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    self_sizing_align_measure_size = 0;
+    self_sizing_align_measure_value = NAN;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    flex_item_set_width(child, 10);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 10, 100);
+
+    flex_item_free(root);
+}
+
+void
+test_self_sizing7(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child = flex_item_new();
+    flex_item_set_width(child, 100);
+    flex_item_set_self_sizing(child, self_sizing_align_measure);
+    flex_item_set_align_self(child, FLEX_ALIGN_STRETCH);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    self_sizing_align_measure_size = 1;
+    self_sizing_align_measure_value = 10;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    self_sizing_align_measure_size = 1;
+    self_sizing_align_measure_value = 0;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    self_sizing_align_measure_size = 1;
+    self_sizing_align_measure_value = NAN;
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 100);
+
+    flex_item_set_height(child, 10);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child, 0, 0, 100, 10);
+
+    flex_item_free(root);
+}

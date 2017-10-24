@@ -407,6 +407,16 @@ layout_align(flex_align align, float flex_dim, unsigned int children_count,
     return true;
 }
 
+static flex_align
+child_align(struct flex_item *child, struct flex_item *parent)
+{
+    flex_align align = child->align_self;
+    if (align == FLEX_ALIGN_AUTO) {
+        align = parent->align_items;
+    }
+    return align;
+}
+
 static void
 layout_items(struct flex_item *item, unsigned int child_begin,
         unsigned int child_end, int children_count, struct flex_layout *layout)
@@ -463,13 +473,9 @@ layout_items(struct flex_item *item, unsigned int child_begin,
 
         // Set the cross axis position (and stretch the cross axis size if
         // needed).
-        flex_align align = child->align_self;
-        if (align == FLEX_ALIGN_AUTO) {
-            align = item->align_items;
-        }
         float align_size = CHILD_SIZE2(child);
         float align_pos = layout->pos2 + 0;
-        switch (align) {
+        switch (child_align(child, item)) {
             case FLEX_ALIGN_END:
                 align_pos += layout->line_dim - align_size
                     - CHILD_MARGIN(child, right, bottom);
@@ -620,17 +626,22 @@ layout_item(struct flex_item *item, float width, float height)
         }
 
         // Call the self_sizing callback if provided. Only non-NAN values
-        // are taken into account.
+        // are taken into account. If the item's cross-axis align property
+        // is set to stretch, ignore the value returned by the callback.
         if (child->self_sizing != NULL) {
             float size[2] = { child->frame[2], child->frame[3] };
 
             child->self_sizing(child, size);
 
-            if (!isnan(size[0])) {
-                child->frame[2] = size[0];
-            }
-            if (!isnan(size[1])) {
-                child->frame[3] = size[1];
+            for (int i = 0; i < 2; i++) {
+                int size_off = i + 2;
+                if (size_off == layout->frame_size2_i
+                        && child_align(child, item) == FLEX_ALIGN_STRETCH) {
+                    continue;
+                }
+                if (!isnan(size[i])) {
+                    child->frame[size_off] = size[i];
+                }
             }
         }
 
