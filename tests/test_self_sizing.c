@@ -163,6 +163,34 @@ test_self_sizing_dummy6(void)
     flex_item_free(root);
 }
 
+static bool simulate_self_sizing_nan_called = false;
+
+static void
+simulate_self_sizing_nan(struct flex_item *item, float size[2])
+{
+    simulate_self_sizing_nan_called = true;
+
+    size[0] = NAN;
+    size[1] = NAN;
+}
+
+void
+test_self_sizing_nan(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child = flex_item_with_size(10, 20);
+    flex_item_set_self_sizing(child, simulate_self_sizing_nan);
+    flex_item_add(root, child);
+
+    flex_layout(root);
+
+    TEST_EQUAL(simulate_self_sizing_nan_called, true);
+    TEST_FRAME_EQUAL(child, 0, 0, 10, 20);
+
+    flex_item_free(root);
+}
+
 static void
 simulate_wrapping_text(struct flex_item *item, float size[2])
 {

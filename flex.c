@@ -619,8 +619,19 @@ layout_item(struct flex_item *item, float width, float height)
                 - CHILD_MARGIN(child, right, bottom);
         }
 
+        // Call the self_sizing callback if provided. Only non-NAN values
+        // are taken into account.
         if (child->self_sizing != NULL) {
-            child->self_sizing(child, &child->frame[2]);
+            float size[2] = { child->frame[2], child->frame[3] };
+
+            child->self_sizing(child, size);
+
+            if (!isnan(size[0])) {
+                child->frame[2] = size[0];
+            }
+            if (!isnan(size[1])) {
+                child->frame[3] = size[1];
+            }
         }
 
         float child_size = CHILD_SIZE(child);
