@@ -88,9 +88,9 @@
       </ReturnValue>
       <Docs>
         <summary>This property defines how the layout engine will distribute space between and around child items that have been laid out on multiple lines. This property is ignored if the root item does not have its <see cref="P:Xamarin.Flex.Item.Wrap" /> property set to Wrap or WrapReverse.</summary>
-        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Stretch and Auto.</value>
-        <remarks>The default value for this property is Start.</remarks>
-        <exception cref="ArgumentException">Thrown if Stretch or Auto are assigned to this property.</exception>
+        <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Auto.</value>
+        <remarks>The default value for this property is Stretch.</remarks>
+        <exception cref="ArgumentException">Thrown if Auto is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="AlignItems">
@@ -227,16 +227,26 @@
         <remarks>To be added.</remarks>
       </Docs>
     </Member>
-    <Member MemberName="Finalize">
-      <MemberSignature Language="C#" Value="~Item ();" />
-      <MemberSignature Language="ILAsm" Value=".method familyhidebysig virtual instance void Finalize() cil managed" />
+    <Member MemberName="Flex">
+      <MemberSignature Language="C#" Value="public void Flex (int grow = -1, int shrink = -1, float basis = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Flex(int32 grow, int32 shrink, float32 basis) cil managed" />
       <MemberType>Method</MemberType>
+      <AssemblyInfo>
+        <AssemblyVersion>0.0.0.0</AssemblyVersion>
+      </AssemblyInfo>
       <ReturnValue>
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
-      <Parameters />
+      <Parameters>
+        <Parameter Name="grow" Type="System.Int32" />
+        <Parameter Name="shrink" Type="System.Int32" />
+        <Parameter Name="basis" Type="System.Single" />
+      </Parameters>
       <Docs>
-        <summary>For internal use only.</summary>
+        <param name="grow">A value for the Grow property.</param>
+        <param name="shrink">A value for the Shrink property.</param>
+        <param name="basis">A value for the Basis property.</param>
+        <summary>A convenience method to set the Grow, Shrink and Basis properties.</summary>
         <remarks>
         </remarks>
       </Docs>

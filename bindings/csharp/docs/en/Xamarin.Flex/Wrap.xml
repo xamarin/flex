@@ -14,9 +14,9 @@
     </remarks>
   </Docs>
   <Members>
-    <Member MemberName="Nowrap">
-      <MemberSignature Language="C#" Value="Nowrap" />
-      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Wrap Nowrap = int32(0)" />
+    <Member MemberName="NoWrap">
+      <MemberSignature Language="C#" Value="NoWrap" />
+      <MemberSignature Language="ILAsm" Value=".field public static literal valuetype Xamarin.Flex.Wrap NoWrap = int32(0)" />
       <MemberType>Field</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
