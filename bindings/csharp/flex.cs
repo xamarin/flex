@@ -290,9 +290,13 @@ namespace Xamarin.Flex
         partial void ValidatePropertyValue(Properties property, int value)
         {
             bool invalid_align = false;
-            if (property == Properties.AlignContent
-                    || property == Properties.JustifyContent) {
+            if (property == Properties.JustifyContent) {
                 if (value == (int)Align.Auto || value == (int)Align.Stretch) {
+                    invalid_align = true;
+                }
+            }
+            else if (property == Properties.AlignContent) {
+                if (value == (int)Align.Auto) {
                     invalid_align = true;
                 }
             }

@@ -132,6 +132,7 @@ public partial class Test
     {
         Item item = new Item();
 
+        assert_no_raised(() => { item.AlignContent = Align.Stretch; });
         assert_no_raised(() => { item.AlignContent = Align.Center; });
         assert_no_raised(() => { item.AlignContent = Align.Start; });
         assert_no_raised(() => { item.AlignContent = Align.End; });
@@ -140,8 +141,6 @@ public partial class Test
         assert_no_raised(() => { item.AlignContent = Align.SpaceEvenly; });
        
         assert_raised(() => { item.AlignContent = Align.Auto; },
-                typeof(ArgumentException));
-        assert_raised(() => { item.AlignContent = Align.Stretch; },
                 typeof(ArgumentException));
 
         item.Dispose();

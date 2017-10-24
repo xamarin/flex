@@ -360,7 +360,7 @@ static void layout_item(struct flex_item *item, float width, float height);
 
 static bool
 layout_align(flex_align align, float flex_dim, unsigned int children_count,
-        float *pos_p, float *spacing_p)
+        float *pos_p, float *spacing_p, bool stretch_allowed)
 {
     assert(flex_dim > 0);
 
@@ -398,6 +398,13 @@ layout_align(flex_align align, float flex_dim, unsigned int children_count,
             }
             break;
 
+        case FLEX_ALIGN_STRETCH:
+            if (stretch_allowed) {
+                spacing = flex_dim / children_count;
+                break;
+            }
+            // fall through
+
         default:
             return false;
     }
@@ -431,7 +438,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
     float spacing = 0;
     if (layout->flex_grows == 0 && layout->flex_dim > 0) {
         assert(layout_align(item->justify_content, layout->flex_dim,
-                    children_count, &pos, &spacing)
+                    children_count, &pos, &spacing, false)
                 && "incorrect justify_content");
         if (layout->reverse) {
             pos = layout->size_dim - pos;
@@ -687,7 +694,7 @@ layout_item(struct flex_item *item, float width, float height)
         float flex_dim = layout->align_dim - layout->lines_sizes;
         if (flex_dim > 0) {
             assert(layout_align(item->align_content, flex_dim,
-                        layout->lines_count, &pos, &spacing)
+                        layout->lines_count, &pos, &spacing, true)
                     && "incorrect align_content");
         }
 
