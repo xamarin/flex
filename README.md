@@ -47,6 +47,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 | align_content space_around | :ok: |
 | align_content space_between | :ok: |
 | align_content space_evenly | :ok: |
+| align_content stretch | :ok: |
 | align_items flex_start | :ok: |
 | align_items flex_end | :ok: |
 | align_items center | :ok: |
