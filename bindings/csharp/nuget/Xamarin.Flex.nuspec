@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
   <metadata>
     <id>Xamarin.Flex</id>
-    <version>0.2</version>
     <title>Xamarin.Flex</title>
+    <version>0.0</version>
     <authors>Microsoft</authors>
     <owners>laurent.sansonetti@microsoft.com</owners>
     <licenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</licenseUrl>
