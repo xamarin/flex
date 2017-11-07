@@ -11,34 +11,38 @@
 		<PackageLicenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</PackageLicenseUrl>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
 	</PropertyGroup>
-	<ItemGroup>
-		<PackageFile Include="..\nuget\iOS\Xamarin.Flex.dll.config">
-			<Link>iOS\Xamarin.Flex.dll.config</Link>
-			<PackagePath>build/XamariniOS/Xamarin.Flex.dll.config</PackagePath>
-		</PackageFile>
-		<PackageFile Include="..\nuget\iOS\Xamarin.Flex.targets">
-			<Link>iOS\Xamarin.Flex.targets</Link>
-			<PackagePath>build/XamariniOS/Xamarin.Flex.targets</PackagePath>
-		</PackageFile>
-		<PackageFile Include="..\..\..\build\ios\libflex.a">
-			<Link>iOS\libflex.a</Link>
-			<PackagePath>native/ios/libflex.a</PackagePath>
-		</PackageFile>
-	</ItemGroup>
-	<ItemGroup>
-		<PackageFile Include="..\nuget\Android\Xamarin.Flex.targets">
-			<Link>Android\Xamarin.Flex.targets</Link>
-			<PackagePath>build/MonoAndroid/Xamarin.Flex.targets</PackagePath>
-		</PackageFile>
-		<PackageFile Include="..\..\..\build\android\armeabi\libflex.so">
-			<Link>Android\armeabi\libflex.so</Link>
-			<PackagePath>native/android/armeabi/libflex.so</PackagePath>
-		</PackageFile>
-		<PackageFile Include="..\..\..\build\android\x86\libflex.so">
-			<Link>Android\x86\libflex.so</Link>
-			<PackagePath>native/android/x86/libflex.so</PackagePath>
-		</PackageFile>
-	</ItemGroup>
+	<Import Project="Xamarin.Flex.BuildNative.targets" />
+	
+	<Target Name="AddNativeFiles" BeforeTargets="BuildNativeLibrary">
+		<ItemGroup>
+			<PackageFile Include="..\nuget\iOS\Xamarin.Flex.dll.config">
+				<Link>iOS\Xamarin.Flex.dll.config</Link>
+				<PackagePath>build/XamariniOS/Xamarin.Flex.dll.config</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\nuget\iOS\Xamarin.Flex.targets">
+				<Link>iOS\Xamarin.Flex.targets</Link>
+				<PackagePath>build/XamariniOS/Xamarin.Flex.targets</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\ios\libflex.a">
+				<Link>iOS\libflex.a</Link>
+				<PackagePath>native/ios/libflex.a</PackagePath>
+			</PackageFile>
+		</ItemGroup>
+		<ItemGroup>
+			<PackageFile Include="..\nuget\Android\Xamarin.Flex.targets">
+				<Link>Android\Xamarin.Flex.targets</Link>
+				<PackagePath>build/MonoAndroid/Xamarin.Flex.targets</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\android\armeabi\libflex.so">
+				<Link>Android\armeabi\libflex.so</Link>
+				<PackagePath>native/android/armeabi/libflex.so</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\android\x86\libflex.so">
+				<Link>Android\x86\libflex.so</Link>
+				<PackagePath>native/android/x86/libflex.so</PackagePath>
+			</PackageFile>
+		</ItemGroup>
+	</Target>
 	<Target Name="_SetPackageVersion" BeforeTargets="GetPackageVersion" DependsOnTargets="GitVersion">
 		<Message Text="SetPackage based on SemVersion" />
 		<PropertyGroup>
@@ -46,7 +50,7 @@
 		</PropertyGroup>
 	</Target>
 	<Target Name="CopyPackage" AfterTargets="Pack">
-		<Message Text="Copy $(PackageId).$(PackageVersion).nupkg $(IsPackable)" />
-		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\" />
+		<Message Text="Copy $(PackageId).$(PackageVersion).nupkg" />
+		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\nuget\" />
 	</Target>
 </Project>

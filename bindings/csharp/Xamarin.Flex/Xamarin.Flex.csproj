@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
@@ -19,5 +20,4 @@
 		</Compile>
 	</ItemGroup>
 	<Import Project="Xamarin.Flex.Pack.targets" Condition="'$(PackOnBuild)' == 'true'" />
-	<Import Project="Xamarin.Flex.BuildNative.targets" Condition="'$(PackOnBuild)' == 'true'" />
 </Project>
