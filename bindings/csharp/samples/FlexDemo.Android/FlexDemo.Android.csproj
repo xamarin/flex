@@ -52,6 +52,7 @@
       <HintPath>packages\Xamarin.Android.Support.v7.AppCompat.20.0.0.2\lib\MonoAndroid10\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Flex">
+      <HintPath>..\..\packages\Xamarin.Flex.0.1.1\lib\netstandard2.0\Xamarin.Flex.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -81,4 +82,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\Xamarin.Flex.0.1.1\build\MonoAndroid\Xamarin.Flex.targets" Condition="Exists('..\..\packages\Xamarin.Flex.0.1.1\build\MonoAndroid\Xamarin.Flex.targets')" />
+
 </Project>
+
