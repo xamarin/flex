@@ -6,10 +6,10 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="NuGet.Build.Packaging" Version="0.2.1" />
-		<PackageReference Include="NETStandard.Library" Version="2.0.0" />
 		<PackageReference Include="GitInfo" Version="2.0.6">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
+		<PackageReference Include="NETStandard.Library" Version="2.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="..\base.cs">

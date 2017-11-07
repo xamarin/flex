@@ -11,9 +11,12 @@
 		<PackageLicenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</PackageLicenseUrl>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
 	</PropertyGroup>
-	<Import Project="Xamarin.Flex.BuildNative.targets" />
-	
-	<Target Name="AddNativeFiles" BeforeTargets="BuildNativeLibrary">
+
+	<Target Name="BuildNativeLibrary">
+		<Exec WorkingDirectory="$(ProjectDir)../../../" Command="make" />
+	</Target>
+		
+	<Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile">
 		<ItemGroup>
 			<PackageFile Include="..\nuget\iOS\Xamarin.Flex.dll.config">
 				<Link>iOS\Xamarin.Flex.dll.config</Link>
@@ -53,4 +56,5 @@
 		<Message Text="Copy $(PackageId).$(PackageVersion).nupkg" />
 		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\nuget\" />
 	</Target>
+
 </Project>
