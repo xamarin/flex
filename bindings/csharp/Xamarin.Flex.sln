@@ -2,9 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuget", "nuget", "{0B1392D0-7701-4DBB-B4B3-F3E55B785476}"
-	ProjectSection(SolutionItems) = preProject
-		nuget\Xamarin.Flex.nuspec = nuget\Xamarin.Flex.nuspec
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "iOS", "iOS", "{16D5DCC2-A0E0-4FCB-8359-364EF28BCB42}"
 	ProjectSection(SolutionItems) = preProject
