@@ -52,8 +52,6 @@
       <HintPath>packages\Xamarin.Android.Support.v7.AppCompat.20.0.0.2\lib\MonoAndroid10\Xamarin.Android.Support.v7.AppCompat.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Flex">
-      <HintPath>..\..\packages\Xamarin.Flex.0.1.212\lib\netstandard2.0\Xamarin.Flex.dll</HintPath>
-      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +80,5 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
-  <Import Project="packages\Xamarin.Flex.0.2\build\MonoAndroid\Xamarin.Flex.targets" Condition="Exists('packages\Xamarin.Flex.0.2\build\MonoAndroid\Xamarin.Flex.targets')" />
   <Import Project="..\..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.0\build\netstandard2.0\NETStandard.Library.targets')" />
-  <Import Project="..\..\packages\Xamarin.Flex.0.1.212\build\MonoAndroid\Xamarin.Flex.targets" Condition="Exists('..\..\packages\Xamarin.Flex.0.1.212\build\MonoAndroid\Xamarin.Flex.targets')" />
 </Project>
