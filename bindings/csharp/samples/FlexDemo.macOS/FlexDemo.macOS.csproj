@@ -54,7 +54,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
     <Reference Include="Xamarin.Flex">
-      <HintPath>..\..\packages\Xamarin.Flex.0.1.220\lib\netstandard2.0\Xamarin.Flex.dll</HintPath>
+      <HintPath>..\..\packages\Xamarin.Flex.0.1.1\lib\netstandard2.0\Xamarin.Flex.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -93,5 +93,4 @@
   <Import Project="..\FlexDemo.Shared\FlexDemo.Shared.projitems" Label="Shared" Condition="Exists('..\FlexDemo.Shared\FlexDemo.Shared.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
   <Import Project="..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
-  <Import Project="..\..\packages\Xamarin.Flex.0.1.220\build\netstandard2.0\Xamarin.Flex.targets" Condition="Exists('..\..\packages\Xamarin.Flex.0.1.220\build\netstandard2.0\Xamarin.Flex.targets')" />
 </Project>
