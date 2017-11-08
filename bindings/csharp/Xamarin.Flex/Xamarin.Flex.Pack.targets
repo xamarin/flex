@@ -12,7 +12,7 @@
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
 	</PropertyGroup>
 	<PropertyGroup>
-		<MSBuildNDKPathVar>/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
+		<MSBuildNDKPathVar>~/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
 	</PropertyGroup>
 
 	<Target Name="BuildNativeLibrary">
