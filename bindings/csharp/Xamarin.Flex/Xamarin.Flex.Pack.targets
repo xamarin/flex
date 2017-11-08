@@ -43,9 +43,21 @@
 				<Link>Android\armeabi\libflex.so</Link>
 				<PackagePath>native/android/armeabi/libflex.so</PackagePath>
 			</PackageFile>
+			<PackageFile Include="..\..\..\build\android\arm64-v8a\libflex.so">
+				<Link>Android\arm64-v8a\libflex.so</Link>
+				<PackagePath>native/android/arm64-v8a/libflex.so</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\android\armeabi-v7a\libflex.so">
+				<Link>Android\armeabi-v7a\libflex.so</Link>
+				<PackagePath>native/android/armeabi-v7a/libflex.so</PackagePath>
+			</PackageFile>
 			<PackageFile Include="..\..\..\build\android\x86\libflex.so">
 				<Link>Android\x86\libflex.so</Link>
 				<PackagePath>native/android/x86/libflex.so</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\android\x86_64\libflex.so">
+				<Link>Android\x86_64\libflex.so</Link>
+				<PackagePath>native/android/x86_64/libflex.so</PackagePath>
 			</PackageFile>
 		</ItemGroup>
 		<ItemGroup>
@@ -69,5 +81,4 @@
 		<Message Text="Copy $(PackageId).$(PackageVersion).nupkg" />
 		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\nuget\" />
 	</Target>
-
 </Project>
