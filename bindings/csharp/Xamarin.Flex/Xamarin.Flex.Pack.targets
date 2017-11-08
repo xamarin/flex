@@ -48,6 +48,16 @@
 				<PackagePath>native/android/x86/libflex.so</PackagePath>
 			</PackageFile>
 		</ItemGroup>
+		<ItemGroup>
+			<PackageFile Include="..\nuget\Desktop\Xamarin.Flex.targets">
+				<Link>Desktop\Xamarin.Flex.targets</Link>
+				<PackagePath>build/netstandard2.0/Xamarin.Flex.targets</PackagePath>
+			</PackageFile>
+			<PackageFile Include="..\..\..\build\macos\libflex.dylib">
+				<Link>macOS\libflex.dylib</Link>
+				<PackagePath>runtimes/osx/native/libflex.dylib</PackagePath>
+			</PackageFile>
+		</ItemGroup>
 	</Target>
 	<Target Name="_SetPackageVersion" BeforeTargets="GetPackageVersion" DependsOnTargets="GitVersion">
 		<Message Text="SetPackage based on SemVersion" />
