@@ -11,9 +11,12 @@
 		<PackageLicenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</PackageLicenseUrl>
 		<GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
 	</PropertyGroup>
+	<PropertyGroup>
+		<MSBuildNDKPathVar>/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
+	</PropertyGroup>
 
 	<Target Name="BuildNativeLibrary">
-		<Exec WorkingDirectory="$(ProjectDir)../../../" Command="make" />
+		<Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make" />
 	</Target>
 		
 	<Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile">
