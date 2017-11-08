@@ -8,7 +8,7 @@ LDFLAGS =
 
 MACOS_MIN_TARGET = '10.10'
 IOS_MIN_TARGET = '7.0'
-ANDROID_API = '15'
+ANDROID_API = '21'
 
 XCODE_DIR = /Applications/Xcode.app
 XCODE_BIN_DIR = $(XCODE_DIR)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
