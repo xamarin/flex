@@ -52,16 +52,34 @@ ANDROID_X86_DYLIB = $(ANDROID_X86_DIR)/lib$(BASE_NAME).so
 ANDROID_X86_SLIB = $(ANDROID_X86_DIR)/lib$(BASE_NAME).a
 ANDROID_X86_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86 -mno-sse -mno-mmx -target i686-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/x86-4.9/prebuilt/darwin-x86_64 -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86/usr/include
 
+ANDROID_X86_64_DIR = $(ANDROID_BUILD_DIR)/x86_64
+ANDROID_X86_64_FLEX_O = $(ANDROID_X86_64_DIR)/flex.o
+ANDROID_X86_64_DYLIB = $(ANDROID_X86_64_DIR)/lib$(BASE_NAME).so
+ANDROID_X86_64_SLIB = $(ANDROID_X86_64_DIR)/lib$(BASE_NAME).a
+ANDROID_X86_64_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86_64 -target x86_64-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/x86_64-4.9/prebuilt/darwin-x86_64 -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-x86_64/usr/include
+
 ANDROID_ARM_DIR = $(ANDROID_BUILD_DIR)/armeabi
 ANDROID_ARM_FLEX_O = $(ANDROID_ARM_DIR)/flex.o
 ANDROID_ARM_DYLIB = $(ANDROID_ARM_DIR)/lib$(BASE_NAME).so
 ANDROID_ARM_SLIB = $(ANDROID_ARM_DIR)/lib$(BASE_NAME).a
-ANDROID_ARM_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -target armv5te-none-linux-androideabi -march=armv5te -mthumb -marm -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -mtune=xscale -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include 
+ANDROID_ARM_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -target armv5te-none-linux-androideabi -march=armv5te -mthumb -marm -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -mtune=xscale -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include
+
+ANDROID_ARM7_DIR = $(ANDROID_BUILD_DIR)/armeabi-v7a
+ANDROID_ARM7_FLEX_O = $(ANDROID_ARM7_DIR)/flex.o
+ANDROID_ARM7_DYLIB = $(ANDROID_ARM7_DIR)/lib$(BASE_NAME).so
+ANDROID_ARM7_SLIB = $(ANDROID_ARM7_DIR)/lib$(BASE_NAME).a
+ANDROID_ARM7_CFLAGS = $(ANDROID_CFLAGS) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm -target armv7-none-linux-androideabi14 -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16 -mthumb -gcc-toolchain $(ANDROID_NDK)/toolchains/arm-linux-androideabi-4.9/prebuilt/darwin-x86_64 -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm/usr/include
+
+ANDROID_ARM64_DIR = $(ANDROID_BUILD_DIR)/arm64-v8a
+ANDROID_ARM64_FLEX_O = $(ANDROID_ARM64_DIR)/flex.o
+ANDROID_ARM64_DYLIB = $(ANDROID_ARM64_DIR)/lib$(BASE_NAME).so
+ANDROID_ARM64_SLIB = $(ANDROID_ARM64_DIR)/lib$(BASE_NAME).a
+ANDROID_ARM64_CFLAGS = $(subst -msoft-float,,$(ANDROID_CFLAGS)) --sysroot=$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm64 -target aarch64-none-linux-android -gcc-toolchain $(ANDROID_NDK)/toolchains/aarch64-linux-android-4.9/prebuilt/darwin-x86_64 -I$(ANDROID_NDK)/platforms/android-$(ANDROID_API)/arch-arm64/usr/include
 
 all: macos ios android
 macos:  $(MACOS_DYLIB) $(MACOS_SLIB)
 ios: $(IOS_DYLIB) $(IOS_SLIB)
-android: $(ANDROID_X86_DYLIB) $(ANDROID_X86_SLIB) $(ANDROID_ARM_DYLIB) $(ANDROID_ARM_SLIB)
+android: $(ANDROID_X86_DYLIB) $(ANDROID_X86_SLIB) $(ANDROID_X86_64_DYLIB) $(ANDROID_X86_64_SLIB) $(ANDROID_ARM_DYLIB) $(ANDROID_ARM_SLIB) $(ANDROID_ARM7_DYLIB) $(ANDROID_ARM7_SLIB) $(ANDROID_ARM64_DYLIB) $(ANDROID_ARM64_SLIB) 
 
 $(MACOS_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(MACOS_FLEX_O)`
@@ -109,9 +127,21 @@ $(ANDROID_X86_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_X86_FLEX_O)`
 	$(ANDROID_CC) $(CFLAGS) $(ANDROID_X86_CFLAGS) -c $(FLEX_SRC) -o $(ANDROID_X86_FLEX_O)
 
+$(ANDROID_X86_64_FLEX_O): $(FLEX_FILES)
+	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_X86_64_FLEX_O)`
+	$(ANDROID_CC) $(CFLAGS) $(ANDROID_X86_64_CFLAGS) -c $(FLEX_SRC) -o $(ANDROID_X86_64_FLEX_O)
+
 $(ANDROID_ARM_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_ARM_FLEX_O)`
 	$(ANDROID_CC) $(CFLAGS) $(ANDROID_ARM_CFLAGS) -c $(FLEX_SRC) -o $(ANDROID_ARM_FLEX_O)
+
+$(ANDROID_ARM7_FLEX_O): $(FLEX_FILES)
+	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_ARM7_FLEX_O)`
+	$(ANDROID_CC) $(CFLAGS) $(ANDROID_ARM7_CFLAGS) -c $(FLEX_SRC) -o $(ANDROID_ARM7_FLEX_O)
+
+$(ANDROID_ARM64_FLEX_O): $(FLEX_FILES)
+	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_ARM64_FLEX_O)`
+	$(ANDROID_CC) $(CFLAGS) $(ANDROID_ARM64_CFLAGS) -c $(FLEX_SRC) -o $(ANDROID_ARM64_FLEX_O)
 
 $(ANDROID_X86_DYLIB): $(ANDROID_X86_FLEX_O)
 	$(ANDROID_CC) $(LDFLAGS) $(ANDROID_X86_CFLAGS) $(ANDROID_X86_FLEX_O) -shared -Wl,-soname,`/usr/bin/basename $(ANDROID_X86_DYLIB)` -o $(ANDROID_X86_DYLIB)
@@ -121,6 +151,14 @@ $(ANDROID_X86_SLIB): $(ANDROID_X86_FLEX_O)
 	$(ANDROID_BIN_DIR)/ar rcu $(ANDROID_X86_SLIB) $(ANDROID_X86_FLEX_O)
 	$(ANDROID_BIN_DIR)/ranlib $(ANDROID_X86_SLIB)
 
+$(ANDROID_X86_64_DYLIB): $(ANDROID_X86_64_FLEX_O)
+	$(ANDROID_CC) $(LDFLAGS) $(ANDROID_X86_64_CFLAGS) $(ANDROID_X86_64_FLEX_O) -shared -Wl,-soname,`/usr/bin/basename $(ANDROID_X86_64_DYLIB)` -o $(ANDROID_X86_64_DYLIB)
+
+$(ANDROID_X86_64_SLIB): $(ANDROID_X86_64_FLEX_O)
+	/bin/rm -f $(ANDROID_X86_64_SLIB)
+	$(ANDROID_BIN_DIR)/ar rcu $(ANDROID_X86_64_SLIB) $(ANDROID_X86_64_FLEX_O)
+	$(ANDROID_BIN_DIR)/ranlib $(ANDROID_X86_64_SLIB)
+
 $(ANDROID_ARM_DYLIB): $(ANDROID_ARM_FLEX_O)
 	$(ANDROID_CC) $(LDFLAGS) $(ANDROID_ARM_CFLAGS) $(ANDROID_ARM_FLEX_O) -shared -Wl,-soname,`/usr/bin/basename $(ANDROID_ARM_DYLIB)` -o $(ANDROID_ARM_DYLIB)
 
@@ -128,6 +166,22 @@ $(ANDROID_ARM_SLIB): $(ANDROID_ARM_FLEX_O)
 	/bin/rm -f $(ANDROID_ARM_SLIB)
 	$(ANDROID_BIN_DIR)/ar rcu $(ANDROID_ARM_SLIB) $(ANDROID_ARM_FLEX_O)
 	$(ANDROID_BIN_DIR)/ranlib $(ANDROID_ARM_SLIB)
+
+$(ANDROID_ARM7_DYLIB): $(ANDROID_ARM7_FLEX_O)
+	$(ANDROID_CC) $(LDFLAGS) $(ANDROID_ARM7_CFLAGS) $(ANDROID_ARM7_FLEX_O) -shared -Wl,-soname,`/usr/bin/basename $(ANDROID_ARM7_DYLIB)` -o $(ANDROID_ARM7_DYLIB)
+
+$(ANDROID_ARM7_SLIB): $(ANDROID_ARM7_FLEX_O)
+	/bin/rm -f $(ANDROID_ARM7_SLIB)
+	$(ANDROID_BIN_DIR)/ar rcu $(ANDROID_ARM7_SLIB) $(ANDROID_ARM7_FLEX_O)
+	$(ANDROID_BIN_DIR)/ranlib $(ANDROID_ARM7_SLIB)
+
+$(ANDROID_ARM64_DYLIB): $(ANDROID_ARM64_FLEX_O)
+	$(ANDROID_CC) $(LDFLAGS) $(ANDROID_ARM64_CFLAGS) $(ANDROID_ARM64_FLEX_O) -shared -Wl,-soname,`/usr/bin/basename $(ANDROID_ARM64_DYLIB)` -o $(ANDROID_ARM64_DYLIB)
+
+$(ANDROID_ARM64_SLIB): $(ANDROID_ARM64_FLEX_O)
+	/bin/rm -f $(ANDROID_ARM64_SLIB)
+	$(ANDROID_BIN_DIR)/ar rcu $(ANDROID_ARM64_SLIB) $(ANDROID_ARM64_FLEX_O)
+	$(ANDROID_BIN_DIR)/ranlib $(ANDROID_ARM64_SLIB)
 
 clean:
 	/bin/rm -rf $(BUILD_DIR)
