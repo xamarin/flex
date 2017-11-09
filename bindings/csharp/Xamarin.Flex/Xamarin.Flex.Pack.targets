@@ -15,6 +15,13 @@
 		<MSBuildNDKPathVar>~/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
 	</PropertyGroup>
 
+	<!-- Workaround for 'Nugetizer packs reference assemblies into NuGet package' issue -->
+	<!-- https://github.com/NuGet/Home/issues/5800 -->
+	<ItemGroup>
+		<PackageFile Include="$(OutputPath)Xamarin.Flex.dll" PackagePath="lib/netstandard2.0/Xamarin.Flex.dll" />
+		<PackageFile Include="$(OutputPath)Xamarin.Flex.xml" PackagePath="lib/netstandard2.0/Xamarin.Flex.xml" />
+	</ItemGroup>
+	
 	<Target Name="BuildNativeLibrary">
 		<Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make" />
 	</Target>
