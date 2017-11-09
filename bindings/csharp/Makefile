@@ -6,8 +6,7 @@ SRCS = base.cs flex.cs
 
 STATIC_DLL = $(BUILD_DIR)/static/Xamarin.Flex.dll
 DYNAMIC_DLL = $(BUILD_DIR)/dynamic/Xamarin.Flex.dll
-
-all:    build-nuget
+all:    msbuild-update-nuget
 
 base.cs:        ../../flex.h
 	/usr/bin/ruby tools/generate_base.rb
@@ -23,5 +22,7 @@ $(DYNAMIC_DLL): $(SRCS)
 clean:
 	/bin/rm -rf build
 
-build-nuget:  $(STATIC_DLL) $(DYNAMIC_DLL)
-	nuget pack nuget/Xamarin.Flex.nuspec -BasePath ../.. -Version $(VERSION)
+msbuild-update-nuget: 
+	nuget restore Xamarin.Flex.sln
+	msbuild Xamarin.Flex.sln
+	nuget update Xamarin.Flex.sln

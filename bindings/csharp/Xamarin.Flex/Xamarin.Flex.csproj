@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+		<PackOnBuild>true</PackOnBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="NuGet.Build.Packaging" Version="0.2.1" />
+		<PackageReference Include="GitInfo" Version="2.0.6">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="NETStandard.Library" Version="2.0.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Include="..\base.cs">
+			<Link>base.cs</Link>
+		</Compile>
+		<Compile Include="..\flex.cs">
+			<Link>flex.cs</Link>
+		</Compile>
+	</ItemGroup>
+	<Import Project="Xamarin.Flex.Pack.targets" Condition="'$(PackOnBuild)' == 'true'" />
+</Project>

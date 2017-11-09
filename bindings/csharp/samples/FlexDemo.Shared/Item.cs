@@ -1,14 +1,18 @@
-﻿﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
-using UIKit;
-
 using XF = Xamarin.Flex;
 
+#if __IOS__
+using NativeView = UIKit.UIView;
 namespace Xamarin.Flex.iOS
+#else
+using NativeView = AppKit.NSView;
+namespace Xamarin.Flex.macOS
+#endif
 {
     abstract public class Base : XF.Item
     {
-        protected UIView view = null;
+		protected NativeView view = null;
 
         public new void Add(XF.Item child)
         {
@@ -19,7 +23,16 @@ namespace Xamarin.Flex.iOS
         public new void InsertAt(int index, XF.Item child)
         {
             base.InsertAt(index, child);
-            view.InsertSubview((child as Base).view, index);
+ #if __IOS__
+			view.InsertSubview((child as Base).view, index);
+#else
+			if(index == 0)
+				view.AddSubview((child as Base).view);
+			var previousIndex = index - 1;
+			var previousView = view.Subviews[previousIndex];
+			view.AddSubview((child as Base).view, AppKit.NSWindowOrderingMode.Above, previousView);
+#endif 
+
         }
 
         public new XF.Item RemoveAt(int index)
@@ -46,7 +59,7 @@ namespace Xamarin.Flex.iOS
         }
     }
 
-    public class Item <T> : Base where T : UIView
+	public class Item <T> : Base where T : NativeView
     {
         public Item() : base()
         {
