@@ -3,13 +3,22 @@
 	<PropertyGroup>
 		<TargetFramework>netstandard2.0</TargetFramework>
 		<PackOnBuild>true</PackOnBuild>
+		<InferPackageContents>false</InferPackageContents>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <DocumentationFile>bin\Debug\netstandard2.0\Xamarin.Flex.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <DebugType></DebugType>
+	  <DocumentationFile>bin\Release\netstandard2.0\Xamarin.Flex.xml</DocumentationFile>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="NuGet.Build.Packaging" Version="0.2.1" />
+		<PackageReference Include="NuGet.Build.Packaging" Version="0.2.1">
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
 		<PackageReference Include="GitInfo" Version="2.0.6">
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
-		<PackageReference Include="NETStandard.Library" Version="2.0.1" />
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="..\base.cs">
