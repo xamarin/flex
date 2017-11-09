@@ -8,5 +8,9 @@
 			<IsCxx>False</IsCxx>
 			<Kind>Dynamic</Kind>
 		</NativeReference>
+		<None Include="$(PreferredOSXNativeFlexPath)">
+			<Link>libflex.dylib</Link>
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 </Project>
