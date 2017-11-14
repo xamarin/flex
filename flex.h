@@ -5,36 +5,44 @@
 #ifndef __FLEX_H_
 # define __FLEX_H_
 
+#if defined(_WIN32) // Also works for WIN64.
+# define DLLEXPORT __declspec(dllexport) 
+#else
+# define DLLEXPORT
+#endif
+
 struct flex_item;
 
 // Create a new flex item.
-struct flex_item *flex_item_new(void);
+DLLEXPORT struct flex_item *flex_item_new(void);
 
 // Free memory associated with a flex item and its children.
 // This function can only be called on a root item.
-void flex_item_free(struct flex_item *item);
+DLLEXPORT void flex_item_free(struct flex_item *item);
 
 // Manage items.
-void flex_item_add(struct flex_item *item, struct flex_item *child);
-void flex_item_insert(struct flex_item *item, unsigned int index,
+DLLEXPORT void flex_item_add(struct flex_item *item, struct flex_item *child);
+DLLEXPORT void flex_item_insert(struct flex_item *item, unsigned int index,
         struct flex_item *child);
-struct flex_item *flex_item_delete(struct flex_item *item, unsigned int index);
-unsigned int flex_item_count(struct flex_item *item);
-struct flex_item *flex_item_child(struct flex_item *item, unsigned int index);
-struct flex_item *flex_item_parent(struct flex_item *item);
-struct flex_item *flex_item_root(struct flex_item *item);
+DLLEXPORT struct flex_item *flex_item_delete(struct flex_item *item,
+		unsigned int index);
+DLLEXPORT unsigned int flex_item_count(struct flex_item *item);
+DLLEXPORT struct flex_item *flex_item_child(struct flex_item *item,
+		unsigned int index);
+DLLEXPORT struct flex_item *flex_item_parent(struct flex_item *item);
+DLLEXPORT struct flex_item *flex_item_root(struct flex_item *item);
 
 // Layout the items associated with this item, as well as their children.
 // This function can only be called on a root item whose `width' and `height'
 // properties have been set.
-void flex_layout(struct flex_item *item);
+DLLEXPORT void flex_layout(struct flex_item *item);
 
 // Retrieve the layout frame associated with an item. These functions should
 // be called *after* the layout is done.
-float flex_item_get_frame_x(struct flex_item *item);
-float flex_item_get_frame_y(struct flex_item *item);
-float flex_item_get_frame_width(struct flex_item *item);
-float flex_item_get_frame_height(struct flex_item *item);
+DLLEXPORT float flex_item_get_frame_x(struct flex_item *item);
+DLLEXPORT float flex_item_get_frame_y(struct flex_item *item);
+DLLEXPORT float flex_item_get_frame_width(struct flex_item *item);
+DLLEXPORT float flex_item_get_frame_height(struct flex_item *item);
 
 typedef enum {
     FLEX_ALIGN_AUTO = 0,
@@ -70,8 +78,8 @@ typedef void (*flex_self_sizing)(struct flex_item *item, float size[2]);
 
 # ifndef FLEX_ATTRIBUTE
 #  define FLEX_ATTRIBUTE(name, type, def) \
-    type flex_item_get_##name(struct flex_item *item); \
-    void flex_item_set_##name(struct flex_item *item, type value);
+    DLLEXPORT type flex_item_get_##name(struct flex_item *item); \
+    DLLEXPORT void flex_item_set_##name(struct flex_item *item, type value);
 # endif
 
 #else // !__FLEX_H_

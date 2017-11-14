@@ -46,15 +46,17 @@ item_property_changed(struct flex_item *item, flex_property property)
 }
 
 #define FLEX_ATTRIBUTE(name, type, def) \
-    type flex_item_get_##name(struct flex_item *item) { \
+    DLLEXPORT type flex_item_get_##name(struct flex_item *item) { \
         return item->name; \
     } \
-    void flex_item_set_##name(struct flex_item *item, type value) { \
+    DLLEXPORT void flex_item_set_##name(struct flex_item *item, \
+			type value) { \
         item->name = value; \
         item_property_changed(item, FLEX_PROPERTY_##name); \
     }
 #include "flex.h"
 
+DLLEXPORT
 struct flex_item *
 flex_item_new(void)
 {
@@ -76,6 +78,7 @@ flex_item_new(void)
     return item;
 }
 
+DLLEXPORT
 void
 flex_item_free(struct flex_item *item)
 {
@@ -117,6 +120,7 @@ child_set(struct flex_item *item, struct flex_item *child, int index)
     update_should_order_children(child);
 }
 
+DLLEXPORT
 void
 flex_item_add(struct flex_item *item, struct flex_item *child)
 {
@@ -124,6 +128,7 @@ flex_item_add(struct flex_item *item, struct flex_item *child)
     child_set(item, child, item->children.count);
 }
 
+DLLEXPORT
 void
 flex_item_insert(struct flex_item *item, unsigned int index,
     struct flex_item *child)
@@ -137,6 +142,7 @@ flex_item_insert(struct flex_item *item, unsigned int index,
     child_set(item, child, index);
 }
 
+DLLEXPORT
 struct flex_item *
 flex_item_delete(struct flex_item *item, unsigned int index)
 {
@@ -154,12 +160,14 @@ flex_item_delete(struct flex_item *item, unsigned int index)
     return child;
 }
 
+DLLEXPORT
 unsigned int
 flex_item_count(struct flex_item *item)
 {
     return item->children.count;
 }
 
+DLLEXPORT
 struct flex_item *
 flex_item_child(struct flex_item *item, unsigned int index)
 {
@@ -168,12 +176,14 @@ flex_item_child(struct flex_item *item, unsigned int index)
     return item->children.ary[index];
 }
 
+DLLEXPORT
 struct flex_item *
 flex_item_parent(struct flex_item *item)
 {
     return item->parent;
 }
 
+DLLEXPORT
 struct flex_item *
 flex_item_root(struct flex_item *item)
 {
@@ -184,7 +194,7 @@ flex_item_root(struct flex_item *item)
 }
 
 #define FRAME_GETTER(name, index) \
-    float flex_item_get_frame_##name(struct flex_item *item) { \
+    DLLEXPORT float flex_item_get_frame_##name(struct flex_item *item) { \
         return item->frame[index]; \
     }
 
@@ -744,6 +754,7 @@ layout_item(struct flex_item *item, float width, float height)
 #undef LAYOUT_CHILD_AT
 #undef LAYOUT_RESET
 
+DLLEXPORT
 void
 flex_layout(struct flex_item *item)
 {
