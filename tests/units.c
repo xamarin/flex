@@ -455,29 +455,6 @@ test_self_sizing(void)
     test_self_sizing7();
 }
 
-static void
-test_overflow(void)
-{
-    current_unit = "test_overflow_basis1";
-    void test_overflow_basis1(void);
-    test_overflow_basis1();
-    current_unit = "test_overflow_basis2";
-    void test_overflow_basis2(void);
-    test_overflow_basis2();
-    current_unit = "test_overflow_size1";
-    void test_overflow_size1(void);
-    test_overflow_size1();
-    current_unit = "test_overflow_size2";
-    void test_overflow_size2(void);
-    test_overflow_size2();
-    current_unit = "test_overflow_self_sizing1";
-    void test_overflow_self_sizing1(void);
-    test_overflow_self_sizing1();
-    current_unit = "test_overflow_self_sizing2";
-    void test_overflow_self_sizing2(void);
-    test_overflow_self_sizing2();
-}
-
 void
 run_all_units(void)
 {
@@ -498,5 +475,4 @@ run_all_units(void)
     test_margin();
     test_padding();
     test_self_sizing();
-    test_overflow();
 }
