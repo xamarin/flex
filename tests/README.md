@@ -8,13 +8,29 @@ It is preferable to cover each new change in the code base (even bug fixes) with
 
 ## Running the tests
 
-You can run the test suite very easily:
+### On a Mac
+
+You can build and run the test suite very easily:
 
 ```
 $ make
 ```
 
-If you see `OK` at the end you won!
+### On a Windows machine
+
+You can build the test suite from the command line:
+
+```
+$ msbuild
+```
+
+After that, you can run the `test.exe` program:
+
+```
+$ x86\Debug\test.exe
+```
+
+Alternatively you can also open the `test.vcxproj` file in Visual Studio and build/run the solution.
 
 ## Adding tests
 

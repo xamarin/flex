@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See the LICENSE.txt file in the project root
 // for the license information.
 
-#include "test.h"
-
 const char *current_unit = NULL;
 #define MAX_FAILURES 100
 const char *failures[MAX_FAILURES];

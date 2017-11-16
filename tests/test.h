@@ -11,6 +11,10 @@
 
 #include "flex.h"
 
+#if defined(_WIN32)
+# define strdup _strdup
+#endif
+
 extern const char *current_unit;
 #define MAX_FAILURES 100
 extern const char *failures[MAX_FAILURES];
