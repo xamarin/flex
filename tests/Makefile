@@ -16,7 +16,7 @@ run:    test
 	@./test
 
 test:   test.c test.h $(FLEX_DIR)/flex.c $(OBJS)
-	$(CC) $(CFLAGS) test.c $(FLEX_DIR)/flex.c -o test $(OBJS)
+	$(CC) $(CFLAGS) -include test.h test.c $(FLEX_DIR)/flex.c -o test $(OBJS)
 
 %.o : %.c test.h $(FLEX_DIR)/flex.h
 	$(CC) $(CFLAGS) -include test.h -c $< -o $@
