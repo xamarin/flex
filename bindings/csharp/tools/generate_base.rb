@@ -92,16 +92,8 @@ EOS
     out 'internal class NativeFunctions'
     out '{'
     @indent += 1
-    out 'private const string dll_name ='
-    out '#if LIBFLEX_STATIC'
-    @indent += 1
-    out "\"__Internal\";"
-    @indent -= 1
-    out '#else'
-    @indent += 1
-    out "\"flex\";"
-    @indent -= 1
-    out '#endif'
+    out 'const string dll_name = "flex";'
+    out ''
     properties = {}
     @functions.sort { |x, y| x[0] <=> y[0] }.each do |name, retval, args|
       i = 0
@@ -151,12 +143,12 @@ EOS
     out 'public partial class Item'
     out '{'
     @indent += 1
-    out 'private IntPtr item = IntPtr.Zero;'
+    first = true;
     properties.each do |name, prop|
       type = prop[0]
       is_enum = type.match(/^[A-Z]/) # good enough
     
-      out ''
+      out '' unless first; first = false
       out "public #{type} #{csharp_name(name)}"
       out '{'
       @indent += 1

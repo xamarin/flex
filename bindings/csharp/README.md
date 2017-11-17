@@ -52,7 +52,16 @@ You will find under the `samples` directory a few projects using the bindings. T
 
 The bindings are covered by tests. The tests specifically cover logic added by the bindings themselves, the native test suite (in the `tests` directory of the root project) covers the flexbox implementation itself.
 
+### Running the tests on a Mac
+
 ```
 $ cd tests
 $ make
+```
+
+### Running the tests on Windows
+
+```
+$ msbuild
+$ bin\x64\Debug\test.exe
 ```
