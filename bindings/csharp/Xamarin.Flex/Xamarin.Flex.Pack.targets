@@ -1,91 +1,103 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
-		<PackageId>Xamarin.Flex</PackageId>
-		<Description>Flex is a flexible box layout system written in C, designed to be easy to consume from other languages.</Description>
-		<Authors>Microsoft</Authors>
-		<Owners>laurent.sansonetti@microsoft.com</Owners>
-		<Copyright>Copyright 2017 - present Microsoft</Copyright>
-		<PackageTags>flex flexbox css xamarin microsoft</PackageTags>
-		<PackageProjectUrl>https://github.com/xamarin/flex</PackageProjectUrl>
-		<PackageLicenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</PackageLicenseUrl>
-		<GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
-	</PropertyGroup>
-	<PropertyGroup>
-		<MSBuildNDKPathVar>~/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
-	</PropertyGroup>
+  <PropertyGroup>
+    <PackageId>Xamarin.Flex</PackageId>
+    <Description>Flex is a flexible box layout system written in C, designed to be easy to consume from other languages.</Description>
+    <Authors>Microsoft</Authors>
+    <Owners>laurent.sansonetti@microsoft.com</Owners>
+    <Copyright>Copyright 2017 - present Microsoft</Copyright>
+    <PackageTags>flex flexbox css xamarin microsoft</PackageTags>
+    <PackageProjectUrl>https://github.com/xamarin/flex</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/xamarin/flex/blob/master/LICENSE.txt</PackageLicenseUrl>
+    <GitInfoReportImportance Condition="'$(Configuration)' == 'Debug'">high</GitInfoReportImportance>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MSBuildNDKPathVar>~/Library/Developer/Xamarin/android-ndk/android-ndk-r13b</MSBuildNDKPathVar>
+  </PropertyGroup>
 
-	<!-- Workaround for 'Nugetizer packs reference assemblies into NuGet package' issue -->
-	<!-- https://github.com/NuGet/Home/issues/5800 -->
-	<ItemGroup>
-		<PackageFile Include="$(OutputPath)Xamarin.Flex.dll" PackagePath="lib/netstandard2.0/Xamarin.Flex.dll" />
-		<PackageFile Include="$(OutputPath)Xamarin.Flex.xml" PackagePath="lib/netstandard2.0/Xamarin.Flex.xml" />
-	</ItemGroup>
-	
-	<Target Name="BuildNativeLibrary">
-		<Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make" />
-	</Target>
-		
-	<Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile">
-		<ItemGroup>
-			<PackageFile Include="..\nuget\iOS\Xamarin.Flex.dll.config">
-				<Link>iOS\Xamarin.Flex.dll.config</Link>
-				<PackagePath>build/XamariniOS/Xamarin.Flex.dll.config</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\nuget\iOS\Xamarin.Flex.targets">
-				<Link>iOS\Xamarin.Flex.targets</Link>
-				<PackagePath>build/XamariniOS/Xamarin.Flex.targets</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\ios\libflex.a">
-				<Link>iOS\libflex.a</Link>
-				<PackagePath>native/ios/libflex.a</PackagePath>
-			</PackageFile>
-		</ItemGroup>
-		<ItemGroup>
-			<PackageFile Include="..\nuget\Android\Xamarin.Flex.targets">
-				<Link>Android\Xamarin.Flex.targets</Link>
-				<PackagePath>build/MonoAndroid/Xamarin.Flex.targets</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\android\armeabi\libflex.so">
-				<Link>Android\armeabi\libflex.so</Link>
-				<PackagePath>native/android/armeabi/libflex.so</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\android\arm64-v8a\libflex.so">
-				<Link>Android\arm64-v8a\libflex.so</Link>
-				<PackagePath>native/android/arm64-v8a/libflex.so</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\android\armeabi-v7a\libflex.so">
-				<Link>Android\armeabi-v7a\libflex.so</Link>
-				<PackagePath>native/android/armeabi-v7a/libflex.so</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\android\x86\libflex.so">
-				<Link>Android\x86\libflex.so</Link>
-				<PackagePath>native/android/x86/libflex.so</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\android\x86_64\libflex.so">
-				<Link>Android\x86_64\libflex.so</Link>
-				<PackagePath>native/android/x86_64/libflex.so</PackagePath>
-			</PackageFile>
-		</ItemGroup>
-		<ItemGroup>
-			<PackageFile Include="..\nuget\Desktop\Xamarin.Flex.targets">
-				<Link>Desktop\Xamarin.Flex.targets</Link>
-				<PackagePath>build/netstandard2.0/Xamarin.Flex.targets</PackagePath>
-			</PackageFile>
-			<PackageFile Include="..\..\..\build\macos\libflex.dylib">
-				<Link>macOS\libflex.dylib</Link>
-				<PackagePath>runtimes/osx/native/libflex.dylib</PackagePath>
-			</PackageFile>
-		</ItemGroup>
-	</Target>
-	<Target Name="_SetPackageVersion" BeforeTargets="GetPackageVersion" DependsOnTargets="GitVersion">
-		<Message Text="SetPackage based on SemVersion" />
-		<PropertyGroup>
-			<PackageVersion>$(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)</PackageVersion>
-		</PropertyGroup>
-	</Target>
-	<Target Name="CopyPackage" AfterTargets="Pack">
-		<Message Text="Copy $(PackageId).$(PackageVersion).nupkg" />
-		<Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\nuget\" />
-	</Target>
+  <!-- Workaround for 'Nugetizer packs reference assemblies into NuGet package' issue -->
+  <!-- https://github.com/NuGet/Home/issues/5800 -->
+  <ItemGroup>
+    <PackageFile Include="$(OutputPath)Xamarin.Flex.dll" PackagePath="lib/netstandard2.0/Xamarin.Flex.dll" />
+    <PackageFile Include="$(OutputPath)Xamarin.Flex.xml" PackagePath="lib/netstandard2.0/Xamarin.Flex.xml" />
+  </ItemGroup>
+
+  <Target Name="BuildNativeLibrary">
+    <Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make"  Condition=" '$(OS)' != 'Windows_NT' " />
+  </Target>
+
+  <Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile" >
+    <ItemGroup>
+      <PackageFile Include="..\nuget\iOS\Xamarin.Flex.dll.config">
+        <Link>iOS\Xamarin.Flex.dll.config</Link>
+        <PackagePath>build/XamariniOS/Xamarin.Flex.dll.config</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\nuget\iOS\Xamarin.Flex.targets">
+        <Link>iOS\Xamarin.Flex.targets</Link>
+        <PackagePath>build/XamariniOS/Xamarin.Flex.targets</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\ios\libflex.a">
+        <Link>iOS\libflex.a</Link>
+        <PackagePath>native/ios/libflex.a</PackagePath>
+      </PackageFile>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageFile Include="..\nuget\Android\Xamarin.Flex.targets">
+        <Link>Android\Xamarin.Flex.targets</Link>
+        <PackagePath>build/MonoAndroid/Xamarin.Flex.targets</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\android\armeabi\libflex.so">
+        <Link>Android\armeabi\libflex.so</Link>
+        <PackagePath>native/android/armeabi/libflex.so</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\android\arm64-v8a\libflex.so">
+        <Link>Android\arm64-v8a\libflex.so</Link>
+        <PackagePath>native/android/arm64-v8a/libflex.so</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\android\armeabi-v7a\libflex.so">
+        <Link>Android\armeabi-v7a\libflex.so</Link>
+        <PackagePath>native/android/armeabi-v7a/libflex.so</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\android\x86\libflex.so">
+        <Link>Android\x86\libflex.so</Link>
+        <PackagePath>native/android/x86/libflex.so</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\android\x86_64\libflex.so">
+        <Link>Android\x86_64\libflex.so</Link>
+        <PackagePath>native/android/x86_64/libflex.so</PackagePath>
+      </PackageFile>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageFile Include="..\nuget\Desktop\Xamarin.Flex.targets">
+        <Link>Desktop\Xamarin.Flex.targets</Link>
+        <PackagePath>build/netstandard2.0/Xamarin.Flex.targets</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\macos\libflex.dylib">
+        <Link>macOS\libflex.dylib</Link>
+        <PackagePath>runtimes/osx/native/libflex.dylib</PackagePath>
+      </PackageFile>
+    </ItemGroup>
+    <ItemGroup>
+      <PackageFile Include="..\..\..\build\windows\ARM\Debug\flex.dll">
+        <PackagePath>runtimes/win10-arm/native/flex.dll</PackagePath>
+      </PackageFile>
+      <PackageFile Include="..\..\..\build\windows\x64\Debug\flex.dll">
+        <PackagePath>runtimes/win10-x64/native/flex.dll</PackagePath>
+      </PackageFile>
+
+      <PackageFile Include="..\..\..\build\windows\Win32\Debug\flex.dll">
+        <PackagePath>runtimes/win10-x86/native/flex.dll</PackagePath>
+      </PackageFile>
+    </ItemGroup>
+  </Target>
+  <Target Name="_SetPackageVersion" BeforeTargets="GetPackageVersion" DependsOnTargets="GitVersion">
+    <Message Text="SetPackage based on SemVersion" />
+    <PropertyGroup>
+      <PackageVersion>$(GitSemVerMajor).$(GitSemVerMinor).252</PackageVersion>
+    </PropertyGroup>
+  </Target>
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Message Text="Copy $(PackageId).$(PackageVersion).nupkg" />
+    <Copy SourceFiles="$(OutputPath)..\$(PackageId).$(PackageVersion).nupkg" DestinationFolder="..\nuget\" />
+  </Target>
 </Project>
