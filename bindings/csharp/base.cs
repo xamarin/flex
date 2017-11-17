@@ -150,8 +150,6 @@ namespace Xamarin.Flex
 
     public partial class Item
     {
-        private IntPtr item = IntPtr.Zero;
-
         public Align AlignContent
         {
             get { return (Align)flex_item_get_align_content(item); }

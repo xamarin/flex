@@ -9,8 +9,12 @@ using static Xamarin.Flex.NativeFunctions;
 
 namespace Xamarin.Flex
 {
+    // Required for instances for be pinnable on Windows.
+    [StructLayout(LayoutKind.Sequential)]
     public partial class Item : IEnumerable, IDisposable
     {
+        private IntPtr item = IntPtr.Zero;
+
         public Item()
         {
             item = flex_item_new();
@@ -45,7 +49,7 @@ namespace Xamarin.Flex
             ValidateNewChild(child);
             child.CreateHandle(true);
             flex_item_add(item, child.item);
-            notify_changed = true;
+            notify_changed = 1;
         }
     
         public void InsertAt(int index, Item child)
@@ -54,7 +58,7 @@ namespace Xamarin.Flex
             ValidateIndex(index, true);
             child.CreateHandle(true);
             flex_item_insert(item, index, child.item);
-            notify_changed = true;
+            notify_changed = 1;
         }
     
         public Item RemoveAt(int index)
@@ -63,7 +67,7 @@ namespace Xamarin.Flex
             IntPtr child_item = flex_item_delete(item, index);
             Item child = ReleaseHandleForItem(child_item, false);
             child.CreateHandle(false);
-            notify_changed = true;
+            notify_changed = 1;
             return child;
         }
     
@@ -104,7 +108,7 @@ namespace Xamarin.Flex
             if (Double.IsNaN(Width) || Double.IsNaN(Height)) {
                 throw new InvalidOperationException("Layout() must be called on an item that has proper values for the Width and Height properties");
             }
-            if (_SelfSizing != null) {
+            if (self_sizing_cb != IntPtr.Zero) {
                 throw new InvalidOperationException("Layout() cannot be called on an item that has the SelfSizing property set");
             }
             flex_layout(item);
@@ -142,24 +146,30 @@ namespace Xamarin.Flex
         public delegate void SelfSizingDelegate(Item item, ref float width,
                 ref float height);
 
-        private Delegate0 _SelfSizing = null;
+        // Keeping this as an `IntPtr' as it's blittable and required for GC
+        // pinning on Windows.
+        private IntPtr self_sizing_cb = IntPtr.Zero;
+
+        private void SelfSizingFunc(IntPtr item, IntPtr sizebuf)
+        {
+            float[] size = { 0, 0 };
+            Marshal.Copy(sizebuf, size, 0, 2);
+            var d = Marshal.GetDelegateForFunctionPointer<SelfSizingDelegate>(self_sizing_cb);
+            d(FlexItemFromItem(item), ref size[0], ref size[1]);
+            Marshal.Copy(size, 0, sizebuf, 2);
+        }
 
         public SelfSizingDelegate SelfSizing
         {
             set {
                 if (value != null) {
-                    _SelfSizing = delegate(IntPtr item, IntPtr sizebuf) {
-                        float[] size = { 0, 0 };
-                        Marshal.Copy(sizebuf, size, 0, 2);
-                        value(FlexItemFromItem(item), ref size[0],
-                                ref size[1]);
-                        Marshal.Copy(size, 0, sizebuf, 2);
-                    };
+                    self_sizing_cb = Marshal.GetFunctionPointerForDelegate(value);
+                    flex_item_set_self_sizing(item, SelfSizingFunc);
                 }
                 else {
-                    _SelfSizing = null;
+                    self_sizing_cb = IntPtr.Zero;
+                    flex_item_set_self_sizing(item, null);
                 }
-                flex_item_set_self_sizing(item, _SelfSizing);
             }
         }
 
@@ -191,7 +201,7 @@ namespace Xamarin.Flex
     
             public bool MoveNext()
             {
-                if (item.notify_changed) {
+                if (item.notify_changed == 1) {
                     throw new InvalidOperationException("the item's children list was modified; enumeration cannot proceed");
                 }
                 index++;
@@ -203,11 +213,12 @@ namespace Xamarin.Flex
         {
             return GetEnumerator();
         }
-    
-        private bool notify_changed = false;
+
+        // Not a boolean as we need a blittable type for GC pinning on Windows.
+        private int notify_changed = 0;
         public ItemEnumerator GetEnumerator()
         {
-            notify_changed = false;
+            notify_changed = 0;
             return new ItemEnumerator(this);
         }
     
