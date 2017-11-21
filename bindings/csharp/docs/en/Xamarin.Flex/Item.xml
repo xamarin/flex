@@ -768,7 +768,7 @@
         <summary>A write-only property that can be set to a delegate that will be called during layout and that can customize the width and height of the given item.</summary>
         <value>
         </value>
-        <remarks>By default an item does not have a self-sizing delegate. You can set this property to null in order to remove a previously-added delegate.</remarks>
+        <remarks>By default an item does not have a self-sizing delegate. You can set this property to null in order to remove a previously-added delegate. When passing a delegate, you must ensure that you keep a strong reference to it in your code, as this property doesn't and the delegate may be called after garbage collection.</remarks>
       </Docs>
     </Member>
     <Member MemberName="Shrink">
