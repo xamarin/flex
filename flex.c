@@ -87,7 +87,7 @@ flex_item_free(struct flex_item *item)
     if (item->children.cap > 0) {
         assert(item->children.ary != NULL);
 
-        for (int i = 0; i < item->children.count; i++) {
+        for (unsigned int i = 0; i < item->children.count; i++) {
             struct flex_item *child = item->children.ary[i];
             child->parent = NULL;
             flex_item_free(child);
@@ -111,7 +111,7 @@ grow_if_needed(struct flex_item *item)
 }
 
 static void
-child_set(struct flex_item *item, struct flex_item *child, int index)
+child_set(struct flex_item *item, struct flex_item *child, unsigned int index)
 {
     assert(child->parent == NULL && "child already has a parent");
     item->children.ary[index] = child;
@@ -136,7 +136,7 @@ flex_item_insert(struct flex_item *item, unsigned int index,
     assert(index <= item->children.count);
 
     grow_if_needed(item);
-    for (int i = index; i < item->children.count; i++) {
+    for (unsigned int i = index; i < item->children.count; i++) {
         item->children.ary[i + 1] = item->children.ary[i];
     }
     child_set(item, child, index);
@@ -151,7 +151,7 @@ flex_item_delete(struct flex_item *item, unsigned int index)
 
     struct flex_item *child = item->children.ary[index];
 
-    for (int i = index; i < item->children.count - 1; i++) {
+    for (unsigned int i = index; i < item->children.count - 1; i++) {
         item->children.ary[i] = item->children.ary[i + 1];
     }
     item->children.count--;
@@ -217,7 +217,7 @@ struct flex_layout {
     unsigned int frame_pos2_i;  // cross axis position
     unsigned int frame_size_i;  // main axis size
     unsigned int frame_size2_i; // cross axis size
-    int *ordered_indices;
+    unsigned int *ordered_indices;
 
     // Set for each line layout.
     float line_dim;             // the cross axis size
@@ -281,7 +281,8 @@ layout_init(struct flex_item *item, float width, float height,
 
     layout->ordered_indices = NULL;
     if (item->should_order_children && item->children.count > 0) {
-        int *indices = (int *)malloc(sizeof(int) * item->children.count);
+        unsigned int *indices = (unsigned int *)malloc(sizeof(unsigned int)
+                * item->children.count);
         assert(indices != NULL);
 
         // Creating a list of item indices sorted using the children's `order'
@@ -289,11 +290,11 @@ layout_init(struct flex_item *item, float width, float height,
         // stability (insertion order must be preserved) and cross-platform
         // support. We should eventually switch to merge sort (or something
         // else) if the number of items becomes significant enough.
-        for (int i = 0; i < item->children.count; i++) {
+        for (unsigned int i = 0; i < item->children.count; i++) {
             indices[i] = i;
-            for (int j = i; j > 0; j--) {
-                int prev = indices[j - 1];
-                int curr = indices[j];
+            for (unsigned int j = i; j > 0; j--) {
+                unsigned int prev = indices[j - 1];
+                unsigned int curr = indices[j];
                 if (item->children.ary[prev]->order
                         <= item->children.ary[curr]->order) {
                     break;
@@ -436,7 +437,8 @@ child_align(struct flex_item *child, struct flex_item *parent)
 
 static void
 layout_items(struct flex_item *item, unsigned int child_begin,
-        unsigned int child_end, int children_count, struct flex_layout *layout)
+        unsigned int child_end, unsigned int children_count,
+        struct flex_layout *layout)
 {
     assert(children_count <= (child_end - child_begin));
     if (children_count <= 0) {
@@ -465,7 +467,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         layout->pos2 -= layout->line_dim;
     }
 
-    for (int i = child_begin; i < child_end; i++) {
+    for (unsigned int i = child_begin; i < child_end; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
         if (child->position == FLEX_POSITION_ABSOLUTE) {
             // Already positioned.
@@ -499,7 +501,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
                 break;
 
             case FLEX_ALIGN_CENTER:
-                align_pos += (layout->line_dim / 2.0) - (align_size / 2.0)
+                align_pos += (layout->line_dim / 2) - (align_size / 2)
                     + (CHILD_MARGIN(child, left, top)
                             - CHILD_MARGIN(child, right, bottom));
                 break;
@@ -572,9 +574,9 @@ layout_item(struct flex_item *item, float width, float height)
 
     LAYOUT_RESET();
 
-    int last_layout_child = 0;
-    int relative_children_count = 0;
-    for (int i = 0; i < item->children.count; i++) {
+    unsigned int last_layout_child = 0;
+    unsigned int relative_children_count = 0;
+    for (unsigned int i = 0; i < item->children.count; i++) {
         struct flex_item *child = LAYOUT_CHILD_AT(item, i);
 
         // Items with an absolute position have their frames determined
@@ -650,14 +652,15 @@ layout_item(struct flex_item *item, float width, float height)
 
             child->self_sizing(child, size);
 
-            for (int i = 0; i < 2; i++) {
-                int size_off = i + 2;
+            for (unsigned int j = 0; j < 2; j++) {
+                unsigned int size_off = j + 2;
                 if (size_off == layout->frame_size2_i
                         && child_align(child, item) == FLEX_ALIGN_STRETCH) {
                     continue;
                 }
-                if (!isnan(size[i])) {
-                    child->frame[size_off] = size[i];
+                float val = size[j];
+                if (!isnan(val)) {
+                    child->frame[size_off] = val;
                 }
             }
         }
@@ -714,7 +717,7 @@ layout_item(struct flex_item *item, float width, float height)
             old_pos = layout->align_dim;
         }
 
-        for (int i = 0; i < layout->lines_count; i++) {
+        for (unsigned int i = 0; i < layout->lines_count; i++) {
             struct flex_layout_line *line = &layout->lines[i];
 
             if (layout->reverse2) {
@@ -725,7 +728,8 @@ layout_item(struct flex_item *item, float width, float height)
 
             // Re-position the children of this line, honoring any child
             // alignment previously set within the line.
-            for (int j = line->child_begin; j < line->child_end; j++) {
+            for (unsigned int j = line->child_begin; j < line->child_end;
+                    j++) {
                 struct flex_item *child = LAYOUT_CHILD_AT(item, j);
                 if (child->position == FLEX_POSITION_ABSOLUTE) {
                     // Should not be re-positioned.
