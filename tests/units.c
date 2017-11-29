@@ -33,6 +33,12 @@ test_children(void)
     current_unit = "test_children4";
     void test_children4(void);
     test_children4();
+    current_unit = "test_children5";
+    void test_children5(void);
+    test_children5();
+    current_unit = "test_children6";
+    void test_children6(void);
+    test_children6();
 }
 
 static void

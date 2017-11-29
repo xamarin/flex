@@ -139,3 +139,131 @@ test_children4(void)
 
 #undef CENTER_ITEM
 }
+
+static void
+self_sizing5(struct flex_item *item, float size[2])
+{
+    size[0] = 100;
+    size[1] = 20;
+}
+
+void
+test_children5(void)
+{
+    struct flex_item *root = flex_item_with_size(300,50);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_set_grow(child1, 1);
+    flex_item_set_self_sizing(child1, self_sizing5);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_set_grow(child2, 1);
+    flex_item_set_self_sizing(child2, self_sizing5);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_new();
+    flex_item_set_grow(child3, 1);
+    flex_item_set_self_sizing(child3, self_sizing5);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 100, 20);
+    TEST_FRAME_EQUAL(child2, 100, 0, 100, 20);
+    TEST_FRAME_EQUAL(child3, 200, 0, 100, 20);
+
+    flex_item_delete(root, 2);
+
+    flex_layout(root);
+
+    TEST_EQUAL(flex_item_count(root), 2);
+    TEST(flex_item_parent(child3) == NULL);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 150, 20);
+    TEST_FRAME_EQUAL(child2, 150, 0, 150, 20);
+
+    struct flex_item *child4 = flex_item_new();
+    flex_item_set_grow(child4, 1);
+    flex_item_set_self_sizing(child4, self_sizing5);
+
+    flex_item_insert(root, 0, child4);
+
+    flex_layout(root);
+
+    TEST_EQUAL(flex_item_count(root), 3);
+    TEST(flex_item_child(root, 0) == child4);
+    TEST(flex_item_child(root, 1) == child1);
+    TEST(flex_item_child(root, 2) == child2);
+
+    TEST_FRAME_EQUAL(child4, 0, 0, 100, 20);
+    TEST_FRAME_EQUAL(child1, 100, 0, 100, 20);
+    TEST_FRAME_EQUAL(child2, 200, 0, 100, 20);
+
+    flex_item_free(child3);
+    flex_item_free(root);
+}
+
+void
+test_children6(void)
+{
+    struct flex_item *root = flex_item_new();
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_new();
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_new();
+    flex_item_insert(root, 1, child3);
+
+    TEST_EQUAL(flex_item_count(root), 3);
+    TEST(flex_item_child(root, 0) == child1);
+    TEST(flex_item_child(root, 1) == child3);
+    TEST(flex_item_child(root, 2) == child2);
+
+    struct flex_item *child4 = flex_item_new();
+    flex_item_insert(root, 3, child4);
+
+    TEST_EQUAL(flex_item_count(root), 4);
+    TEST(flex_item_child(root, 0) == child1);
+    TEST(flex_item_child(root, 1) == child3);
+    TEST(flex_item_child(root, 2) == child2);
+    TEST(flex_item_child(root, 3) == child4);
+
+    struct flex_item *child5 = flex_item_new();
+    flex_item_insert(root, 0, child5);
+
+    TEST_EQUAL(flex_item_count(root), 5);
+    TEST(flex_item_child(root, 0) == child5);
+    TEST(flex_item_child(root, 1) == child1);
+    TEST(flex_item_child(root, 2) == child3);
+    TEST(flex_item_child(root, 3) == child2);
+    TEST(flex_item_child(root, 4) == child4);
+
+    flex_item_delete(root, 2);
+
+    TEST_EQUAL(flex_item_count(root), 4);
+    TEST(flex_item_child(root, 0) == child5);
+    TEST(flex_item_child(root, 1) == child1);
+    TEST(flex_item_child(root, 2) == child2);
+    TEST(flex_item_child(root, 3) == child4);
+
+    flex_item_delete(root, 3);
+
+    TEST_EQUAL(flex_item_count(root), 3);
+    TEST(flex_item_child(root, 0) == child5);
+    TEST(flex_item_child(root, 1) == child1);
+    TEST(flex_item_child(root, 2) == child2);
+
+    flex_item_delete(root, 0);
+
+    TEST_EQUAL(flex_item_count(root), 2);
+    TEST(flex_item_child(root, 0) == child1);
+    TEST(flex_item_child(root, 1) == child2);
+
+    flex_item_free(root);
+}
+

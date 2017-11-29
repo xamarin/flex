@@ -136,8 +136,8 @@ flex_item_insert(struct flex_item *item, unsigned int index,
     assert(index <= item->children.count);
 
     grow_if_needed(item);
-    for (unsigned int i = index; i < item->children.count; i++) {
-        item->children.ary[i + 1] = item->children.ary[i];
+    for (unsigned int i = item->children.count; i > index; i--) {
+        item->children.ary[i] = item->children.ary[i - 1];
     }
     child_set(item, child, index);
 }
