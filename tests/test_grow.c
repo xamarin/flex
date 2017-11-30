@@ -138,3 +138,38 @@ test_grow6(void)
 
     flex_item_free(root);
 }
+
+void
+test_grow7(void)
+{
+    // Sizes of flexible items should be ignored when growing.
+    struct flex_item *root = flex_item_with_size(500, 600);
+
+    struct flex_item *child1 = flex_item_with_size(250, 0);
+    flex_item_set_grow(child1, 1);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(250, 50);
+    flex_item_set_grow(child2, 1);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(250, 0);
+    flex_item_add(root, child3);
+
+    struct flex_item *child4 = flex_item_with_size(250, 0);
+    flex_item_set_grow(child4, 1);
+    flex_item_add(root, child4);
+
+    struct flex_item *child5 = flex_item_with_size(250, 0);
+    flex_item_add(root, child5);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 250, 200);
+    TEST_FRAME_EQUAL(child2, 0, 200, 250, 200);
+    TEST_FRAME_EQUAL(child3, 0, 400, 250, 0);
+    TEST_FRAME_EQUAL(child4, 0, 400, 250, 200);
+    TEST_FRAME_EQUAL(child5, 0, 600, 250, 0);
+
+    flex_item_free(root);
+}

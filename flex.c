@@ -222,6 +222,7 @@ struct flex_layout {
     // Set for each line layout.
     float line_dim;             // the cross axis size
     float flex_dim;             // the flexible part of the main axis size
+    float extra_flex_dim;       // sizes of flexible items
     int flex_grows;
     int flex_shrinks;
     float pos2;                 // cross axis position
@@ -346,6 +347,7 @@ layout_cleanup(struct flex_layout *layout)
     do { \
         layout->line_dim = layout->wrap ? 0 : layout->align_dim; \
         layout->flex_dim = layout->size_dim; \
+        layout->extra_flex_dim = 0; \
         layout->flex_grows = 0; \
         layout->flex_shrinks = 0; \
     } \
@@ -445,6 +447,12 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         return;
     }
 
+    if (layout->flex_dim > 0 && layout->extra_flex_dim > 0) {
+        // If the container has a positive flexible space, let's add to it
+        // the sizes of all flexible children.
+        layout->flex_dim += layout->extra_flex_dim;
+    }
+
     // Determine the main axis initial position and optional spacing.
     float pos = 0;
     float spacing = 0;
@@ -478,6 +486,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         float flex_size = 0;
         if (layout->flex_dim > 0) {
             if (child->grow != 0) {
+                CHILD_SIZE(child) = 0; // Ignore previous size when growing.
                 flex_size = (layout->flex_dim / layout->flex_grows)
                     * child->grow;
             }
@@ -692,6 +701,10 @@ layout_item(struct flex_item *item, float width, float height)
                     + CHILD_MARGIN(child, bottom, right));
 
         relative_children_count++;
+
+        if (child_size > 0 && child->grow > 0) {
+            layout->extra_flex_dim += child_size;
+        }
     }
 
     // Layout remaining items in wrap mode, or everything otherwise.
