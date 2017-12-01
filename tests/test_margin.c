@@ -264,3 +264,22 @@ test_margin9(void)
 
     flex_item_free(root);
 }
+
+void
+test_margin10(void)
+{
+    struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+
+    struct flex_item *child1 = flex_item_new();
+    flex_item_set_grow(child1, 1);
+    flex_item_set_margin_left(child1, 10);
+    flex_item_set_margin_right(child1, 10);
+    flex_item_add(root, child1);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 10, 0, 80, 100);
+
+    flex_item_free(root);
+}

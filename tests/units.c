@@ -404,6 +404,9 @@ test_margin(void)
     current_unit = "test_margin9";
     void test_margin9(void);
     test_margin9();
+    current_unit = "test_margin10";
+    void test_margin10(void);
+    test_margin10();
 }
 
 static void
