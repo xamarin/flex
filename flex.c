@@ -227,7 +227,10 @@ struct flex_layout {
     int flex_shrinks;
     float pos2;                 // cross axis position
 
-    // Calculated layout lines - only tracked when needed.
+    // Calculated layout lines - only tracked when needed:
+    //   - if the root's align_content property isn't set to FLEX_ALIGN_START
+    //   - or if any child item doesn't have a cross-axis size set
+    bool need_lines;
     struct flex_layout_line {
         unsigned int child_begin;
         unsigned int child_end;
@@ -324,6 +327,8 @@ layout_init(struct flex_item *item, float width, float height,
             ? item->padding_left : item->padding_top;
     }
 
+    layout->need_lines = layout->wrap
+        && item->align_content != FLEX_ALIGN_START;
     layout->lines = NULL;
     layout->lines_count = 0;
     layout->lines_sizes = 0;
@@ -556,7 +561,7 @@ layout_items(struct flex_item *item, unsigned int child_begin,
         layout->pos2 += layout->line_dim;
     }
 
-    if (layout->wrap && item->align_content != FLEX_ALIGN_START) {
+    if (layout->need_lines) {
         layout->lines = (struct flex_layout_line *)realloc(layout->lines,
                 sizeof(struct flex_layout_line) * (layout->lines_count + 1));
         assert(layout->lines != NULL);
@@ -646,11 +651,17 @@ layout_item(struct flex_item *item, float width, float height)
             CHILD_SIZE(child) = 0;
         }
 
-        // Cross axis size defaults to the parent's size.
+        // Cross axis size defaults to the parent's size (or line size in wrap
+        // mode, which is calculated later on).
         if (isnan(CHILD_SIZE2(child))) {
-            CHILD_SIZE2(child) = (layout->vertical ? width : height)
-                - CHILD_MARGIN(child, left, top)
-                - CHILD_MARGIN(child, right, bottom);
+            if (layout->wrap) {
+                layout->need_lines = true;
+            }
+            else {
+                CHILD_SIZE2(child) = (layout->vertical ? width : height)
+                    - CHILD_MARGIN(child, left, top)
+                    - CHILD_MARGIN(child, right, bottom);
+            }
         }
 
         // Call the self_sizing callback if provided. Only non-NAN values
@@ -688,7 +699,7 @@ layout_item(struct flex_item *item, float width, float height)
             }
 
             float child_size2 = CHILD_SIZE2(child);
-            if (child_size2 > layout->line_dim) {
+            if (!isnan(child_size2) && child_size2 > layout->line_dim) {
                 layout->line_dim = child_size2;
             }
         }
@@ -711,10 +722,10 @@ layout_item(struct flex_item *item, float width, float height)
     layout_items(item, last_layout_child, item->children.count,
             relative_children_count, layout);
 
-    // In wrap mode if the `align_content' property changed from its default
-    // value we need to tweak the position of each line accordingly.
-    if (layout->wrap && item->align_content != FLEX_ALIGN_START
-            && layout->lines_count > 0) {
+    // In wrap mode we may need to tweak the position of each line according to
+    // the align_content property as well as the cross-axis size of items that
+    // haven't been set yet.
+    if (layout->need_lines && layout->lines_count > 0) {
         float pos = 0;
         float spacing = 0;
         float flex_dim = layout->align_dim - layout->lines_sizes;
@@ -747,6 +758,11 @@ layout_item(struct flex_item *item, float width, float height)
                 if (child->position == FLEX_POSITION_ABSOLUTE) {
                     // Should not be re-positioned.
                     continue;
+                }
+                if (isnan(CHILD_SIZE2(child))) {
+                    // If the child's cross axis size hasn't been set it, it
+                    // defaults to the line size.
+                    CHILD_SIZE2(child) = line->size + spacing;
                 }
                 CHILD_POS2(child) = pos + (CHILD_POS2(child) - old_pos);
             }
