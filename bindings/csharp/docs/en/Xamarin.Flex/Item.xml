@@ -249,6 +249,7 @@
         <summary>A convenience method to set the Grow, Shrink and Basis properties.</summary>
         <remarks>
         </remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to the Grow or Shrink properties.</exception>
       </Docs>
     </Member>
     <Member MemberName="FrameHeight">
@@ -348,6 +349,7 @@
         <summary>This property defines the grow factor of the item; the amount of available space it should use on the main-axis. If this property is set to 0, the item will not grow.</summary>
         <value>The item grow factor.</value>
         <remarks>The default value for this property is 0 (does not take any available space).</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="Height">
@@ -785,6 +787,7 @@
         <summary>This property defines the shrink factor of the item. In case the child items overflow the main-axis of the container, this factor will be used to determine how individual items should shrink so that all items can fill inside the container. If this property is set to 0, the item will not shrink.</summary>
         <value>The item shrink factor.</value>
         <remarks>The default value for this property is 1 (all items will shrink equally).</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="System.Collections.IEnumerable.GetEnumerator">
