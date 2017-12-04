@@ -130,12 +130,12 @@ namespace Xamarin.Flex
             }
         }
 
-        public void Flex(int grow=-1, int shrink=-1, float basis=0)
+        public void Flex(float grow=(float)Double.NaN, float shrink=(float)Double.NaN, float basis=0)
         {
-            if (grow != -1) {
+            if (!Double.IsNaN(grow)) {
                 this.Grow = grow;
             }
-            if (shrink != -1) {
+            if (!Double.IsNaN(shrink)) {
                 this.Shrink = shrink;
             }
             if (basis >= 0) {
@@ -329,6 +329,16 @@ namespace Xamarin.Flex
                     || property == Properties.PaddingBottom) {
                 if (value < 0) {
                     throw new ArgumentException("invalid Padding value (should be positive or zero)");
+                }
+            }
+            if (property == Properties.Grow) {
+                if (value < 0) {
+                    throw new ArgumentException("invalid Grow value (should be positive or zero)");
+                }
+            }
+            if (property == Properties.Shrink) {
+                if (value < 0) {
+                    throw new ArgumentException("invalid Shrink value (should be positive or zero)");
                 }
             }
         }

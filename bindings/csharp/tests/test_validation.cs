@@ -226,4 +226,32 @@ public partial class Test
 
         item.Dispose();
     }
+
+    void test_validation_grow()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.Grow = 0; });
+        assert_no_raised(() => { item.Grow = 1; });
+        assert_raised(() => { item.Grow = -1; }, typeof(ArgumentException));
+
+        assert_raised(() => { item.Flex(grow:-1); },
+                typeof(ArgumentException));
+
+        item.Dispose();
+    }
+
+    void test_validation_shrink()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.Shrink = 0; });
+        assert_no_raised(() => { item.Shrink = 1; });
+        assert_raised(() => { item.Shrink = -1; }, typeof(ArgumentException));
+
+        assert_raised(() => { item.Flex(shrink:-1); },
+                typeof(ArgumentException));
+
+        item.Dispose();
+    }
 }

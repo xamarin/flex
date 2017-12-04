@@ -156,8 +156,8 @@
     FLEX_FLOAT_GET(padding_top, paddingTop);
     FLEX_FLOAT_GET(padding_bottom, paddingBottom);
     
-    FLEX_INT_GET(grow, grow);
-    FLEX_INT_GET(shrink, shrink);
+    FLEX_FLOAT_GET(grow, grow);
+    FLEX_FLOAT_GET(shrink, shrink);
     FLEX_INT_GET(order, order);
 
 #undef FLEX_ENUM_GET
@@ -241,8 +241,8 @@ FLEX_FLOAT_ACTION(right, positionRight);
 FLEX_FLOAT_ACTION(top, positionTop);
 FLEX_FLOAT_ACTION(bottom, positionBottom);
 
-FLEX_INT_ACTION(grow, grow);
-FLEX_INT_ACTION(shrink, shrink);
+FLEX_FLOAT_ACTION(grow, grow);
+FLEX_FLOAT_ACTION(shrink, shrink);
 FLEX_INT_ACTION(order, order);
 
 #undef _GET_ITEM

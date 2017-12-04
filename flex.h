@@ -125,8 +125,8 @@ FLEX_ATTRIBUTE(position, flex_position, FLEX_POSITION_RELATIVE)
 FLEX_ATTRIBUTE(direction, flex_direction, FLEX_DIRECTION_COLUMN)
 FLEX_ATTRIBUTE(wrap, flex_wrap, FLEX_WRAP_NO_WRAP)
 
-FLEX_ATTRIBUTE(grow, unsigned int, 0)
-FLEX_ATTRIBUTE(shrink, unsigned int, 1)
+FLEX_ATTRIBUTE(grow, float, 0.0)
+FLEX_ATTRIBUTE(shrink, float, 1.0)
 FLEX_ATTRIBUTE(order, int, 0)
 FLEX_ATTRIBUTE(basis, float, 0)
 

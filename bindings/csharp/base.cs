@@ -62,7 +62,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern float flex_item_get_frame_width (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_frame_x (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_frame_y (IntPtr arg1);
-        [DllImport(dll_name)] public static extern int flex_item_get_grow (IntPtr arg1);
+        [DllImport(dll_name)] public static extern float flex_item_get_grow (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_height (IntPtr arg1);
         [DllImport(dll_name)] public static extern int flex_item_get_justify_content (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_left (IntPtr arg1);
@@ -79,7 +79,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern int flex_item_get_position (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_right (IntPtr arg1);
         [DllImport(dll_name)] public static extern Delegate0 flex_item_get_self_sizing (IntPtr arg1);
-        [DllImport(dll_name)] public static extern int flex_item_get_shrink (IntPtr arg1);
+        [DllImport(dll_name)] public static extern float flex_item_get_shrink (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_top (IntPtr arg1);
         [DllImport(dll_name)] public static extern float flex_item_get_width (IntPtr arg1);
         [DllImport(dll_name)] public static extern int flex_item_get_wrap (IntPtr arg1);
@@ -93,7 +93,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_item_set_basis (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_bottom (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_direction (IntPtr arg1, int arg2);
-        [DllImport(dll_name)] public static extern void flex_item_set_grow (IntPtr arg1, int arg2);
+        [DllImport(dll_name)] public static extern void flex_item_set_grow (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_height (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_justify_content (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_left (IntPtr arg1, float arg2);
@@ -110,7 +110,7 @@ namespace Xamarin.Flex
         [DllImport(dll_name)] public static extern void flex_item_set_position (IntPtr arg1, int arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_right (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_self_sizing (IntPtr arg1, Delegate0 arg2);
-        [DllImport(dll_name)] public static extern void flex_item_set_shrink (IntPtr arg1, int arg2);
+        [DllImport(dll_name)] public static extern void flex_item_set_shrink (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_top (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_width (IntPtr arg1, float arg2);
         [DllImport(dll_name)] public static extern void flex_item_set_wrap (IntPtr arg1, int arg2);
@@ -230,7 +230,7 @@ namespace Xamarin.Flex
             get { return flex_item_get_frame_y(item); }
         }
 
-        public int Grow
+        public float Grow
         {
             get { return flex_item_get_grow(item); }
             set
@@ -380,7 +380,7 @@ namespace Xamarin.Flex
             }
         }
 
-        public int Shrink
+        public float Shrink
         {
             get { return flex_item_get_shrink(item); }
             set

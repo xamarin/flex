@@ -93,6 +93,9 @@ test_grow(void)
     current_unit = "test_grow7";
     void test_grow7(void);
     test_grow7();
+    current_unit = "test_grow8";
+    void test_grow8(void);
+    test_grow8();
 }
 
 static void
@@ -116,6 +119,9 @@ test_shrink(void)
     current_unit = "test_shrink6";
     void test_shrink6(void);
     test_shrink6();
+    current_unit = "test_shrink7";
+    void test_shrink7(void);
+    test_shrink7();
 }
 
 static void

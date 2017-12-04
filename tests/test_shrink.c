@@ -128,3 +128,25 @@ test_shrink6(void)
 
     flex_item_free(root);
 }
+
+void
+test_shrink7(void)
+{
+    // Shrink can be floating point.
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child1 = flex_item_with_size(100, 75);
+    flex_item_set_shrink(child1, 1);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(100, 75);
+    flex_item_set_shrink(child2, 1.5);
+    flex_item_add(root, child2);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 100, 55);
+    TEST_FRAME_EQUAL(child2, 0, 55, 100, 45);
+
+    flex_item_free(root);
+}

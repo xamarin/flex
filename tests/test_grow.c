@@ -173,3 +173,29 @@ test_grow7(void)
 
     flex_item_free(root);
 }
+
+void
+test_grow8(void)
+{
+    // Grow can be floating point.
+    struct flex_item *root = flex_item_with_size(100, 100);
+
+    struct flex_item *child1 = flex_item_with_size(100, 10);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2 = flex_item_with_size(100, 20);
+    flex_item_set_grow(child2, 1);
+    flex_item_add(root, child2);
+
+    struct flex_item *child3 = flex_item_with_size(100, 20);
+    flex_item_set_grow(child3, 1.5);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1, 0, 0, 100, 10);
+    TEST_FRAME_EQUAL(child2, 0, 10, 100, 36);
+    TEST_FRAME_EQUAL(child3, 0, 46, 100, 54);
+
+    flex_item_free(root);
+}

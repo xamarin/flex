@@ -82,11 +82,11 @@ public partial class Test
     void test_flex_shorthand6()
     {
         var i = new Item();
-        i.Flex(grow:-1, shrink:-1);
+        i.Flex(basis:100, shrink:2, grow:3);
 
-        assert(i.Grow == 0);    // default
-        assert(i.Shrink == 1);  // default
-        assert(i.Basis == 0);   // default
+        assert(i.Grow == 3);
+        assert(i.Shrink == 2);
+        assert(i.Basis == 100);
 
         i.Dispose();
     }
@@ -94,10 +94,10 @@ public partial class Test
     void test_flex_shorthand7()
     {
         var i = new Item();
-        i.Flex(basis:100, shrink:2, grow:3);
+        i.Flex(basis:100, shrink:(float)2.5, grow:(float)3.5);
 
-        assert(i.Grow == 3);
-        assert(i.Shrink == 2);
+        assert(i.Grow == 3.5);
+        assert(i.Shrink == 2.5);
         assert(i.Basis == 100);
 
         i.Dispose();

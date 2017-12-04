@@ -1,6 +1,6 @@
 <Type Name="Item" FullName="Xamarin.Flex.Item">
   <TypeSignature Language="C#" Value="public class Item : IDisposable, System.Collections.IEnumerable" />
-  <TypeSignature Language="ILAsm" Value=".class public auto ansi beforefieldinit Item extends System.Object implements class System.Collections.IEnumerable, class System.IDisposable" />
+  <TypeSignature Language="ILAsm" Value=".class public sequential ansi beforefieldinit Item extends System.Object implements class System.Collections.IEnumerable, class System.IDisposable" />
   <AssemblyInfo>
     <AssemblyName>lib</AssemblyName>
     <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -228,8 +228,8 @@
       </Docs>
     </Member>
     <Member MemberName="Flex">
-      <MemberSignature Language="C#" Value="public void Flex (int grow = -1, int shrink = -1, float basis = 0);" />
-      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Flex(int32 grow, int32 shrink, float32 basis) cil managed" />
+      <MemberSignature Language="C#" Value="public void Flex (float grow = -1, float shrink = -1, float basis = 0);" />
+      <MemberSignature Language="ILAsm" Value=".method public hidebysig instance void Flex(float32 grow, float32 shrink, float32 basis) cil managed" />
       <MemberType>Method</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
@@ -238,8 +238,8 @@
         <ReturnType>System.Void</ReturnType>
       </ReturnValue>
       <Parameters>
-        <Parameter Name="grow" Type="System.Int32" />
-        <Parameter Name="shrink" Type="System.Int32" />
+        <Parameter Name="grow" Type="System.Single" />
+        <Parameter Name="shrink" Type="System.Single" />
         <Parameter Name="basis" Type="System.Single" />
       </Parameters>
       <Docs>
@@ -335,14 +335,14 @@
       </Docs>
     </Member>
     <Member MemberName="Grow">
-      <MemberSignature Language="C#" Value="public int Grow { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 Grow" />
+      <MemberSignature Language="C#" Value="public float Grow { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Grow" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>This property defines the grow factor of the item; the amount of available space it should use on the main-axis. If this property is set to 0, the item will not grow.</summary>
@@ -772,14 +772,14 @@
       </Docs>
     </Member>
     <Member MemberName="Shrink">
-      <MemberSignature Language="C#" Value="public int Shrink { get; set; }" />
-      <MemberSignature Language="ILAsm" Value=".property instance int32 Shrink" />
+      <MemberSignature Language="C#" Value="public float Shrink { get; set; }" />
+      <MemberSignature Language="ILAsm" Value=".property instance float32 Shrink" />
       <MemberType>Property</MemberType>
       <AssemblyInfo>
         <AssemblyVersion>0.0.0.0</AssemblyVersion>
       </AssemblyInfo>
       <ReturnValue>
-        <ReturnType>System.Int32</ReturnType>
+        <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
         <summary>This property defines the shrink factor of the item. In case the child items overflow the main-axis of the container, this factor will be used to determine how individual items should shrink so that all items can fill inside the container. If this property is set to 0, the item will not shrink.</summary>

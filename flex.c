@@ -223,8 +223,8 @@ struct flex_layout {
     float line_dim;             // the cross axis size
     float flex_dim;             // the flexible part of the main axis size
     float extra_flex_dim;       // sizes of flexible items
-    int flex_grows;
-    int flex_shrinks;
+    float flex_grows;
+    float flex_shrinks;
     float pos2;                 // cross axis position
 
     // Calculated layout lines - only tracked when needed:
@@ -703,6 +703,9 @@ layout_item(struct flex_item *item, float width, float height)
                 layout->line_dim = child_size2;
             }
         }
+
+        assert(child->grow >= 0);
+        assert(child->shrink >= 0);
 
         layout->flex_grows += child->grow;
         layout->flex_shrinks += child->shrink;
