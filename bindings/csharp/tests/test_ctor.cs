@@ -26,7 +26,7 @@ public partial class Test
 
         assert(item.JustifyContent == Align.Start);
         assert(item.AlignContent == Align.Stretch);
-        assert(item.AlignItems == Align.Start);
+        assert(item.AlignItems == Align.Stretch);
         assert(item.AlignSelf == Align.Auto);
 
         assert(item.Position == Position.Relative);

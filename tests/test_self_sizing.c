@@ -211,6 +211,7 @@ void
 test_self_sizing1(void)
 {
     struct flex_item *root = flex_item_with_size(100, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_START);
 
     struct flex_item *child = flex_item_new();
     flex_item_set_self_sizing(child, simulate_wrapping_text);
@@ -227,6 +228,7 @@ void
 test_self_sizing2(void)
 {
     struct flex_item *root = flex_item_with_size(55, 100);
+    flex_item_set_align_items(root, FLEX_ALIGN_START);
 
     struct flex_item *child = flex_item_new();
     flex_item_set_self_sizing(child, simulate_wrapping_text);

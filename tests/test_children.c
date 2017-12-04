@@ -152,6 +152,7 @@ test_children5(void)
 {
     struct flex_item *root = flex_item_with_size(300,50);
     flex_item_set_direction(root, FLEX_DIRECTION_ROW);
+    flex_item_set_align_items(root, FLEX_ALIGN_START);
 
     struct flex_item *child1 = flex_item_new();
     flex_item_set_grow(child1, 1);

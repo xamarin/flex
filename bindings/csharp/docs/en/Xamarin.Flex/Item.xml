@@ -106,7 +106,7 @@
       <Docs>
         <summary>This property defines how the layout engine will distribute space between and around child items along the cross-axis.</summary>
         <value>Any value part of the <see cref="T:Xamarin.Flex.Align" /> enumeration, with the exception of Auto.</value>
-        <remarks>The default value for this property is Start.</remarks>
+        <remarks>The default value for this property is Stretch.</remarks>
         <exception cref="ArgumentException">Thrown if Auto is assigned to this property.</exception>
       </Docs>
     </Member>

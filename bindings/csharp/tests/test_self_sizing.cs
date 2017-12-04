@@ -10,6 +10,8 @@ public partial class Test
     void test_self_sizing()
     {
         using (Item root = new Item(500, 500)) {
+            root.AlignItems = Align.Start;
+
             Item item = new Item(10, 20);
             item.SelfSizing = delegate(Item _, ref float width,
                     ref float height) {
