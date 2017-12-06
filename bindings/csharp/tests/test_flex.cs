@@ -72,9 +72,9 @@ public partial class Test
         var i = new Item();
         i.Flex(basis:-1, shrink:2);
 
-        assert(i.Grow == 0);    // default
+        assert(i.Grow == 0);           // default
         assert(i.Shrink == 2);
-        assert(i.Basis == 0);   // default
+        assert(Double.IsNaN(i.Basis)); // default
 
         i.Dispose();
     }

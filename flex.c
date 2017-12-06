@@ -641,7 +641,7 @@ layout_item(struct flex_item *item, float width, float height)
         child->frame[2] = child->width;
         child->frame[3] = child->height;
 
-        if (child->basis > 0) {
+        if (!isnan(child->basis) && child->basis >= 0) {
             // The `basis' property has priority.
             CHILD_SIZE(child) = child->basis;
         }

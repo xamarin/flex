@@ -128,7 +128,7 @@ FLEX_ATTRIBUTE(wrap, flex_wrap, FLEX_WRAP_NO_WRAP)
 FLEX_ATTRIBUTE(grow, float, 0.0)
 FLEX_ATTRIBUTE(shrink, float, 1.0)
 FLEX_ATTRIBUTE(order, int, 0)
-FLEX_ATTRIBUTE(basis, float, 0)
+FLEX_ATTRIBUTE(basis, float, NAN)
 
 // An item can store an arbitrary pointer, which can be used by bindings as
 // the address of a managed object.

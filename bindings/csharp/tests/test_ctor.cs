@@ -36,7 +36,7 @@ public partial class Test
         assert(item.Grow == 0);
         assert(item.Shrink == 1);
         assert(item.Order == 0);
-        assert(item.Basis == 0);
+        assert(Double.IsNaN(item.Basis));
     }
 
     void test_ctor1()

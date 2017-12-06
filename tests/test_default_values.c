@@ -38,7 +38,7 @@ test_default_values1(void)
     TEST_EQUAL(flex_item_get_grow(item), 0);
     TEST_EQUAL(flex_item_get_shrink(item), 1);
     TEST_EQUAL(flex_item_get_order(item), 0);
-    TEST_EQUAL(flex_item_get_basis(item), 0);
+    TEST(isnan(flex_item_get_basis(item)));
 
     flex_item_free(item);
 }

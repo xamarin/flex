@@ -267,6 +267,9 @@ test_wrap(void)
     current_unit = "test_wrap21";
     void test_wrap21(void);
     test_wrap21();
+    current_unit = "test_wrap22";
+    void test_wrap22(void);
+    test_wrap22();
 }
 
 static void

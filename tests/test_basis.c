@@ -26,7 +26,7 @@ test_basis1(void)
 void
 test_basis2(void)
 {
-    // The basis attribute has priority over width/height.
+    // The basis attribute has priority over the main-axis size.
     struct flex_item *root = flex_item_with_size(100, 100);
 
     struct flex_item *child1 = flex_item_with_size(100, 40);
@@ -90,7 +90,7 @@ test_basis4(void)
 void
 test_basis5(void)
 {
-    // The basis attribute is ignored if 0.
+    // The basis attribute is honored if 0.
     struct flex_item *root = flex_item_with_size(100, 100);
 
     struct flex_item *child1 = flex_item_with_size(100, 40);
@@ -102,8 +102,8 @@ test_basis5(void)
 
     flex_layout(root);
 
-    TEST_FRAME_EQUAL(child1, 0, 0, 100, 40);
-    TEST_FRAME_EQUAL(child2, 0, 40, 100, 40);
+    TEST_FRAME_EQUAL(child1, 0, 0, 100, 0);
+    TEST_FRAME_EQUAL(child2, 0, 0, 100, 40);
 
     flex_item_free(root);
 }
