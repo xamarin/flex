@@ -765,7 +765,9 @@ layout_item(struct flex_item *item, float width, float height)
                 if (isnan(CHILD_SIZE2(child))) {
                     // If the child's cross axis size hasn't been set it, it
                     // defaults to the line size.
-                    CHILD_SIZE2(child) = line->size + spacing;
+                    CHILD_SIZE2(child) = line->size
+                        + (item->align_content == FLEX_ALIGN_STRETCH
+                                ? spacing : 0);
                 }
                 CHILD_POS2(child) = pos + (CHILD_POS2(child) - old_pos);
             }
