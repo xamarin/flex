@@ -61,12 +61,6 @@ test_basis(void)
     current_unit = "test_basis3";
     void test_basis3(void);
     test_basis3();
-    current_unit = "test_basis4";
-    void test_basis4(void);
-    test_basis4();
-    current_unit = "test_basis5";
-    void test_basis5(void);
-    test_basis5();
 }
 
 static void

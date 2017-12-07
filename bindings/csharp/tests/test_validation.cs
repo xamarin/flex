@@ -254,4 +254,18 @@ public partial class Test
 
         item.Dispose();
     }
+
+    void test_validation_basis()
+    {
+        Item item = new Item();
+
+        assert_no_raised(() => { item.Basis = 0; });
+        assert_no_raised(() => { item.Basis = 1; });
+        assert_raised(() => { item.Basis = -1; }, typeof(ArgumentException));
+
+        assert_raised(() => { item.Flex(basis:-1); },
+                typeof(ArgumentException));
+
+        item.Dispose();
+    }
 }

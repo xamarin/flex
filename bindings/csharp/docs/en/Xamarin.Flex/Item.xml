@@ -137,9 +137,10 @@
         <ReturnType>System.Single</ReturnType>
       </ReturnValue>
       <Docs>
-        <summary>This property defines the initial main-axis dimension of the item. If <see cref="P:Xamarin.Flex.Item.Direction" /> is row-based (horizontal), it will be used instead of <see cref="P:Xamarin.Flex.Item.Width" />, and if it's column-based (vertical), it will be used instead of <see cref="P:Xamarin.Flex.Item.Height" />. This property is ignored if set to a negative value.</summary>
+        <summary>This property defines the initial main-axis dimension of the item. If <see cref="P:Xamarin.Flex.Item.Direction" /> is row-based (horizontal), it will be used instead of <see cref="P:Xamarin.Flex.Item.Width" />, and if it's column-based (vertical), it will be used instead of <see cref="P:Xamarin.Flex.Item.Height" />. Negative values are not allowed.</summary>
         <value>The value for the property.</value>
         <remarks>The default value for this property is NaN.</remarks>
+        <exception cref="ArgumentException">Thrown if a negative value is assigned to this property.</exception>
       </Docs>
     </Member>
     <Member MemberName="Bottom">

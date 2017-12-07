@@ -12,9 +12,9 @@ public partial class Test
         var i = new Item();
         i.Flex();
 
-        assert(i.Grow == 0);    // default
-        assert(i.Shrink == 1);  // default
-        assert(i.Basis == 0);   // default
+        assert(i.Grow == 0);            // default
+        assert(i.Shrink == 1);          // default
+        assert(Double.IsNaN(i.Basis));  // default
 
         i.Dispose();
     }
@@ -25,8 +25,8 @@ public partial class Test
         i.Flex(3);
 
         assert(i.Grow == 3);
-        assert(i.Shrink == 1);  // default
-        assert(i.Basis == 0);   // default
+        assert(i.Shrink == 1);          // default
+        assert(Double.IsNaN(i.Basis));  // default
 
         i.Dispose();
     }
@@ -38,7 +38,7 @@ public partial class Test
 
         assert(i.Grow == 3);
         assert(i.Shrink == 2);
-        assert(i.Basis == 0);   // default
+        assert(Double.IsNaN(i.Basis));  // default
 
         i.Dispose();
     }
@@ -70,11 +70,11 @@ public partial class Test
     void test_flex_shorthand5()
     {
         var i = new Item();
-        i.Flex(basis:-1, shrink:2);
+        i.Flex(basis:0, shrink:2);
 
         assert(i.Grow == 0);           // default
         assert(i.Shrink == 2);
-        assert(Double.IsNaN(i.Basis)); // default
+        assert(i.Basis == 0);
 
         i.Dispose();
     }

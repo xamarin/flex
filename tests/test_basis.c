@@ -47,49 +47,6 @@ test_basis2(void)
 void
 test_basis3(void)
 {
-    // The basis attribute is ignored if negative.
-    struct flex_item *root = flex_item_with_size(100, 100);
-
-    struct flex_item *child1 = flex_item_new();
-    flex_item_set_width(child1, 100);
-    flex_item_set_basis(child1, -60);
-    flex_item_add(root, child1);
-
-    struct flex_item *child2 = flex_item_with_size(100, 40);
-    flex_item_add(root, child2);
-
-    flex_layout(root);
-
-    TEST_FRAME_EQUAL(child1, 0, 0, 100, 0);
-    TEST_FRAME_EQUAL(child2, 0, 0, 100, 40);
-
-    flex_item_free(root);
-}
-
-void
-test_basis4(void)
-{
-    // The basis attribute is ignored if negative.
-    struct flex_item *root = flex_item_with_size(100, 100);
-
-    struct flex_item *child1 = flex_item_with_size(100, 40);
-    flex_item_set_basis(child1, -60);
-    flex_item_add(root, child1);
-
-    struct flex_item *child2 = flex_item_with_size(100, 40);
-    flex_item_add(root, child2);
-
-    flex_layout(root);
-
-    TEST_FRAME_EQUAL(child1, 0, 0, 100, 40);
-    TEST_FRAME_EQUAL(child2, 0, 40, 100, 40);
-
-    flex_item_free(root);
-}
-
-void
-test_basis5(void)
-{
     // The basis attribute is honored if 0.
     struct flex_item *root = flex_item_with_size(100, 100);
 
