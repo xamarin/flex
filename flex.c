@@ -641,12 +641,6 @@ layout_item(struct flex_item *item, float width, float height)
         child->frame[2] = child->width;
         child->frame[3] = child->height;
 
-        if (!isnan(child->basis)) {
-            assert(child->basis >= 0);
-            // The `basis' property has priority.
-            CHILD_SIZE(child) = child->basis;
-        }
-
         // Main axis size defaults to 0.
         if (isnan(CHILD_SIZE(child))) {
             CHILD_SIZE(child) = 0;
@@ -684,6 +678,12 @@ layout_item(struct flex_item *item, float width, float height)
                     child->frame[size_off] = val;
                 }
             }
+        }
+
+        // Honor the `basis' property which overrides the main-axis size.
+        if (!isnan(child->basis)) {
+            assert(child->basis >= 0);
+            CHILD_SIZE(child) = child->basis;
         }
 
         float child_size = CHILD_SIZE(child);
