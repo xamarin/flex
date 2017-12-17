@@ -30,6 +30,8 @@ MACOS_CFLAGS = -mmacosx-version-min=$(MACOS_MIN_TARGET) -arch i386 -arch x86_64
 IOS_BUILD_DIR = $(BUILD_DIR)/ios
 IOS_DYLIB = $(IOS_BUILD_DIR)/lib$(BASE_NAME).dylib
 IOS_SLIB = $(IOS_BUILD_DIR)/lib$(BASE_NAME).a
+IOS_FRAMEWORK = $(IOS_BUILD_DIR)/$(BASE_NAME).framework
+IOS_FRAMEWORK_ZIP = $(IOS_FRAMEWORK).zip
 
 IOS_SIM_PNAME = iPhoneSimulator
 IOS_SIM_FLEX_O = $(IOS_BUILD_DIR)/$(IOS_SIM_PNAME)/flex.o
@@ -78,7 +80,7 @@ ANDROID_ARM64_CFLAGS = $(subst -msoft-float,,$(ANDROID_CFLAGS)) --sysroot=$(ANDR
 
 all: macos ios android
 macos:  $(MACOS_DYLIB) $(MACOS_SLIB)
-ios: $(IOS_DYLIB) $(IOS_SLIB)
+ios: $(IOS_DYLIB) $(IOS_SLIB) $(IOS_FRAMEWORK_ZIP)
 android: $(ANDROID_X86_DYLIB) $(ANDROID_X86_SLIB) $(ANDROID_X86_64_DYLIB) $(ANDROID_X86_64_SLIB) $(ANDROID_ARM_DYLIB) $(ANDROID_ARM_SLIB) $(ANDROID_ARM7_DYLIB) $(ANDROID_ARM7_SLIB) $(ANDROID_ARM64_DYLIB) $(ANDROID_ARM64_SLIB) 
 
 $(MACOS_FLEX_O): $(FLEX_FILES)
@@ -122,6 +124,14 @@ $(IOS_DYLIB): $(IOS_SIM_DYLIB) $(IOS_DEV_DYLIB)
 
 $(IOS_SLIB): $(IOS_SIM_SLIB) $(IOS_DEV_SLIB)
 	/usr/bin/lipo -create $(IOS_SIM_SLIB) $(IOS_DEV_SLIB) -output $(IOS_SLIB)
+
+$(IOS_FRAMEWORK_ZIP): $(IOS_SLIB)
+	/bin/rm -rf $(IOS_FRAMEWORK)
+	/bin/mkdir -p $(IOS_FRAMEWORK)
+	/bin/cp flex.framework.plist $(IOS_FRAMEWORK)/Info.plist
+	/bin/cp $(IOS_DYLIB) $(IOS_FRAMEWORK)/flex
+	/usr/bin/install_name_tool -id @rpath/flex.framework/flex $(IOS_FRAMEWORK)/flex
+	(cd `/usr/bin/dirname $(IOS_FRAMEWORK_ZIP)` && /usr/bin/zip -r `/usr/bin/basename $(IOS_FRAMEWORK_ZIP)` `/usr/bin/basename $(IOS_FRAMEWORK)`)
 
 $(ANDROID_X86_FLEX_O): $(FLEX_FILES)
 	/bin/mkdir -p `/usr/bin/dirname $(ANDROID_X86_FLEX_O)`
