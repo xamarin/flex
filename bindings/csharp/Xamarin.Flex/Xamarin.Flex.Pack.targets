@@ -40,6 +40,10 @@
         <Link>iOS\libflex.a</Link>
         <PackagePath>native/ios/libflex.a</PackagePath>
       </PackageFile>
+      <PackageFile Include="..\..\..\build\ios\flex.framework.zip">
+        <Link>iOS\flex.framework.zip</Link>
+        <PackagePath>native/ios/flex.framework.zip</PackagePath>
+      </PackageFile>
     </ItemGroup>
     <ItemGroup>
       <PackageFile Include="..\nuget\Android\Xamarin.Flex.targets">
