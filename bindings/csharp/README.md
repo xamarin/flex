@@ -20,7 +20,7 @@ The first thing to do is to build the native code for all the platforms that you
 $ (cd ../.. && make)
 ```
 
-Now that the native code is built, you can build the C# bindings. Running `make` in this directory will build 2 Xamarin.Flex.dll files (one for projects where the native code is statically linked, such as iOS and macOS, and one for projects where the native code is dynamically loaded at runtime, such as Android), then create a NuGet package:
+Now that the native code is built, you can build the C# bindings. Running `make` in this directory will build the C# code into a DLL file and package it along with the native code to create a NuGet package:
 
 ```
 $ make
@@ -37,7 +37,7 @@ You can generate the documentation by running `make` in the `docs` directory whi
 ```
 $ cd docs
 $ make
-$ open en.html
+$ open en.html/index.html
 ```
 
 The documentation is also available online here:
@@ -62,6 +62,7 @@ $ make
 ### Running the tests on Windows
 
 ```
+$ cd tests
 $ msbuild
 $ bin\x64\Debug\test.exe
 ```
