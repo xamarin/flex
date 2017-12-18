@@ -74,14 +74,7 @@ Under the `demo` directory you will find an Xcode project that will build a Mac 
 
 ## Tests
 
-There is a test suite in the `tests` directory that you can run:
-
-```
-$ cd tests
-$ make
-```
-
-The test suite doesn't provide full coverage at this stage (as many parameters are in play) and needs more work.
+There is a test suite in the `tests` directory. See the [tests/README.md](tests/README.md) file for more details on how to build, run and contribute to the test suite.
 
 ## License
 
