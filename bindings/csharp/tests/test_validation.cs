@@ -11,7 +11,7 @@ public partial class Test
     {
         Item item = new Item();
 
-        foreach (int val in new int[] { -100, -1, 0, 1, 100 }) {
+        foreach (uint val in new uint[] { 0, 1, 100 }) {
             assert_raised(() => { item.ItemAt(val); },
                     typeof(ArgumentOutOfRangeException));
 
@@ -21,14 +21,14 @@ public partial class Test
 
         Item item2 = new Item();
 
-        foreach (int val in new int[] { -100, -1, 1, 100 }) {
+        foreach (uint val in new uint[] { 1, 100 }) {
             assert_raised(() => { item.InsertAt(val, item2); },
                     typeof(ArgumentOutOfRangeException));
         }
 
         item.Add(item2);
 
-        foreach (int val in new int[] { -100, -1, 1, 2, 100 }) {
+        foreach (uint val in new uint[] { 1, 2, 100 }) {
             assert_raised(() => { item.ItemAt(val); },
                     typeof(ArgumentOutOfRangeException));
 
@@ -38,14 +38,14 @@ public partial class Test
 
         Item item3 = new Item();
 
-        foreach (int val in new int[] { -100, -1, 2, 100 }) {
+        foreach (uint val in new uint[] { 2, 100 }) {
             assert_raised(() => { item.InsertAt(val, item3); },
                     typeof(ArgumentOutOfRangeException));
         }
 
         item.RemoveAt(0);
 
-        foreach (int val in new int[] { -100, -1, 0, 1, 100 }) {
+        foreach (uint val in new uint[] { 0, 1, 100 }) {
             assert_raised(() => { item.ItemAt(val); },
                     typeof(ArgumentOutOfRangeException));
 
@@ -53,7 +53,7 @@ public partial class Test
                     typeof(ArgumentOutOfRangeException));
         }
 
-        foreach (int val in new int[] { -100, -1, 1, 100 }) {
+        foreach (uint val in new uint[] { 1, 100 }) {
             assert_raised(() => { item.InsertAt(val, item2); },
                     typeof(ArgumentOutOfRangeException));
         }

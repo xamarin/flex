@@ -99,8 +99,8 @@ EOS
       i = 0
       args_list = args.map { |x| x + " arg#{i += 1}" }.join(', ')
       func_line = "#{retval} #{name} (#{args_list})"
-      out "[DllImport(dll_name)] public static extern #{func_line};"
-    
+      out "[DllImport(dll_name, CallingConvention=CallingConvention.Cdecl)] public static extern #{func_line};"
+ 
       if md = name.match(/^flex_item_(g|s)et_(.+)$/)
         name = md[2]
         what = md[1] == 'g' ? :get : :set
@@ -204,7 +204,9 @@ EOS
       @delegates[ftype] ||= "Delegate#{@delegates.size}"
     else
       case type = elem.attributes['type']
-        when 'I', 'i'
+        when 'I'
+          'uint'
+        when 'i'
           'int'
         when 'v'
           'void'

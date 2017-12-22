@@ -26,8 +26,6 @@ public partial class Test
             assert(item.ItemAt(1) == item[1]);
             assert(item.ItemAt(2) == item[2]);
 
-            assert_raised(() => { var x = item[-1]; },
-                    typeof(ArgumentOutOfRangeException));
             assert_raised(() => { var x = item[3]; },
                     typeof(ArgumentOutOfRangeException));
         }

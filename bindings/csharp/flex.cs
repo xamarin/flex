@@ -52,7 +52,7 @@ namespace Xamarin.Flex
             notify_changed = 1;
         }
     
-        public void InsertAt(int index, Item child)
+        public void InsertAt(uint index, Item child)
         {
             ValidateNewChild(child);
             ValidateIndex(index, true);
@@ -61,7 +61,7 @@ namespace Xamarin.Flex
             notify_changed = 1;
         }
     
-        public Item RemoveAt(int index)
+        public Item RemoveAt(uint index)
         {
             ValidateIndex(index, false);
             IntPtr child_item = flex_item_delete(item, index);
@@ -71,12 +71,12 @@ namespace Xamarin.Flex
             return child;
         }
     
-        public int Count
+        public uint Count
         {
             get { return flex_item_count(item); }
         }
     
-        public Item ItemAt(int index)
+        public Item ItemAt(uint index)
         {
             ValidateIndex(index, false);
             return FlexItemFromItem(flex_item_child(item, index));
@@ -85,7 +85,7 @@ namespace Xamarin.Flex
         // The IndexerName() attribute is required because otherwise we clash
         // with another symbol named `Item' in the builtin library.
         [System.Runtime.CompilerServices.IndexerName("ItemIndexer")]
-        public Item this[int index]
+        public Item this[uint index]
         {
             get { return ItemAt(index); }
         }
@@ -192,7 +192,7 @@ namespace Xamarin.Flex
     
             public Item Current
             {
-                get { return item.ItemAt(index); }
+                get { return item.ItemAt((uint)index); }
             }
     
             public void Reset()
@@ -264,7 +264,7 @@ namespace Xamarin.Flex
     
         private static void ReleaseHandlesWithinItem(IntPtr item, bool reset)
         {
-            for (int i = 0, count = flex_item_count(item); i < count; i++) {
+            for (uint i = 0, count = flex_item_count(item); i < count; i++) {
                 ReleaseHandlesWithinItem(flex_item_child(item, i), true);
             }
             ReleaseHandleForItem(item, reset);
@@ -288,13 +288,13 @@ namespace Xamarin.Flex
             } 
         }
     
-        private void ValidateIndex(int index, bool inc)
+        private void ValidateIndex(uint index, bool inc)
         {
-            int max = Count;
+            uint max = Count;
             if (inc) {
                 max++;
             }
-            if (index < 0 || index >= max) {
+            if (index >= max) {
                 throw new ArgumentOutOfRangeException();
             }
         }
