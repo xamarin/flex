@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FlexNativeDLLname>flex.dll</FlexNativeDLLname>
+    <PreferredWindowsNativeFlexPath>$(MSBuildThisFileDirectory)..\..\..\..\build\windows\</PreferredWindowsNativeFlexPath>
+    <PreferredWindowsNativeFlexPathx86>$(PreferredWindowsNativeFlexPath)Win32\Debug\</PreferredWindowsNativeFlexPathx86>
+    <PreferredWindowsNativeFlexPathx64>$(PreferredWindowsNativeFlexPath)x64\Debug\</PreferredWindowsNativeFlexPathx64>
+    <PreferredWindowsNativeFlexPathARM>$(PreferredWindowsNativeFlexPath)ARM\Debug\</PreferredWindowsNativeFlexPathARM>
+    <PreferredOSXNativeFlexPath>$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\libflex.dylib</PreferredOSXNativeFlexPath>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(Platform)' != 'x86' and '$(Platform)' != 'x64' and '$(Platform)' != 'ARM' and '$(OS)' == 'Windows_NT'">
+    <Content Include="$(PreferredWindowsNativeFlexPathx86)$(FlexNativeDLLname)">
+      <Link>$(FlexNativeDLLname)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-x64\native\*">
+      <Link>%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition="'$(PlatformTarget)' == 'x86' and '$(OS)' != 'Unix'">
+    <Content Include="$(PreferredWindowsNativeFlexPathx86)$(FlexNativeDLLname)">
+      <Link>$(FlexNativeDLLname)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition="'$(PlatformTarget)' == 'x64' and '$(OS)' == 'Windows_NT'">
+    <Content Include="$(PreferredWindowsNativeFlexPathx64)$(FlexNativeDLLname)">
+      <Link>$(FlexNativeDLLname)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+  <ItemGroup Condition="'$(PlatformTarget)' == 'ARM' and '$(OS)' == 'Windows_NT'">
+    <Content Include="$(PreferredWindowsNativeFlexPathARM)$(FlexNativeDLLname)">
+      <Link>$(FlexNativeDLLname)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Visible>False</Visible>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="BuildNativeLibrary" Condition="'$(OS)' != 'Windows_NT'">
+    <Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make"  Condition=" '$(OS)' != 'Windows_NT' " />
+  </Target>
+  <Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile" Condition="'$(OS)' != 'Windows_NT'">
+    <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+      <NativeReference Include="$(PreferredOSXNativeFlexPath)">
+        <IsCxx>False</IsCxx>
+        <Kind>Dynamic</Kind>
+      </NativeReference>
+      <None Include="$(PreferredOSXNativeFlexPath)">
+        <Link>libflex.dylib</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+  </Target>
+</Project>
