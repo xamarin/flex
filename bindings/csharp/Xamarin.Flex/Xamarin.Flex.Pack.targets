@@ -97,7 +97,7 @@
   <Target Name="_SetPackageVersion" BeforeTargets="GetPackageVersion" DependsOnTargets="GitVersion">
     <Message Text="SetPackage based on SemVersion" />
     <PropertyGroup>
-      <PackageVersion>$(GitSemVerMajor).$(GitSemVerMinor).252</PackageVersion>
+      <PackageVersion>$(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)</PackageVersion>
     </PropertyGroup>
   </Target>
   <Target Name="CopyPackage" AfterTargets="Pack">
