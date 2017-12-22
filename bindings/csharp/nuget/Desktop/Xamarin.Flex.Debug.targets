@@ -41,14 +41,20 @@
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
-  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
-    <NativeReference Include="$(PreferredOSXNativeFlexPath)">
-      <IsCxx>False</IsCxx>
-      <Kind>Dynamic</Kind>
-    </NativeReference>
-    <None Include="$(PreferredOSXNativeFlexPath)">
-      <Link>libflex.dylib</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+
+  <Target Name="BuildNativeLibrary" Condition="'$(OS)' != 'Windows_NT'">
+    <Exec WorkingDirectory="$(ProjectDir)../../../" Command="ANDROID_NDK=$(MSBuildNDKPathVar) make"  Condition=" '$(OS)' != 'Windows_NT' " />
+  </Target>
+  <Target Name="AddNativeFiles" DependsOnTargets="BuildNativeLibrary" BeforeTargets="CoreCompile" Condition="'$(OS)' != 'Windows_NT'">
+    <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+      <NativeReference Include="$(PreferredOSXNativeFlexPath)">
+        <IsCxx>False</IsCxx>
+        <Kind>Dynamic</Kind>
+      </NativeReference>
+      <None Include="$(PreferredOSXNativeFlexPath)">
+        <Link>libflex.dylib</Link>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+  </Target>
 </Project>
