@@ -29,6 +29,7 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlexDemo.Shared", "samples\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Desktop", "Desktop", "{E6426795-8306-408F-BD51-779335D51BE0}"
 	ProjectSection(SolutionItems) = preProject
+		nuget\Desktop\Xamarin.Flex.Debug.targets = nuget\Desktop\Xamarin.Flex.Debug.targets
 		nuget\Desktop\Xamarin.Flex.targets = nuget\Desktop\Xamarin.Flex.targets
 	EndProjectSection
 EndProject
