@@ -90,6 +90,9 @@ test_grow(void)
     current_unit = "test_grow8";
     void test_grow8(void);
     test_grow8();
+    current_unit = "test_grow9";
+    void test_grow9(void);
+    test_grow9();
 }
 
 static void

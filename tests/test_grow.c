@@ -199,3 +199,37 @@ test_grow8(void)
 
     flex_item_free(root);
 }
+
+#include <stdio.h>
+void
+test_grow9(void)
+{
+    struct flex_item *root = flex_item_with_size(400, 200);
+    flex_item_set_grow(root, 1);
+    flex_item_set_direction(root, FLEX_DIRECTION_COLUMN);
+
+    struct flex_item *child1  = flex_item_with_size(50, 50);
+    flex_item_add(root, child1);
+
+    struct flex_item *child2  = flex_item_new();
+    flex_item_set_grow(child2, 1);
+    flex_item_set_direction(child2, FLEX_DIRECTION_ROW);
+    flex_item_add(root, child2);
+
+    struct flex_item *child21 = flex_item_with_size(50, 100);
+    flex_item_add(child2, child21);
+
+    struct flex_item *child22 = flex_item_with_size(100, 50);
+    flex_item_add(child2, child22);
+
+    struct flex_item *child3  = flex_item_with_size(200, 50);
+    flex_item_add(root, child3);
+
+    flex_layout(root);
+
+    TEST_FRAME_EQUAL(child1,   0,   0,  50,  50);
+    TEST_FRAME_EQUAL(child2,   0,  50, 400, 100);
+    TEST_FRAME_EQUAL(child21,  0,  50,  50, 100); // test_grow9 (test_grow.c:234): failed test `flex_item_get_frame_y(_item) == 50.0' (is 0.0)
+    TEST_FRAME_EQUAL(child22, 50,  50, 100,  50); // test_grow9 (test_grow.c:235): failed test `flex_item_get_frame_y(_item) == 50.0' (is 0.0)
+    TEST_FRAME_EQUAL(child3,   0, 150, 200,  50);
+}
