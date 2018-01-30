@@ -9,8 +9,15 @@ namespace Xamarin.Flex.UnitTests
 		[TestMethod]
 		public void TestFlex()
 		{
-			var item = new Xamarin.Flex.Item(22, 22);
-			var item1 = new Xamarin.Flex.Item(10, 10);
+			var item = new Item(22, 22);
+			var item1 = new Item
+			{
+				SelfSizing = (Item it, ref float w, ref float h) =>
+				{
+					w = 10.0f;
+					h = 10.0f;
+				}
+			};
 			item.Add(item1);
 			item.Layout();
 			Assert.IsNotNull(item);
