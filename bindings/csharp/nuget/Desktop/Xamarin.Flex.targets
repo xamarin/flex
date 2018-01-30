@@ -3,13 +3,8 @@
   <PropertyGroup>
     <PreferredOSXNativeFlexPath>$(MSBuildThisFileDirectory)..\..\runtimes\osx\native\libflex.dylib</PreferredOSXNativeFlexPath>
   </PropertyGroup>
-  <ItemGroup Condition="'$(Platform)' != 'x86' and '$(Platform)' != 'x64' and '$(Platform)' != 'ARM' and '$(OS)' == 'Windows_NT'">
+  <ItemGroup Condition="'$(Platform)' != 'x86' and '$(Platform)' != 'x64' and '$(Platform)' != 'ARM' and '$(OS)' != 'Unix'">
     <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-x86\native\*">
-      <Link>%(Filename)%(Extension)</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Visible>False</Visible>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-x64\native\*">
       <Link>%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
@@ -22,21 +17,21 @@
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
-  <ItemGroup Condition="'$(PlatformTarget)' == 'x64' and '$(OS)' == 'Windows_NT'">
+  <ItemGroup Condition="'$(PlatformTarget)' == 'x64' and '$(OS)' != 'Unix'">
     <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-x64\native\*">
       <Link>%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
-  <ItemGroup Condition="'$(PlatformTarget)' == 'ARM' and '$(OS)' == 'Windows_NT'">
+  <ItemGroup Condition="'$(PlatformTarget)' == 'ARM' and '$(OS)' != 'Unix'">
     <Content Include="$(MSBuildThisFileDirectory)..\..\runtimes\win10-arm\native\*">
       <Link>%(Filename)%(Extension)</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Visible>False</Visible>
     </Content>
   </ItemGroup>
-  <ItemGroup Condition="'$(OS)' != 'Windows_NT'">
+  <ItemGroup Condition="'$(OS)' == 'Unix'">
     <NativeReference Include="$(PreferredOSXNativeFlexPath)">
       <IsCxx>False</IsCxx>
       <Kind>Dynamic</Kind>
