@@ -7,8 +7,10 @@
 
 #if defined(_WIN32) // Also works for WIN64.
 # define DLLEXPORT __declspec(dllexport) 
+# define WINAPI_STDCALL __stdcall
 #else
 # define DLLEXPORT
+# define WINAPI_STDCALL
 #endif
 
 struct flex_item;
@@ -74,7 +76,7 @@ typedef enum {
 } flex_wrap;
 
 // size[0] == width, size[1] == height
-typedef void (*flex_self_sizing)(struct flex_item *item, float size[2]);
+typedef void (WINAPI_STDCALL *flex_self_sizing)(struct flex_item *item, float size[2]);
 
 # ifndef FLEX_ATTRIBUTE
 #  define FLEX_ATTRIBUTE(name, type, def) \
