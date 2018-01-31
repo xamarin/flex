@@ -104,8 +104,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup  Condition=" '$(Platform)' == 'x64' ">
     <Content Include="..\..\..\build\windows\x64\Debug\flex.dll">
+      <Link>flex.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+   <ItemGroup  Condition=" '$(Platform)' == 'x86' ">
+    <Content Include="..\..\..\build\windows\Win32\Debug\flex.dll">
       <Link>flex.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
